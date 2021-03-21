@@ -1,17 +1,18 @@
-public class Candidato {
+import java.lang.Comparable;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+public class Candidato implements Comparable<Candidato> {
   private int numero;
   private int votos_nominais;
+  private int numero_partido;
+  private char sexo; // 1 feminino e 0 masculino
+  private Date data_nasc;
   private String situacao;
   private String destino_voto;
   private String nome;
   private String nome_urna;
   private String nome_partido;
-  private char sexo; // 1 feminino e 0 masculino
-  private String data_nasc;
-  // private boolean destino_voto; //só é usado para verificar se é valido ao
-  // criar um candidato
-  private int numero_partido;
-  // static public int numeroVotosNominais = 0;
 
   private final char MASCULINO = 'M';
   private final char FEMININO = 'F';
@@ -24,6 +25,7 @@ public class Candidato {
     String nome_urna = vetorDados[4];
     char sexo = vetorDados[5].charAt(0);
     String data_nasc = vetorDados[6];
+
     String destino_voto = vetorDados[7];
     int numero_partido = Integer.parseInt(vetorDados[8]);
 
@@ -43,11 +45,25 @@ public class Candidato {
     return this.destino_voto.equals("Válido");
   }
 
-  public void imprimeCandidato() {
-    // System.out.println(getNome() + " / " + getNome_urna() + " (" +
-    // getNomePartidoPeloNumeroPartido(this.numero_partido)
-    // + ", " + getVotos_nominais() + " votos)");
-  };
+  // --------------@Override---------------//
+
+  @Override
+  public String toString() {
+    return this.nome + " / " + this.nome_urna + " (PARTIDO, " + this.votos_nominais + " votos)";
+  }
+
+  @Override
+  public int compareTo(Candidato candidato) {
+    if (this.votos_nominais > candidato.getVotos_nominais())
+      return -1;
+    else if (this.votos_nominais < candidato.getVotos_nominais())
+      return 1;
+    else {
+      return this.data_nasc.compareTo(candidato.getData_nasc());
+    }
+  }
+
+  // --------------End of @Override---------------//
 
   public void setDestino_voto(String destino_voto) {
     this.destino_voto = destino_voto;
@@ -58,10 +74,16 @@ public class Candidato {
   }
 
   public void setData_nasc(String data_nasc) {
-    this.data_nasc = data_nasc;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+    try {
+      this.data_nasc = sdf.parse(data_nasc);
+    } catch (Exception e) {
+    }
+
   }
 
-  public String getData_nasc() {
+  public Date getData_nasc() {
     return data_nasc;
   }
 

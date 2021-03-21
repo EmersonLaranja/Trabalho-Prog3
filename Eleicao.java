@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+// import java.util.Collections;
+// import java.util.Comparator;
 
 public class Eleicao {
   private int numeroTotalEleitos = 0;
@@ -15,32 +15,52 @@ public class Eleicao {
   private List<Partido> listaDePartidos;
   private String data;
 
-  Eleicao() {
-  }
-
   Eleicao(List<Candidato> listaDeCandidatosValidos, List<Partido> listaDePartidos) {
     this.listaDeCandidatosValidos = listaDeCandidatosValidos;
     this.listaDePartidos = listaDePartidos;
 
-    Comparator<Candidato> maisVotado = Collections.reverseOrder(new OrdenarPorMaisVotado());
-    Collections.sort(listaDeCandidatosValidos, maisVotado);
-
-    setNumeroTotalEleitos();
-
-    setTotalVotosLegenda();
-    setTotalVotosValidos();
-    setTotalVotosNominais();
-
-    setListaMaisVotados();
     setListaMaisVotadosEleitos();
+    setNumeroTotalEleitos();
+    setTotalVotosLegenda();
+    setTotalVotosNominais();
+    setTotalVotosValidos();
+    setListaMaisVotados();
 
   }
 
-  public void imprimeCandidatosBeneficiadosVotacaoMajoritaria() {
-    List<Candidato> beneficiados = listaDeCandidatosMaisVotados;
+  // --------------Imprimir---------------//
 
-    beneficiados.removeAll(listaDeCandidatosMaisVotadosEleitos);
-    System.out.println(beneficiados);
+  public void imprimeCandidatosEleitos() {
+    System.out.println("\nVereadores eleitos:");
+    imprimeListaCandidatos(this.listaDeCandidatosMaisVotadosEleitos);
+  }
+
+  public void imprimeListaCandidatosValidos() {
+    imprimeListaCandidatos(this.listaDeCandidatosValidos);
+  }
+
+  public void imprimeListaCandidatosMaisVotadosPorLimiteVagas() {
+    System.out.println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
+    ;
+    int i;
+    for (i = 0; i < numeroTotalEleitos; i++) {
+      Candidato aux = listaDeCandidatosMaisVotados.get(i);
+      System.out.print((i + 1) + " - " + aux + "\n");
+    }
+  }
+
+  public void imprimeCandidatosBeneficiadosVotacaoMajoritaria() {
+
+    System.out.println("\nTeriam sido eleitos se a votação fosse majoritária, e não foram eleitos:");
+    System.out.println("(com sua posição no ranking de mais votados)");
+    imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotados, listaDeCandidatosMaisVotadosEleitos);
+
+  }
+
+  public void imprimeCandidatosBeneficiadosVotacaoProporcional() {
+    System.out.println("\nEleitos, que se beneficiaram do sistema proporcional:");
+    System.out.println("(com sua posição no ranking de mais votados)");
+    imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotadosEleitos, listaDeCandidatosMaisVotados);
 
   }
 
@@ -48,7 +68,7 @@ public class Eleicao {
 
     float qntFeminino = 0.0F;
     float qntMasculino = 0.0F;
-
+    System.out.println();
     for (Candidato candidato : listaDeCandidatosValidos) {
 
       if (candidato.getSexo() == 'F' && candidato.getSituacao().equals("Eleito"))
@@ -65,6 +85,46 @@ public class Eleicao {
 
   }
 
+  public void imprimeListaPartidos() {
+    int i = 1;
+    System.out.println("\nVotação dos partidos e número de candidatos eleitos:");
+    for (Partido partido : listaDePartidos) {
+      System.out.println(i + " - " + partido);
+      i++;
+    }
+  }
+
+  private void imprimeListaCandidatos(List<Candidato> lista) {
+    int i = 1;
+    for (Candidato candidato : lista) {
+      System.out.print(i + " - " + candidato + "\n");
+      i++;
+    }
+  }
+
+  private void imprimePreservandoPosicaoMaisVotados(List<Candidato> lista) {
+    int i, j;
+    for (i = 0, j = 0; j < lista.size(); i++) {
+
+      Candidato aux1 = lista.get(j);
+      Candidato aux2 = listaDeCandidatosValidos.get(i);
+
+      if (aux1.getNome().equals(aux2.getNome())) {
+        System.out.println((i + 1) + " _ " + aux1);
+        j++;
+      }
+    }
+  }
+
+  private void imprimeBeneficiadosPresentesLista1AusentesLista2(List<Candidato> lista1, List<Candidato> lista2) {
+    ArrayList<Candidato> beneficiados = new ArrayList<Candidato>(lista1);
+    beneficiados.removeAll(lista2);
+    imprimePreservandoPosicaoMaisVotados(beneficiados);
+
+  }
+
+  // ----------End of of Imprimir --------------//
+
   // public String getNomePartidoPeloNumeroPartido(int numero_partido) {
   // String nome_partido = new String();
 
@@ -75,16 +135,6 @@ public class Eleicao {
   // }
   // return nome_partido;
   // }
-
-  public void imprimeListaCandidatosValidos() {
-    int i = 0;
-    for (Candidato candidato : this.listaDeCandidatosValidos) {
-      System.out.print(i + " - ");
-      candidato.imprimeCandidato();
-      System.out.println();
-      i++;
-    }
-  }
 
   public void setData(String data) {
     this.data = data;
@@ -125,6 +175,10 @@ public class Eleicao {
         listaDeCandidatosMaisVotadosEleitos.add(aux);
     }
 
+  }
+
+  public List<Partido> getlistaDePartidos() {
+    return listaDePartidos;
   }
 
   public List<Candidato> getListaDeCandidatosMaisVotadosEleitos() {
@@ -172,19 +226,8 @@ public class Eleicao {
 
 }
 
-// @Override
-// public int compareTo(Candidato candidato) {
-// if (this.total_votos_nominais > candidato.getVotos_nominais())
-// return -1;
-// else if (this.preco < candidato.getPreco())
-// return 1;
-// else {
-// if (this.nome.compareTo(candidato.getNome()) < 0)
-// return -1;
-// return 1;
+// class OrdenarPorMaisVotado implements Comparator<Candidato> {
+// public int compare(Candidato a, Candidato b) {
+// return a.getVotos_nominais() - b.getVotos_nominais();
 // }
-class OrdenarPorMaisVotado implements Comparator<Candidato> {
-  public int compare(Candidato a, Candidato b) {
-    return a.getVotos_nominais() - b.getVotos_nominais();
-  }
-}
+// }
