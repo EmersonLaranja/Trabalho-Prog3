@@ -1,10 +1,11 @@
-public class Candidato extends Partido {
+public class Candidato {
   private int numero;
   private int votos_nominais;
   private String situacao;
   private String destino_voto;
   private String nome;
   private String nome_urna;
+  private String nome_partido;
   private char sexo; // 1 feminino e 0 masculino
   private String data_nasc;
   // private boolean destino_voto; //só é usado para verificar se é valido ao
@@ -43,8 +44,9 @@ public class Candidato extends Partido {
   }
 
   public void imprimeCandidato() {
-    System.out.println(getNome() + " / " + getNome_urna() + "  (" + getNomePartidoPeloNumeroPartido(this.numero_partido)
-        + ", " + getVotos_nominais() + " votos)");
+    // System.out.println(getNome() + " / " + getNome_urna() + " (" +
+    // getNomePartidoPeloNumeroPartido(this.numero_partido)
+    // + ", " + getVotos_nominais() + " votos)");
   };
 
   public void setDestino_voto(String destino_voto) {
@@ -125,6 +127,10 @@ public class Candidato extends Partido {
 
   public int getVotos_nominais() {
     return votos_nominais;
+  }
+
+  public String getNome_partido() {
+    return nome_partido;
   }
 
 }

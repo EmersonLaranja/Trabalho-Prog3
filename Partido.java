@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
-public class Partido extends Eleicao {
+public class Partido {
   private int numero;
   private int votos_legenda;
-  private int quociente_partidario = 0;
   private String nome_partido;
   private String sigla;
   private ArrayList<Candidato> lista_candidatos;
@@ -38,14 +37,6 @@ public class Partido extends Eleicao {
     return lista_candidatos;
   }
 
-  public int getQuociente_partidario() {
-    return quociente_partidario;
-  }
-
-  public void setQuociente_partidario() {
-    this.quociente_partidario = quociente_partidario;
-  }
-
   public void setNome(String nome) {
     this.nome_partido = nome;
   }
@@ -77,4 +68,5 @@ public class Partido extends Eleicao {
   public int getVotos_legenda() {
     return votos_legenda;
   }
+
 }

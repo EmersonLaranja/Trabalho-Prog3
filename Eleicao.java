@@ -8,7 +8,7 @@ public class Eleicao {
   private int total_votos_nominais = 0;
   private int total_votos_legenda = 0;
   private int total_votos_validos = 0;
-  private int quociente_eleitoral = 0; // total_votos_validos/numeroTotalEleitos;
+
   private List<Candidato> listaDeCandidatosValidos;
   private List<Candidato> listaDeCandidatosMaisVotadosEleitos;
   private List<Candidato> listaDeCandidatosMaisVotados;
@@ -36,16 +36,45 @@ public class Eleicao {
 
   }
 
-  public String getNomePartidoPeloNumeroPartido(int numero_partido) {
-    String nome_partido = new String();
+  public void imprimeCandidatosBeneficiadosVotacaoMajoritaria() {
+    List<Candidato> beneficiados = listaDeCandidatosMaisVotados;
 
-    for (Partido partido : this.listaDePartidos) {
-      if (numero_partido == partido.getNumero()) {
-        nome_partido = partido.getNome();
-      }
-    }
-    return nome_partido;
+    beneficiados.removeAll(listaDeCandidatosMaisVotadosEleitos);
+    System.out.println(beneficiados);
+
   }
+
+  public void imprimeCandidatosPorSexo() {
+
+    float qntFeminino = 0.0F;
+    float qntMasculino = 0.0F;
+
+    for (Candidato candidato : listaDeCandidatosValidos) {
+
+      if (candidato.getSexo() == 'F' && candidato.getSituacao().equals("Eleito"))
+        qntFeminino++;
+    }
+
+    qntMasculino = getNumeroTotalEleitos() - qntFeminino;
+    System.out.println("Eleitos, por sexo:");
+    float porcentagem = (qntFeminino / numeroTotalEleitos) * 100;
+
+    System.out.printf("Feminino: %.0f (%.2f%%)\n", qntFeminino, porcentagem);
+    porcentagem = (qntMasculino / numeroTotalEleitos) * 100;
+    System.out.printf("Masculino: %.0f (%.2f%%)\n", qntMasculino, porcentagem);
+
+  }
+
+  // public String getNomePartidoPeloNumeroPartido(int numero_partido) {
+  // String nome_partido = new String();
+
+  // for (Partido partido : this.listaDePartidos) {
+  // if (numero_partido == partido.getNumero()) {
+  // nome_partido = partido.getNome();
+  // }
+  // }
+  // return nome_partido;
+  // }
 
   public void imprimeListaCandidatosValidos() {
     int i = 0;
@@ -55,14 +84,6 @@ public class Eleicao {
       System.out.println();
       i++;
     }
-  }
-
-  public int getQuociente_eleitoral() {
-    return quociente_eleitoral;
-  }
-
-  public void setQuociente_eleitoral() {
-    this.quociente_eleitoral = (this.total_votos_validos / this.numeroTotalEleitos);
   }
 
   public void setData(String data) {
@@ -151,6 +172,17 @@ public class Eleicao {
 
 }
 
+// @Override
+// public int compareTo(Candidato candidato) {
+// if (this.total_votos_nominais > candidato.getVotos_nominais())
+// return -1;
+// else if (this.preco < candidato.getPreco())
+// return 1;
+// else {
+// if (this.nome.compareTo(candidato.getNome()) < 0)
+// return -1;
+// return 1;
+// }
 class OrdenarPorMaisVotado implements Comparator<Candidato> {
   public int compare(Candidato a, Candidato b) {
     return a.getVotos_nominais() - b.getVotos_nominais();

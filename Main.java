@@ -62,5 +62,7 @@ public class Main {
       candidato.imprimeCandidato();
     }
 
+    eleicao.imprimeCandidatosPorSexo();
+
   }
 }
