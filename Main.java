@@ -51,7 +51,8 @@ public class Main {
     scanner.close();
 
     // // --------------------------IMPRIMINDO LISTAS---------------------
-    Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos);
+    String dataEleicao = args[2];
+    Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
     // eleicao.imprimeListaPartidos();
 
     System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
@@ -73,10 +74,12 @@ public class Main {
 
     System.out.println("\nEleitos, por faixa etária (na data da eleição):");
 
+    // eleicao.imprimeCandidatosPorIdade();
     eleicao.imprimeCandidatosPorSexo();
     System.out.println();
 
     eleicao.ordenaPrimeiroUltimoListaPartido();
+
     // --------------------------IMPRIMINDO LISTAS---------------------
     // System.out.println(eleicao.getTotalVotosNominais());
     // System.out.println(eleicao.getTotalVotosLegenda());

@@ -184,16 +184,16 @@ class OrdenarPrimeiroUltimoCandidatoPartido implements Comparator<Partido> {
   public int compare(Partido partido1, Partido partido2) {
     int i = 0;
     OrdenarPorMaisVotadoComparator comparaVotos = new OrdenarPorMaisVotadoComparator();
-    System.out.println(partido1.getCandidatoPorPosicao(0));
-    System.out.println(partido1.getCandidatoPorPosicao(0));
 
+    System.out.println(partido1.getCandidatoPorPosicao(0));
+    System.out.println();
     i = comparaVotos.compare(partido1.getCandidatoPorPosicao(0), partido2.getCandidatoPorPosicao(0));
 
     if (i == 0) {
-      i = comparaVotos.compare(partido1.getCandidatoPorPosicao(partido1.getTotal_candidatos() - 1),
-          partido2.getCandidatoPorPosicao(partido2.getTotal_candidatos() - 1));
-    }
+      // compare(partido1.getNumero(), partido2.getNumero());
+      return Integer.compare(partido1.getNumero(), partido2.getNumero());
 
+    }
     return i;
 
   }
