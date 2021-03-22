@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.lang.Comparable;
 
@@ -9,6 +10,7 @@ public class Partido implements Comparable<Partido> {
   private int total_candidatos_eleitos = 0;
   private int total_votos_nominais = 0;
   private int total_votos_partido = 0;
+  private int total_candidatos = 0;
   private String nome_partido;
   private String sigla;
   private List<Candidato> lista_candidatos;
@@ -27,7 +29,7 @@ public class Partido implements Comparable<Partido> {
     this.setTotal_votos_nominais();
     this.setTotal_votos_partido();
     this.setTotal_candidatos_eleitos();
-
+    this.setTotal_candidatos();
   }
 
   @Override
@@ -84,6 +86,18 @@ public class Partido implements Comparable<Partido> {
       System.out.println(i + " - " + candidato);
     }
 
+  }
+
+  public void setTotal_candidatos() {
+    this.total_candidatos = this.lista_candidatos.size();
+  }
+
+  public int getTotal_candidatos() {
+    return total_candidatos;
+  }
+
+  public Candidato getCandidatoPorPosicao(int posicao) {
+    return lista_candidatos.get(posicao);
   }
 
   public void setTotal_candidatos_eleitos() {
@@ -164,3 +178,33 @@ public class Partido implements Comparable<Partido> {
   }
 
 }
+
+class OrdenarPrimeiroUltimoCandidatoPartido implements Comparator<Partido> {
+  @Override
+  public int compare(Partido partido1, Partido partido2) {
+    int i = 0;
+    OrdenarPorMaisVotadoComparator comparaVotos = new OrdenarPorMaisVotadoComparator();
+    System.out.println(partido1.getCandidatoPorPosicao(0));
+    System.out.println(partido1.getCandidatoPorPosicao(0));
+
+    i = comparaVotos.compare(partido1.getCandidatoPorPosicao(0), partido2.getCandidatoPorPosicao(0));
+
+    if (i == 0) {
+      i = comparaVotos.compare(partido1.getCandidatoPorPosicao(partido1.getTotal_candidatos() - 1),
+          partido2.getCandidatoPorPosicao(partido2.getTotal_candidatos() - 1));
+    }
+
+    return i;
+
+  }
+}
+
+/*
+ * 
+ * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
+ * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
+ * P2.getUltCand);
+ * 
+ * 
+ * }
+ */

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 // import java.util.Collections;
 // import java.util.Comparator;
@@ -41,7 +42,6 @@ public class Eleicao {
 
   public void imprimeListaCandidatosMaisVotadosPorLimiteVagas() {
     System.out.println("\nCandidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
-    ;
     int i;
     for (i = 0; i < numeroTotalEleitos; i++) {
       Candidato aux = listaDeCandidatosMaisVotados.get(i);
@@ -117,7 +117,7 @@ public class Eleicao {
   }
 
   private void imprimeBeneficiadosPresentesLista1AusentesLista2(List<Candidato> lista1, List<Candidato> lista2) {
-    ArrayList<Candidato> beneficiados = new ArrayList<Candidato>(lista1);
+    List<Candidato> beneficiados = new ArrayList<Candidato>(lista1);
     beneficiados.removeAll(lista2);
     imprimePreservandoPosicaoMaisVotados(beneficiados);
 
@@ -218,6 +218,19 @@ public class Eleicao {
     return total_votos_validos;
   }
 
+  public void ordenaPrimeiroUltimoListaPartido() {
+
+    List<Partido> novaLista = new ArrayList<Partido>(this.listaDePartidos);
+    OrdenarPrimeiroUltimoCandidatoPartido comparator = new OrdenarPrimeiroUltimoCandidatoPartido();
+    Collections.sort(novaLista, comparator);
+
+    // for (Partido partido : novaLista) {
+    // System.out.println(partido.getNome());
+
+    // }
+
+  }
+
   // public void imprimeListaPartidos() {
   // for (Partido partido : this.listaDePartidos) {
 
@@ -231,3 +244,13 @@ public class Eleicao {
 // return a.getVotos_nominais() - b.getVotos_nominais();
 // }
 // }
+
+/*
+ * 
+ * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
+ * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
+ * P2.getUltCand);
+ * 
+ * 
+ * }
+ */

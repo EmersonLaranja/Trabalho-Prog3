@@ -1,4 +1,5 @@
 import java.lang.Comparable;
+import java.util.Comparator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -79,6 +80,7 @@ public class Candidato implements Comparable<Candidato> {
     try {
       this.data_nasc = sdf.parse(data_nasc);
     } catch (Exception e) {
+      System.err.println(e);
     }
 
   }
@@ -155,4 +157,32 @@ public class Candidato implements Comparable<Candidato> {
     return nome_partido;
   }
 
+  public int Ordena{
+
+  @Override
+  public int compareTo(Candidato candidato) {
+    if (this.getVotos_nominais())
+
+      return 1;
+
+  }
 }
+
+}
+
+class OrdenarPorMaisVotadoComparator implements Comparator<Candidato> {
+  public int compare(Candidato a, Candidato b) {
+    return Integer.compare(a.getVotos_nominais(), b.getVotos_nominais());
+  }
+
+}
+
+/*
+ * 
+ * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
+ * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
+ * P2.getUltCand);
+ * 
+ * 
+ * }
+ */

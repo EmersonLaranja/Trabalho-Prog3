@@ -9,7 +9,7 @@ public class Main {
 
   public static void main(String[] args) throws FileNotFoundException {
     List<Candidato> listaDeCandidatosValidos = new ArrayList<Candidato>();
-    File ArquivoCandidatos = new File(args[0]);
+    File ArquivoCandidatos = new File("/home/emerson/Documents/Trabalho-Prog3/vitória-candidatos.csv");
     Scanner scanner = new Scanner(ArquivoCandidatos);
     scanner.nextLine();
 
@@ -33,7 +33,7 @@ public class Main {
     // -------------------------LENDO PARTIDO------------------------------------
 
     List<Partido> listaDePartidos = new ArrayList<Partido>();
-    File ArquivoPartido = new File(args[1]);
+    File ArquivoPartido = new File("/home/emerson/Documents/Trabalho-Prog3/vitória-partidos.csv");
     scanner = new Scanner(ArquivoPartido);
     scanner.nextLine();
 
@@ -74,7 +74,9 @@ public class Main {
     System.out.println("\nEleitos, por faixa etária (na data da eleição):");
 
     eleicao.imprimeCandidatosPorSexo();
+    System.out.println();
 
+    eleicao.ordenaPrimeiroUltimoListaPartido();
     // --------------------------IMPRIMINDO LISTAS---------------------
     // System.out.println(eleicao.getTotalVotosNominais());
     // System.out.println(eleicao.getTotalVotosLegenda());
