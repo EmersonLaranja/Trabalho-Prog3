@@ -1,80 +1,95 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Collections;
 
 public class Main {
 
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) {
     List<Candidato> listaDeCandidatosValidos = new ArrayList<Candidato>();
-    File ArquivoCandidatos = new File(
-        "/home/gabriel/Documents/UFES/EARTE/2020_2/Prog3/Trabalho/Trabalho-Prog3/vitória-candidatos.csv");
-    Scanner scanner = new Scanner(ArquivoCandidatos);
-    scanner.nextLine();
 
-    String auxiliar;
-    String[] vetorDadosCandidato;
-
-    while (scanner.hasNextLine()) {
-      auxiliar = scanner.nextLine();
-      vetorDadosCandidato = auxiliar.split(",");
-
-      Candidato candidato = new Candidato(vetorDadosCandidato);
-
-      if (candidato.verificaDestinoVoto()) {
-
-        listaDeCandidatosValidos.add(candidato);
-      }
-    }
-    scanner.close();
-    Collections.sort(listaDeCandidatosValidos);
-
-    // -------------------------LENDO PARTIDO------------------------------------
-
-    List<Partido> listaDePartidos = new ArrayList<Partido>();
-    File ArquivoPartido = new File(
-        "/home/gabriel/Documents/UFES/EARTE/2020_2/Prog3/Trabalho/Trabalho-Prog3/vitória-partidos.csv");
-    scanner = new Scanner(ArquivoPartido);
-    scanner.nextLine();
-
-    String[] vetorDadosPartido;
-
-    while (scanner.hasNextLine()) {
-      auxiliar = scanner.nextLine();
-      vetorDadosPartido = auxiliar.split(",");
-
-      Partido partido = new Partido(vetorDadosPartido, listaDeCandidatosValidos);
-
-      listaDePartidos.add(partido);
-    }
-    Collections.sort(listaDePartidos);
-    scanner.close();
-
-    // // --------------------------IMPRIMINDO LISTAS---------------------
-
-    String dataEleicao = args[2];
-    System.out.println(dataEleicao);
     try {
-      Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
-      System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
-      eleicao.imprimeCandidatosEleitos();
-      eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
-      eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
-      eleicao.imprimeCandidatosBeneficiadosVotacaoProporcional();
-      eleicao.imprimeListaPartidos();
-      eleicao.ordenaPrimeiroUltimoListaPartido();
+      File ArquivoCandidatos = new File(args[0]);
 
-      System.out.println("\nEleitos, por faixa etária (na data da eleição):");
+      final var localeBrasileiro = new Locale("en", "US");
+      Locale.setDefault(localeBrasileiro);
+      Scanner scanner = new Scanner(ArquivoCandidatos);
+      scanner.nextLine();
 
-      eleicao.imprimeCandidatosPorIdade();
-      System.out.println();
-      eleicao.imprimeCandidatosPorSexo();
-      System.out.println();
+      String auxiliar;
+      String[] vetorDadosCandidato;
 
+      while (scanner.hasNextLine()) {
+        auxiliar = scanner.nextLine();
+        vetorDadosCandidato = auxiliar.split(",");
+
+        Candidato candidato = new Candidato(vetorDadosCandidato);
+
+        if (candidato.verificaDestinoVoto()) {
+
+          listaDeCandidatosValidos.add(candidato);
+        }
+      }
+      scanner.close();
+      Collections.sort(listaDeCandidatosValidos);
+
+      // -------------------------LENDO PARTIDO------------------------------------
+      try {
+
+        List<Partido> listaDePartidos = new ArrayList<Partido>();
+        File ArquivoPartido = new File(args[1]);
+        scanner = new Scanner(ArquivoPartido);
+        scanner.nextLine();
+
+        String[] vetorDadosPartido;
+
+        while (scanner.hasNextLine()) {
+          auxiliar = scanner.nextLine();
+          vetorDadosPartido = auxiliar.split(",");
+
+          Partido partido = new Partido(vetorDadosPartido, listaDeCandidatosValidos);
+
+          listaDePartidos.add(partido);
+        }
+        Collections.sort(listaDePartidos);
+        scanner.close();
+
+        // // --------------------------IMPRIMINDO LISTAS---------------------
+        try {
+          String dataEleicao = args[2];
+          System.out.println(dataEleicao);
+          try {
+            Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
+            System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
+            eleicao.imprimeCandidatosEleitos();
+            eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
+            eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
+            eleicao.imprimeCandidatosBeneficiadosVotacaoProporcional();
+            eleicao.imprimeListaPartidos();
+            eleicao.ordenaPrimeiroUltimoListaPartido();
+
+            eleicao.imprimeCandidatosPorIdade();
+            System.out.println();
+            eleicao.imprimeCandidatosPorSexo();
+            System.out.println();
+            eleicao.imprimeVotosTotaisEleicao();
+
+          } catch (Exception e) {
+            System.out.println(e);
+
+          }
+        } catch (Exception e) {
+          System.out.println("Não foi possivel ler a data da eleicao! ");
+        }
+
+      } catch (Exception e) {
+        System.out.println("Não foi possivel abrir o arquivo: " + args[1]);
+
+      }
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println("Não foi possivel abrir o arquivo: " + args[0]);
 
     }
   }

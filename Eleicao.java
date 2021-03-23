@@ -33,6 +33,17 @@ public class Eleicao {
 
   // --------------Imprimir---------------//
 
+  public void imprimeVotosTotaisEleicao() {
+    System.out.printf("Total de votos válidos:    %d\n", total_votos_validos);
+
+    System.out.printf("Total de votos nominais:   %d", total_votos_nominais);
+    System.out.printf(" (%.2f%%)\n", ((float) total_votos_nominais / total_votos_validos) * 100);
+
+    System.out.printf("Total de votos de Legenda: %d", total_votos_legenda);
+    System.out.printf(" (%.2f%%)\n", ((float) total_votos_legenda / total_votos_validos) * 100);
+
+  }
+
   public void imprimeCandidatosEleitos() {
     System.out.println("\nVereadores eleitos:");
     imprimeListaCandidatos(this.listaDeCandidatosMaisVotadosEleitos);
@@ -73,7 +84,8 @@ public class Eleicao {
     int d40_50 = 0;
     int d50_60 = 0;
     int maior60 = 0;
-    for (Candidato candidato : listaDeCandidatosValidos) {
+    int total = 0;
+    for (Candidato candidato : listaDeCandidatosMaisVotadosEleitos) {
       idade = Period.between(candidato.getData_nasc(), dataEleicao).getYears();
       if (idade < 30)
         menor30++;
@@ -85,13 +97,15 @@ public class Eleicao {
         d50_60++;
       else
         maior60++;
-
+      total++;
     }
-    System.out.println(menor30);
-    System.out.println(d30_40);
-    System.out.println(d40_50);
-    System.out.println(d50_60);
-    System.out.println(maior60);
+    System.out.println("\nEleitos, por faixa etária (na data da eleição):");
+    System.out.printf(" Idade < 30: %d (%.2f%%)\n", menor30, ((float) menor30 / total) * 100);
+    System.out.printf("30 <= Idade < 40: %d (%.2f%%)\n", d30_40, ((float) d30_40 / total) * 100);
+    System.out.printf("40 <= Idade < 50: %d (%.2f%%)\n", d40_50, ((float) d40_50 / total) * 100);
+    System.out.printf("50 <= Idade < 60: %d (%.2f%%)\n", d50_60, ((float) d50_60 / total) * 100);
+    System.out.printf("60 <= Idade     : %d (%.2f%%)\n", maior60, ((float) maior60 / total) * 100);
+
   }
 
   public void imprimeCandidatosPorSexo() {
