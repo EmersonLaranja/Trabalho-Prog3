@@ -1,9 +1,12 @@
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.time.LocalDate;
+
 // import java.util.Collections;
 // import java.util.Comparator;
 
@@ -17,7 +20,7 @@ public class Eleicao {
   private List<Candidato> listaDeCandidatosMaisVotadosEleitos;
   private List<Candidato> listaDeCandidatosMaisVotados;
   private List<Partido> listaDePartidos;
-  static public Date dataEleicao;
+  private Date dataEleicao;
 
   Eleicao(List<Candidato> listaDeCandidatosValidos, List<Partido> listaDePartidos, String data) throws ParseException {
     this.listaDeCandidatosValidos = listaDeCandidatosValidos;
@@ -69,26 +72,9 @@ public class Eleicao {
 
   }
 
-  // public void imprimeCandidatosPorIdade() {
+  public void imprimeCandidatosPorIdade() {
 
-  // float qntFeminino = 0.0F;
-  // float qntMasculino = 0.0F;
-  // System.out.println();
-  // for (Candidato candidato : listaDeCandidatosValidos) {
-
-  // if (candidato.getSexo() == 'F' && candidato.getSituacao().equals("Eleito"))
-  // qntFeminino++;
-  // }
-
-  // qntMasculino = getNumeroTotalEleitos() - qntFeminino;
-  // System.out.println("Eleitos, por sexo:");
-  // float porcentagem = (qntFeminino / numeroTotalEleitos) * 100;
-
-  // System.out.printf("Feminino: %.0f (%.2f%%)\n", qntFeminino, porcentagem);
-  // porcentagem = (qntMasculino / numeroTotalEleitos) * 100;
-  // System.out.printf("Masculino: %.0f (%.2f%%)\n", qntMasculino, porcentagem);
-
-  // }
+  }
 
   public void imprimeCandidatosPorSexo() {
 
@@ -151,17 +137,6 @@ public class Eleicao {
 
   // ----------End of of Imprimir --------------//
 
-  // public String getNomePartidoPeloNumeroPartido(int numero_partido) {
-  // String nome_partido = new String();
-
-  // for (Partido partido : this.listaDePartidos) {
-  // if (numero_partido == partido.getNumero()) {
-  // nome_partido = partido.getNome();
-  // }
-  // }
-  // return nome_partido;
-  // }
-
   public void setNumeroTotalEleitos() {
 
     for (Candidato candidato : listaDeCandidatosValidos) {
@@ -195,6 +170,16 @@ public class Eleicao {
 
   }
 
+  public String getNomePartidoPorNumero(int numero) {
+    String aux = new String();
+
+    for (Partido partido : listaDePartidos) {
+      if (partido.getNumero() == numero)
+        aux = partido.getNome();
+    }
+    return aux;
+  }
+
   public List<Partido> getlistaDePartidos() {
     return listaDePartidos;
   }
@@ -225,7 +210,6 @@ public class Eleicao {
     for (Candidato candidato : listaDeCandidatosValidos) {
       this.total_votos_nominais += candidato.getVotos_nominais();
     }
-
   }
 
   public void setTotalVotosValidos() {
@@ -237,29 +221,17 @@ public class Eleicao {
   }
 
   public void ordenaPrimeiroUltimoListaPartido() {
-    OrdenarPorMaisVotadoComparator comparator = new OrdenarPorMaisVotadoComparator();
+    OrdenarPrimeiroUltimoCandidatoPartido comparator = new OrdenarPrimeiroUltimoCandidatoPartido();
     List<Partido> novaLista = new ArrayList<Partido>(this.listaDePartidos);
-    int v = 0;
 
-    for (int i = 0; i < this.listaDePartidos.size() - 1; i++) {
-      Partido p1 = this.listaDePartidos.get(i);
-      for (int j = i + 1; j < this.listaDePartidos.size(); j++) {
-        Partido p2 = this.listaDePartidos.get(j);
-        v = comparator.compare(p1.getCandidatoPorPosicao(0), p2.getCandidatoPorPosicao(0));
-        if (v == 0) {
-          if (p1.getNumero() > p2.getNumero()) {
-            novaLista.add(p1);
-          } else {
-            novaLista.add(p2);
-          }
-        } else if (v == -1) {
-          novaLista.add(p1);
-        } else
-          novaLista.add(p2);
-
-      }
+    for (int i = 0; i < novaLista.size(); i++) {
+      Partido aux = novaLista.get(i);
+      if (aux.getTotalVotosNominais() == 0)
+        novaLista.remove(aux);
     }
+    novaLista.sort(comparator);
 
+    System.out.println("\nPrimeiro e último colocados de cada partido:");
     int i = 1;
     for (Partido partido : novaLista) {
       System.out.print(i + " - ");
@@ -267,49 +239,15 @@ public class Eleicao {
       i++;
     }
   }
-
-  // public void ordenaPrimeiroUltimoListaPartido() {
-  // OrdenarPorMaisVotadoComparator comparator = new
-  // OrdenarPorMaisVotadoComparator();
-  // List<Partido> novaLista = new ArrayList<Partido>(this.listaDePartidos);
-  // int v = 0;
-
-  // for (int i = 0; i < this.listaDePartidos.size(); i++) {
-  // Partido p1 = this.listaDePartidos.get(i);
-  // for (int j = 1; j < this.listaDePartidos.size() - 1; j++) {
-  // Partido p2 = this.listaDePartidos.get(j);
-  // v = comparator.compare(p1.getCandidatoPorPosicao(0),
-  // p2.getCandidatoPorPosicao(0));
-  // if(v == 0){
-  // if(p1.getNumero() > p2.getNumero()){
-  // novaLista.add(p1);
-  // }
-  // else
-  // }
-  // }
-  // }
-  // }
-  /**
-   * Pegar a lista de partidos que já está ordenada e fazer um laço, onde: cada
-   * partido buscamos o candidato da lista de candidatos na posição zero (o mais
-   * votado) e atribuimos a um vetor de primeiros
-   */
-
 }
 
-// @Override
-// public int compareTo(Partido partido) {
-// if (th)
-// return 0;
-// }
-// }
+class AgeCalculator {
 
-/*
- * 
- * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
- * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
- * P2.getUltCand);
- * 
- * 
- * }
- */
+  public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+    if ((birthDate != null) && (currentDate != null)) {
+      return Period.between(birthDate, currentDate).getYears();
+    } else {
+      return 0;
+    }
+  }
+}

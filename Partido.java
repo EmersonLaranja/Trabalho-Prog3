@@ -68,15 +68,14 @@ public class Partido implements Comparable<Partido> {
 
   public void imprimePrimeiroUltimoPartido() { // Refazer
 
-    System.out.println(this.sigla + " - " + this.numero + ", ");
+    System.out.print(this.sigla + " - " + this.numero + ", ");
+    if (this.lista_candidatos.size() > 0) {
+      Candidato aux = this.lista_candidatos.get(0);
+      System.out.print(aux.getNome_urna() + " (" + aux.getNumero() + ", " + aux.getVotos_nominais() + " votos) / ");
 
-    Candidato aux = this.lista_candidatos.get(0);
-    System.out.print(aux.getNome_urna() + " (" + aux.getNumero() + ", " + aux.getVotos_nominais() + " votos) / ");
-
-    aux = this.lista_candidatos.get(lista_candidatos.size() - 1);
-
-    System.out.print(aux.getNome_urna() + " (" + aux.getNumero() + ", " + aux.getVotos_nominais() + " votos) / ");
-
+      aux = this.lista_candidatos.get(lista_candidatos.size() - 1);
+      System.out.print(aux.getNome_urna() + " (" + aux.getNumero() + ", " + aux.getVotos_nominais() + " votos)");
+    }
     System.out.println();
   }
 
@@ -108,6 +107,13 @@ public class Partido implements Comparable<Partido> {
     }
   }
 
+  public int verificaListaCandidatosVazia() {
+    if (this.lista_candidatos.size() == 0) {
+      return 1;
+    }
+    return 0;
+  }
+
   public int getTotal_candidatos_eleitos() {
     return total_candidatos_eleitos;
   }
@@ -136,6 +142,7 @@ public class Partido implements Comparable<Partido> {
     for (Candidato candidato : listaDeCandidatosValidos) {
       if (candidato.getNumero_partido() == this.numero) {
         this.lista_candidatos.add(candidato);
+        candidato.setSiglaPartido(this.sigla);
       }
     }
 
@@ -181,21 +188,19 @@ public class Partido implements Comparable<Partido> {
 
 class OrdenarPrimeiroUltimoCandidatoPartido implements Comparator<Partido> {
   @Override
-  public int compare(Partido partido1, Partido partido2) {
-    int i = 0;
-    OrdenarPorMaisVotadoComparator comparaVotos = new OrdenarPorMaisVotadoComparator();
+  public int compare(Partido p1, Partido p2) {
+    int value;
+    OrdenarPorMaisVotadoComparator comp = new OrdenarPorMaisVotadoComparator();
+    value = comp.compare(p2.getCandidatoPorPosicao(0), p1.getCandidatoPorPosicao(0));
 
-    System.out.println(partido1.getCandidatoPorPosicao(0));
-    System.out.println();
-    i = comparaVotos.compare(partido1.getCandidatoPorPosicao(0), partido2.getCandidatoPorPosicao(0));
+    if (value == -1)
+      return -1;
+    else if (value == 1)
+      return 1;
 
-    if (i == 0) {
-      // compare(partido1.getNumero(), partido2.getNumero());
-      return Integer.compare(partido1.getNumero(), partido2.getNumero());
-
+    else {
+      return Integer.compare(p1.getNumero(), p2.getNumero());
     }
-    return i;
-
   }
 }
 

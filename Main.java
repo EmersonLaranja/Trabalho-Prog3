@@ -9,7 +9,8 @@ public class Main {
 
   public static void main(String[] args) throws FileNotFoundException {
     List<Candidato> listaDeCandidatosValidos = new ArrayList<Candidato>();
-    File ArquivoCandidatos = new File("/home/emerson/Documents/Trabalho-Prog3/vitória-candidatos.csv");
+    File ArquivoCandidatos = new File(
+        "/home/gabriel/Documents/UFES/EARTE/2020_2/Prog3/Trabalho/Trabalho-Prog3/vitória-candidatos.csv");
     Scanner scanner = new Scanner(ArquivoCandidatos);
     scanner.nextLine();
 
@@ -33,7 +34,8 @@ public class Main {
     // -------------------------LENDO PARTIDO------------------------------------
 
     List<Partido> listaDePartidos = new ArrayList<Partido>();
-    File ArquivoPartido = new File("/home/emerson/Documents/Trabalho-Prog3/vitória-partidos.csv");
+    File ArquivoPartido = new File(
+        "/home/gabriel/Documents/UFES/EARTE/2020_2/Prog3/Trabalho/Trabalho-Prog3/vitória-partidos.csv");
     scanner = new Scanner(ArquivoPartido);
     scanner.nextLine();
 
@@ -51,39 +53,28 @@ public class Main {
     scanner.close();
 
     // // --------------------------IMPRIMINDO LISTAS---------------------
+
     String dataEleicao = args[2];
-    Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
-    // eleicao.imprimeListaPartidos();
+    System.out.println(dataEleicao);
+    try {
+      Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
+      System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
+      eleicao.imprimeCandidatosEleitos();
+      eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
+      eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
+      eleicao.imprimeCandidatosBeneficiadosVotacaoProporcional();
+      eleicao.imprimeListaPartidos();
+      eleicao.ordenaPrimeiroUltimoListaPartido();
 
-    System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
-    eleicao.imprimeCandidatosEleitos();
-    eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
-    eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
-    eleicao.imprimeCandidatosBeneficiadosVotacaoProporcional();
+      System.out.println("\nEleitos, por faixa etária (na data da eleição):");
 
-    eleicao.imprimeListaPartidos();
-    System.out.println("\nPrimeiro e último colocados de cada partido:");
-    int i = 1;
-    for (Partido partido : eleicao.getlistaDePartidos()) {
-      if (partido.getLista_candidatos().size() != 0) {
-        System.out.print(i + " - ");
-        partido.imprimePrimeiroUltimoPartido();
-      }
-      i++;
+      eleicao.imprimeCandidatosPorIdade();
+      eleicao.imprimeCandidatosPorSexo();
+      System.out.println();
+
+    } catch (Exception e) {
+      System.out.println(e);
+
     }
-
-    System.out.println("\nEleitos, por faixa etária (na data da eleição):");
-
-    // eleicao.imprimeCandidatosPorIdade();
-    eleicao.imprimeCandidatosPorSexo();
-    System.out.println();
-
-    eleicao.ordenaPrimeiroUltimoListaPartido();
-
-    // --------------------------IMPRIMINDO LISTAS---------------------
-    // System.out.println(eleicao.getTotalVotosNominais());
-    // System.out.println(eleicao.getTotalVotosLegenda());
-    // System.out.println(eleicao.getTotalVotos());
-
   }
 }

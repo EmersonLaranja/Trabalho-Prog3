@@ -20,7 +20,7 @@ public class Candidato implements Comparable<Candidato> {
   private String destino_voto;
   private String nome;
   private String nome_urna;
-  private String nome_partido;
+  private String sigla_partido;
   private Date idade;
 
   private final char MASCULINO = 'M';
@@ -58,7 +58,7 @@ public class Candidato implements Comparable<Candidato> {
 
   @Override
   public String toString() {
-    return this.nome + " / " + this.nome_urna + " (PARTIDO, " + this.votos_nominais + " votos)";
+    return this.nome + " / " + this.nome_urna + " (" + getSiglaPartido() + " , " + this.votos_nominais + " votos)";
   }
 
   @Override
@@ -79,6 +79,15 @@ public class Candidato implements Comparable<Candidato> {
   // System.out.println(this.idade);
   // }
 
+  public void setSiglaPartido(String sigla_partido) {
+    this.sigla_partido = sigla_partido;
+
+  }
+
+  public String getSiglaPartido() {
+    return sigla_partido;
+  }
+
   public Date getIdade() {
     return idade;
   }
@@ -92,9 +101,15 @@ public class Candidato implements Comparable<Candidato> {
   }
 
   public void setData_nasc(String data_nasc) {
-    // SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-    LocalDate localDate = LocalDate.parse(data_nasc, formatter);
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    try {
+      this.data_nasc = sdf.parse(data_nasc);
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+    // LocalDate localDate = LocalDate.parse(data_nasc, formatter);
 
   }
 
@@ -166,10 +181,6 @@ public class Candidato implements Comparable<Candidato> {
     return votos_nominais;
   }
 
-  public String getNome_partido() {
-    return nome_partido;
-  }
-
 }
 
 class OrdenarPorMaisVotadoComparator implements Comparator<Candidato> {
@@ -177,21 +188,3 @@ class OrdenarPorMaisVotadoComparator implements Comparator<Candidato> {
     return Integer.compare(a.getVotos_nominais(), b.getVotos_nominais());
   }
 }
-
-// class ComparaPorNumeroCandidato implements Comparator<Candidato> {
-// public int compare(Candidato a, Candidato b) {
-// if (a.getNumero_partido() > b.getNumero_partido())
-// return -1;
-// return 1;
-
-// }
-// }
-/*
- * 
- * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
- * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
- * P2.getUltCand);
- * 
- * 
- * }
- */
