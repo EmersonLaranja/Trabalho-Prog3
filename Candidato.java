@@ -2,6 +2,7 @@ import java.lang.Comparable;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -15,7 +16,7 @@ public class Candidato implements Comparable<Candidato> {
   private int votos_nominais;
   private int numero_partido;
   private char sexo; // 1 feminino e 0 masculino
-  private Date data_nasc;
+  private LocalDate data_nasc;
   private String situacao;
   private String destino_voto;
   private String nome;
@@ -101,19 +102,11 @@ public class Candidato implements Comparable<Candidato> {
   }
 
   public void setData_nasc(String data_nasc) {
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    try {
-      this.data_nasc = sdf.parse(data_nasc);
-
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-    // LocalDate localDate = LocalDate.parse(data_nasc, formatter);
-
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    this.data_nasc = LocalDate.parse(data_nasc, formatter);
   }
 
-  public Date getData_nasc() {
+  public LocalDate getData_nasc() {
     return data_nasc;
   }
 

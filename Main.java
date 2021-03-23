@@ -69,6 +69,7 @@ public class Main {
       System.out.println("\nEleitos, por faixa etária (na data da eleição):");
 
       eleicao.imprimeCandidatosPorIdade();
+      System.out.println();
       eleicao.imprimeCandidatosPorSexo();
       System.out.println();
 

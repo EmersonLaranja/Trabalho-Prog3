@@ -1,14 +1,9 @@
-import java.util.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.time.LocalDate;
-
-// import java.util.Collections;
-// import java.util.Comparator;
+import java.time.format.DateTimeFormatter;
 
 public class Eleicao {
   private int numeroTotalEleitos = 0;
@@ -20,7 +15,7 @@ public class Eleicao {
   private List<Candidato> listaDeCandidatosMaisVotadosEleitos;
   private List<Candidato> listaDeCandidatosMaisVotados;
   private List<Partido> listaDePartidos;
-  private Date dataEleicao;
+  private LocalDate dataEleicao;
 
   Eleicao(List<Candidato> listaDeCandidatosValidos, List<Partido> listaDePartidos, String data) throws ParseException {
     this.listaDeCandidatosValidos = listaDeCandidatosValidos;
@@ -32,9 +27,8 @@ public class Eleicao {
     setTotalVotosNominais();
     setTotalVotosValidos();
     setListaMaisVotados();
+    setDataEleicao(data);
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    this.dataEleicao = sdf.parse(data);
   }
 
   // --------------Imprimir---------------//
@@ -73,7 +67,31 @@ public class Eleicao {
   }
 
   public void imprimeCandidatosPorIdade() {
+    int idade;
+    int menor30 = 0;
+    int d30_40 = 0;
+    int d40_50 = 0;
+    int d50_60 = 0;
+    int maior60 = 0;
+    for (Candidato candidato : listaDeCandidatosValidos) {
+      idade = Period.between(candidato.getData_nasc(), dataEleicao).getYears();
+      if (idade < 30)
+        menor30++;
+      else if (idade >= 30 && idade < 40)
+        d30_40++;
+      else if (idade >= 40 && idade < 50)
+        d40_50++;
+      else if (idade >= 50 && idade < 60)
+        d50_60++;
+      else
+        maior60++;
 
+    }
+    System.out.println(menor30);
+    System.out.println(d30_40);
+    System.out.println(d40_50);
+    System.out.println(d50_60);
+    System.out.println(maior60);
   }
 
   public void imprimeCandidatosPorSexo() {
@@ -136,6 +154,15 @@ public class Eleicao {
   }
 
   // ----------End of of Imprimir --------------//
+
+  public void setDataEleicao(String data) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    this.dataEleicao = LocalDate.parse(data, formatter);
+  }
+
+  public LocalDate getDataEleicao() {
+    return dataEleicao;
+  }
 
   public void setNumeroTotalEleitos() {
 
