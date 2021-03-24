@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Eleicao {
   private int numeroTotalEleitos = 0;
-  private int total_votos_nominais = 0;
-  private int total_votos_legenda = 0;
-  private int total_votos_validos = 0;
+  private int totalVotosNominais = 0;
+  private int totalVotosLegenda = 0;
+  private int totalVotosValidos = 0;
 
   private List<Candidato> listaDeCandidatosValidos;
   private List<Candidato> listaDeCandidatosMaisVotadosEleitos;
@@ -34,13 +34,13 @@ public class Eleicao {
   // --------------Imprimir---------------//
 
   public void imprimeVotosTotaisEleicao() {
-    System.out.printf("Total de votos válidos:    %d\n", total_votos_validos);
+    System.out.printf("Total de votos válidos:    %d\n", totalVotosValidos);
 
-    System.out.printf("Total de votos nominais:   %d", total_votos_nominais);
-    System.out.printf(" (%.2f%%)\n", ((float) total_votos_nominais / total_votos_validos) * 100);
+    System.out.printf("Total de votos nominais:   %d", totalVotosNominais);
+    System.out.printf(" (%.2f%%)\n", ((float) totalVotosNominais / totalVotosValidos) * 100);
 
-    System.out.printf("Total de votos de Legenda: %d", total_votos_legenda);
-    System.out.printf(" (%.2f%%)\n", ((float) total_votos_legenda / total_votos_validos) * 100);
+    System.out.printf("Total de votos de Legenda: %d", totalVotosLegenda);
+    System.out.printf(" (%.2f%%)\n", ((float) totalVotosLegenda / totalVotosValidos) * 100);
 
   }
 
@@ -86,7 +86,7 @@ public class Eleicao {
     int maior60 = 0;
     int total = 0;
     for (Candidato candidato : listaDeCandidatosMaisVotadosEleitos) {
-      idade = Period.between(candidato.getData_nasc(), dataEleicao).getYears();
+      idade = Period.between(candidato.getdataNascimento(), dataEleicao).getYears();
       if (idade < 30)
         menor30++;
       else if (idade >= 30 && idade < 40)
@@ -235,30 +235,30 @@ public class Eleicao {
 
   public void setTotalVotosLegenda() {
     for (Partido partido : listaDePartidos) {
-      this.total_votos_legenda += partido.getVotos_legenda();
+      this.totalVotosLegenda += partido.getvotosLegenda();
     }
   }
 
   public int getTotalVotosLegenda() {
-    return total_votos_legenda;
+    return totalVotosLegenda;
   }
 
   public int getTotalVotosNominais() {
-    return total_votos_nominais;
+    return totalVotosNominais;
   }
 
   public void setTotalVotosNominais() {
     for (Candidato candidato : listaDeCandidatosValidos) {
-      this.total_votos_nominais += candidato.getVotos_nominais();
+      this.totalVotosNominais += candidato.getvotosNominais();
     }
   }
 
   public void setTotalVotosValidos() {
-    this.total_votos_validos = total_votos_legenda + total_votos_nominais;
+    this.totalVotosValidos = totalVotosLegenda + totalVotosNominais;
   }
 
   public int getTotalVotosValidos() {
-    return total_votos_validos;
+    return totalVotosValidos;
   }
 
   public void ordenaPrimeiroUltimoListaPartido() {

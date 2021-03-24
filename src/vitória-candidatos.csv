@@ -1,4 +1,4 @@
-numero,votos_nominais,situacao,nome,nome_urna,sexo,data_nasc,destino_voto,numero_partido
+numero,votosNominais,situacao,nome,nomeUrna,sexo,dataNascimento,destinoVoto,numeroPartido
 23626,1588,Suplente,JOSÉ FRANCISCO MAIO FILHO,ZEZITO MAIO,M,02/12/1957,Válido,23
 23222,1115,Suplente,BRUNO ALVES DE SOUZA TOLEDO,BRUNO TOLEDO,M,05/08/1980,Válido,23
 23113,86,Suplente,MÔNICA RAYMUNDO,MÔNICA RAY,F,15/11/1967,Válido,23
