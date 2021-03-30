@@ -1,15 +1,9 @@
+
 import java.lang.Comparable;
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.Year;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
 
 public class Candidato implements Comparable<Candidato> {
   private int numero;
@@ -59,7 +53,10 @@ public class Candidato implements Comparable<Candidato> {
 
   @Override
   public String toString() {
-    return this.nome + " / " + this.nomeUrna + " (" + getSiglaPartido() + " , " + this.votosNominais + " votos)";
+    if (this.votosNominais > 1)
+      return this.nome + " / " + this.nomeUrna + " (" + getSiglaPartido() + ", " + this.votosNominais + " votos)";
+    else
+      return this.nome + " / " + this.nomeUrna + " (" + getSiglaPartido() + ", " + this.votosNominais + " voto)";
   }
 
   @Override
@@ -69,7 +66,7 @@ public class Candidato implements Comparable<Candidato> {
     else if (this.votosNominais < candidato.getvotosNominais())
       return 1;
     else {
-      return this.dataNascimento.compareTo(candidato.getdataNascimento());
+      return this.getdataNascimento().compareTo(candidato.getdataNascimento());
     }
   }
 

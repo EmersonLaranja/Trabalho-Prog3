@@ -28,8 +28,8 @@ public class Partido implements Comparable<Partido> {
     this.setListaCandidatos(listaDeCandidatosValidos);
     this.settotalVotosNominais();
     this.settotalVotosPartido();
-    this.settotalCandidatosEleitos();
-    this.settotalCandidatos();
+    this.setTotalCandidatosEleitos();
+    this.setTotalCandidatos();
   }
 
   @Override
@@ -37,13 +37,23 @@ public class Partido implements Comparable<Partido> {
     String s = this.sigla + " - " + this.numero + ", ";
     String aux;
 
-    if (this.totalVotosPartido == 0) {
-      s = s.concat(+this.totalVotosPartido + " voto (" + this.totalVotosNominais + " nominal e ");
+    if (this.totalVotosPartido > 1) {
+      if (this.totalVotosNominais > 1)
+        s = s.concat(+this.totalVotosPartido + " votos (" + this.totalVotosNominais + " nominais e ");
+      else {
+        s = s.concat(+this.totalVotosPartido + " votos (" + this.totalVotosNominais + " nominal e ");
+
+      }
     } else {
-      s = s.concat(+this.totalVotosPartido + " votos (" + this.totalVotosNominais + " nominais e ");
+      if (this.totalVotosNominais > 1)
+        s = s.concat(+this.totalVotosPartido + " voto (" + this.totalVotosNominais + " nominais e ");
+      else {
+        s = s.concat(+this.totalVotosPartido + " voto (" + this.totalVotosNominais + " nominal e ");
+
+      }
     }
 
-    s = s.concat(+this.votosLegenda + " de legenda), " + this.gettotalCandidatosEleitos());
+    s = s.concat(+this.votosLegenda + " de legenda), " + this.getTotalCandidatosEleitos());
 
     if (this.totalCandidatosEleitos > 1) {
       aux = " candidatos eleitos";
@@ -66,15 +76,23 @@ public class Partido implements Comparable<Partido> {
     }
   }
 
-  public void imprimePrimeiroUltimoPartido() { // Refazer
+  public void imprimePrimeiroUltimoPartido() {
 
     System.out.print(this.sigla + " - " + this.numero + ", ");
     if (this.listaCandidatos.size() > 0) {
       Candidato aux = this.listaCandidatos.get(0);
-      System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " votos) / ");
+      if (aux.getvotosNominais() > 1)
+        System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " votos) / ");
+      else
+        System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " voto) / ");
 
       aux = this.listaCandidatos.get(listaCandidatos.size() - 1);
-      System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " votos)");
+
+      if (aux.getvotosNominais() > 1)
+        System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " votos)");
+      else
+        System.out.print(aux.getnomeUrna() + " (" + aux.getNumero() + ", " + aux.getvotosNominais() + " voto)");
+
     }
     System.out.println();
   }
@@ -87,11 +105,11 @@ public class Partido implements Comparable<Partido> {
 
   }
 
-  public void settotalCandidatos() {
+  public void setTotalCandidatos() {
     this.totalCandidatos = this.listaCandidatos.size();
   }
 
-  public int gettotalCandidatos() {
+  public int getTotalCandidatos() {
     return totalCandidatos;
   }
 
@@ -99,7 +117,7 @@ public class Partido implements Comparable<Partido> {
     return listaCandidatos.get(posicao);
   }
 
-  public void settotalCandidatosEleitos() {
+  public void setTotalCandidatosEleitos() {
     for (Candidato candidato : listaCandidatos) {
       if (candidato.getSituacao().equals("Eleito")) {
         this.totalCandidatosEleitos++;
@@ -114,7 +132,7 @@ public class Partido implements Comparable<Partido> {
     return 0;
   }
 
-  public int gettotalCandidatosEleitos() {
+  public int getTotalCandidatosEleitos() {
     return totalCandidatosEleitos;
   }
 

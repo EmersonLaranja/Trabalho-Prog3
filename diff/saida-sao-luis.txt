@@ -1,0 +1,4 @@
+1c1
+< Não foi possivel abrir o arquivo: ../in/sao-luis-candidatos.csv
+---
+> Arquivo de candidatos não encontrado

@@ -1,3 +1,5 @@
+
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.time.Period;
 import java.util.ArrayList;
@@ -31,6 +33,11 @@ public class Eleicao {
 
   }
 
+  private String calculaPercentual(Integer quant, Integer total) {
+    Float resultado = (quant.floatValue() / total.floatValue()) * 100;
+    return new DecimalFormat("#,##0.00").format(resultado);
+  }
+
   // --------------Imprimir---------------//
 
   public void imprimeVotosTotaisEleicao() {
@@ -40,7 +47,7 @@ public class Eleicao {
     System.out.printf(" (%.2f%%)\n", ((float) totalVotosNominais / totalVotosValidos) * 100);
 
     System.out.printf("Total de votos de Legenda: %d", totalVotosLegenda);
-    System.out.printf(" (%.2f%%)\n", ((float) totalVotosLegenda / totalVotosValidos) * 100);
+    System.out.printf(" (%.2f%%)", ((float) totalVotosLegenda / totalVotosValidos) * 100);
 
   }
 
@@ -100,11 +107,13 @@ public class Eleicao {
       total++;
     }
     System.out.println("\nEleitos, por faixa etária (na data da eleição):");
-    System.out.printf(" Idade < 30: %d (%.2f%%)\n", menor30, ((float) menor30 / total) * 100);
-    System.out.printf("30 <= Idade < 40: %d (%.2f%%)\n", d30_40, ((float) d30_40 / total) * 100);
-    System.out.printf("40 <= Idade < 50: %d (%.2f%%)\n", d40_50, ((float) d40_50 / total) * 100);
-    System.out.printf("50 <= Idade < 60: %d (%.2f%%)\n", d50_60, ((float) d50_60 / total) * 100);
-    System.out.printf("60 <= Idade     : %d (%.2f%%)\n", maior60, ((float) maior60 / total) * 100);
+    // private String calculaPorcentagemTotal(Integer total, Integer num) {
+
+    System.out.println("      Idade < 30: " + menor30 + " (" + calculaPercentual(menor30, total) + "%)");
+    System.out.println("30 <= Idade < 40: " + d30_40 + " (" + calculaPercentual(d30_40, total) + "%)");
+    System.out.println("40 <= Idade < 50: " + d40_50 + " (" + calculaPercentual(d40_50, total) + "%)");
+    System.out.println("50 <= Idade < 60: " + d50_60 + " (" + calculaPercentual(d50_60, total) + "%)");
+    System.out.println("60 <= Idade     : " + maior60 + " (" + calculaPercentual(maior60, total) + "%)");
 
   }
 
@@ -123,7 +132,7 @@ public class Eleicao {
     System.out.println("Eleitos, por sexo:");
     float porcentagem = (qntFeminino / numeroTotalEleitos) * 100;
 
-    System.out.printf("Feminino: %.0f (%.2f%%)\n", qntFeminino, porcentagem);
+    System.out.printf("Feminino:  %.0f (%.2f%%)\n", qntFeminino, porcentagem);
     porcentagem = (qntMasculino / numeroTotalEleitos) * 100;
     System.out.printf("Masculino: %.0f (%.2f%%)\n", qntMasculino, porcentagem);
 
@@ -154,7 +163,7 @@ public class Eleicao {
       Candidato aux2 = listaDeCandidatosValidos.get(i);
 
       if (aux1.getNome().equals(aux2.getNome())) {
-        System.out.println((i + 1) + " _ " + aux1);
+        System.out.println((i + 1) + " - " + aux1);
         j++;
       }
     }

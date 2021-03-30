@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,8 +14,6 @@ public class Main {
     try {
       File ArquivoCandidatos = new File(args[0]);
 
-      final var localeBrasileiro = new Locale("en", "US");
-      Locale.setDefault(localeBrasileiro);
       Scanner scanner = new Scanner(ArquivoCandidatos);
       scanner.nextLine();
 
@@ -59,10 +58,9 @@ public class Main {
         // // --------------------------IMPRIMINDO LISTAS---------------------
         try {
           String dataEleicao = args[2];
-          System.out.println(dataEleicao);
           try {
             Eleicao eleicao = new Eleicao(listaDeCandidatosValidos, listaDePartidos, dataEleicao);
-            System.out.println("Vereadores eleitos: " + eleicao.getNumeroTotalEleitos());
+            System.out.printf("Número de vagas: %d\n", eleicao.getNumeroTotalEleitos());
             eleicao.imprimeCandidatosEleitos();
             eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
             eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
@@ -71,7 +69,6 @@ public class Main {
             eleicao.ordenaPrimeiroUltimoListaPartido();
 
             eleicao.imprimeCandidatosPorIdade();
-            System.out.println();
             eleicao.imprimeCandidatosPorSexo();
             System.out.println();
             eleicao.imprimeVotosTotaisEleicao();
