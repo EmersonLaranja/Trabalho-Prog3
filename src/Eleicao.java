@@ -1,6 +1,5 @@
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class Eleicao {
   private List<Partido> listaDePartidos;
   private LocalDate dataEleicao;
 
-  Eleicao(List<Candidato> listaDeCandidatosValidos, List<Partido> listaDePartidos, String data) throws ParseException {
+  Eleicao(List<Candidato> listaDeCandidatosValidos, List<Partido> listaDePartidos, String data) {
     this.listaDeCandidatosValidos = listaDeCandidatosValidos;
     this.listaDePartidos = listaDePartidos;
 
@@ -36,6 +35,30 @@ public class Eleicao {
   private String calculaPercentual(Integer quant, Integer total) {
     Float resultado = (quant.floatValue() / total.floatValue()) * 100;
     return new DecimalFormat("#,##0.00").format(resultado);
+  }
+
+  public int calculaIdadeCandidato(LocalDate nascimento, LocalDate diaEleicao) {
+    return Period.between(nascimento, diaEleicao).getYears();
+  }
+
+  public void ordenaPrimeiroUltimoListaPartido() {
+    OrdenarPrimeiroUltimoCandidatoPartido comparator = new OrdenarPrimeiroUltimoCandidatoPartido();
+    List<Partido> novaLista = new ArrayList<Partido>(this.listaDePartidos);
+
+    for (int i = 0; i < novaLista.size(); i++) {
+      Partido aux = novaLista.get(i);
+      if (aux.getTotalVotosNominais() == 0)
+        novaLista.remove(aux);
+    }
+    novaLista.sort(comparator);
+
+    System.out.println("\nPrimeiro e último colocados de cada partido:");
+    int i = 1;
+    for (Partido partido : novaLista) {
+      System.out.print(i + " - ");
+      partido.imprimePrimeiroUltimoPartido();
+      i++;
+    }
   }
 
   // --------------Imprimir---------------//
@@ -93,22 +116,26 @@ public class Eleicao {
     int maior60 = 0;
     int total = 0;
     for (Candidato candidato : listaDeCandidatosMaisVotadosEleitos) {
-      idade = Period.between(candidato.getdataNascimento(), dataEleicao).getYears();
+      idade = calculaIdadeCandidato(candidato.getdataNascimento(), dataEleicao);
+
       if (idade < 30)
         menor30++;
+
       else if (idade >= 30 && idade < 40)
         d30_40++;
+
       else if (idade >= 40 && idade < 50)
         d40_50++;
+
       else if (idade >= 50 && idade < 60)
         d50_60++;
+
       else
         maior60++;
+
       total++;
     }
     System.out.println("\nEleitos, por faixa etária (na data da eleição):");
-    // private String calculaPorcentagemTotal(Integer total, Integer num) {
-
     System.out.println("      Idade < 30: " + menor30 + " (" + calculaPercentual(menor30, total) + "%)");
     System.out.println("30 <= Idade < 40: " + d30_40 + " (" + calculaPercentual(d30_40, total) + "%)");
     System.out.println("40 <= Idade < 50: " + d40_50 + " (" + calculaPercentual(d40_50, total) + "%)");
@@ -176,7 +203,7 @@ public class Eleicao {
 
   }
 
-  // ----------End of of Imprimir --------------//
+  // ----------Setters & Getters --------------//
 
   public void setDataEleicao(String data) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -270,23 +297,4 @@ public class Eleicao {
     return totalVotosValidos;
   }
 
-  public void ordenaPrimeiroUltimoListaPartido() {
-    OrdenarPrimeiroUltimoCandidatoPartido comparator = new OrdenarPrimeiroUltimoCandidatoPartido();
-    List<Partido> novaLista = new ArrayList<Partido>(this.listaDePartidos);
-
-    for (int i = 0; i < novaLista.size(); i++) {
-      Partido aux = novaLista.get(i);
-      if (aux.getTotalVotosNominais() == 0)
-        novaLista.remove(aux);
-    }
-    novaLista.sort(comparator);
-
-    System.out.println("\nPrimeiro e último colocados de cada partido:");
-    int i = 1;
-    for (Partido partido : novaLista) {
-      System.out.print(i + " - ");
-      partido.imprimePrimeiroUltimoPartido();
-      i++;
-    }
-  }
 }

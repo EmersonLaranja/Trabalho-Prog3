@@ -1,0 +1,1 @@
+Não foi possivel abrir o arquivo: ../testes/são-paulo/in/candidatos.csv

@@ -24,13 +24,14 @@ public class Partido implements Comparable<Partido> {
     this.setNumero(numeroPartido);
     this.setNome(nomePartido);
     this.setSigla(siglaPartido);
-    this.setvotosLegenda(votosLegenda);
+    this.setVotosLegenda(votosLegenda);
     this.setListaCandidatos(listaDeCandidatosValidos);
-    this.settotalVotosNominais();
-    this.settotalVotosPartido();
+    this.setTotalVotosNominais();
+    this.setTotalVotosPartido();
     this.setTotalCandidatosEleitos();
     this.setTotalCandidatos();
   }
+  // --------------@Overrides---------------//
 
   @Override
   public String toString() {
@@ -105,16 +106,25 @@ public class Partido implements Comparable<Partido> {
 
   }
 
+  public int verificaListaCandidatosVazia() {
+
+    if (this.listaCandidatos.isEmpty()) {
+      return 1;
+    }
+    return 0;
+  }
+
+  public Candidato buscaCandidatoPorPosicao(int posicao) {
+    return listaCandidatos.get(posicao);
+  }
+  // ---------------setters & getters--------------------
+
   public void setTotalCandidatos() {
     this.totalCandidatos = this.listaCandidatos.size();
   }
 
   public int getTotalCandidatos() {
     return totalCandidatos;
-  }
-
-  public Candidato getCandidatoPorPosicao(int posicao) {
-    return listaCandidatos.get(posicao);
   }
 
   public void setTotalCandidatosEleitos() {
@@ -125,18 +135,11 @@ public class Partido implements Comparable<Partido> {
     }
   }
 
-  public int verificaListaCandidatosVazia() {
-    if (this.listaCandidatos.size() == 0) {
-      return 1;
-    }
-    return 0;
-  }
-
   public int getTotalCandidatosEleitos() {
     return totalCandidatosEleitos;
   }
 
-  public void settotalVotosNominais() {
+  public void setTotalVotosNominais() {
     for (Candidato candidato : listaCandidatos) {
       this.totalVotosNominais += candidato.getvotosNominais();
     }
@@ -146,7 +149,7 @@ public class Partido implements Comparable<Partido> {
     return totalVotosNominais;
   }
 
-  public void settotalVotosPartido() {
+  public void setTotalVotosPartido() {
     this.totalVotosPartido = this.totalVotosNominais + this.votosLegenda;
   }
 
@@ -194,7 +197,7 @@ public class Partido implements Comparable<Partido> {
     return sigla;
   }
 
-  public void setvotosLegenda(int votosLegenda) {
+  public void setVotosLegenda(int votosLegenda) {
     this.votosLegenda = votosLegenda;
   }
 
@@ -208,8 +211,8 @@ class OrdenarPrimeiroUltimoCandidatoPartido implements Comparator<Partido> {
   @Override
   public int compare(Partido p1, Partido p2) {
     int value;
-    OrdenarPorMaisVotadoComparator comp = new OrdenarPorMaisVotadoComparator();
-    value = comp.compare(p2.getCandidatoPorPosicao(0), p1.getCandidatoPorPosicao(0));
+    OrdenarCandidatoPorMaisVotadoComparator comp = new OrdenarCandidatoPorMaisVotadoComparator();
+    value = comp.compare(p2.buscaCandidatoPorPosicao(0), p1.buscaCandidatoPorPosicao(0));
 
     if (value == -1)
       return -1;
@@ -221,13 +224,3 @@ class OrdenarPrimeiroUltimoCandidatoPartido implements Comparator<Partido> {
     }
   }
 }
-
-/*
- * 
- * Compara partido( P1, P2){ int i; i = compara(P1.getPrimCand, P2.getPrimeCand)
- * i = 1; return 1; i = -1; return -1; i = 0; compara(P1.getUltCandm,
- * P2.getUltCand);
- * 
- * 
- * }
- */

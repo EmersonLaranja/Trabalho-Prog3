@@ -17,7 +17,6 @@ public class Candidato implements Comparable<Candidato> {
   private String nomeUrna;
   private String siglaPartido;
   private Date idade;
-
   private final char MASCULINO = 'M';
   private final char FEMININO = 'F';
 
@@ -34,14 +33,14 @@ public class Candidato implements Comparable<Candidato> {
     int numeroPartido = Integer.parseInt(vetorDados[8]);
 
     this.setNumero(numero);
-    this.setvotosNominais(votosNominais);
+    this.setVotosNominais(votosNominais);
     this.setSituacao(situacao);
     this.setNome(nome);
     this.setSexo(sexo);
-    this.setnomeUrna(nomeUrna);
-    this.setdataNascimento(dataNascimento);
-    this.setdestinoVoto(destinoVoto);
-    this.setnumeroPartido(numeroPartido);
+    this.setNomeUrna(nomeUrna);
+    this.setDataNascimento(dataNascimento);
+    this.setDestinoVoto(destinoVoto);
+    this.setNumeroPartido(numeroPartido);
 
   }
 
@@ -49,7 +48,7 @@ public class Candidato implements Comparable<Candidato> {
     return this.destinoVoto.equals("Válido");
   }
 
-  // --------------@Override---------------//
+  // --------------@Overrides---------------//
 
   @Override
   public String toString() {
@@ -70,12 +69,7 @@ public class Candidato implements Comparable<Candidato> {
     }
   }
 
-  // --------------End of @Override---------------//
-
-  // public void setIdade(Date idade) {
-  // LocalDate.Period.between(this.dataNascimento, Eleicao.dataEleicao);
-  // System.out.println(this.idade);
-  // }
+  // ---------------setters & getters--------------------
 
   public void setSiglaPartido(String siglaPartido) {
     this.siglaPartido = siglaPartido;
@@ -90,7 +84,7 @@ public class Candidato implements Comparable<Candidato> {
     return idade;
   }
 
-  public void setdestinoVoto(String destinoVoto) {
+  public void setDestinoVoto(String destinoVoto) {
     this.destinoVoto = destinoVoto;
   }
 
@@ -98,7 +92,7 @@ public class Candidato implements Comparable<Candidato> {
     return destinoVoto;
   }
 
-  public void setdataNascimento(String dataNascimento) {
+  public void setDataNascimento(String dataNascimento) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     this.dataNascimento = LocalDate.parse(dataNascimento, formatter);
   }
@@ -115,7 +109,7 @@ public class Candidato implements Comparable<Candidato> {
     return nome;
   }
 
-  public void setnomeUrna(String nomeUrna) {
+  public void setNomeUrna(String nomeUrna) {
     this.nomeUrna = nomeUrna;
   }
 
@@ -131,7 +125,7 @@ public class Candidato implements Comparable<Candidato> {
     return numero;
   }
 
-  public void setnumeroPartido(int numeroPartido) {
+  public void setNumeroPartido(int numeroPartido) {
     this.numeroPartido = numeroPartido;
   }
 
@@ -163,17 +157,16 @@ public class Candidato implements Comparable<Candidato> {
     return situacao;
   }
 
-  public void setvotosNominais(int votosNominais) {
+  public void setVotosNominais(int votosNominais) {
     this.votosNominais = votosNominais;
   }
 
   public int getvotosNominais() {
     return votosNominais;
   }
-
 }
 
-class OrdenarPorMaisVotadoComparator implements Comparator<Candidato> {
+class OrdenarCandidatoPorMaisVotadoComparator implements Comparator<Candidato> {
   public int compare(Candidato a, Candidato b) {
     return Integer.compare(a.getvotosNominais(), b.getvotosNominais());
   }

@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.io.File;
 import java.util.Collections;
@@ -72,6 +71,8 @@ public class Main {
             eleicao.imprimeCandidatosPorSexo();
             System.out.println();
             eleicao.imprimeVotosTotaisEleicao();
+            System.out.println();
+            System.out.println();
 
           } catch (Exception e) {
             System.out.println(e);
