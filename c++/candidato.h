@@ -1,4 +1,11 @@
+#if !defined(CANDIDATO_H)
+#define CANDIDATO_H
+
 #include <string>
+#include <vector>
+#include <list>
+#include <iostream>
+
 using namespace std;
 class Candidato
 {
@@ -12,6 +19,7 @@ private:
   string nome;
   string nomeUrna;
   string siglaPartido;
+  string dataNascimento;
   // LocalDate dataNascimento;
   // Date idade;
   const char MASCULINO = 'M';
@@ -28,7 +36,7 @@ public:
 
   void setDestinoVoto(string destinoVoto);
 
-  string getdestinoVoto();
+  string getDestinoVoto();
 
   void setDataNascimento(string dataNascimento);
 
@@ -38,7 +46,7 @@ public:
 
   void setNomeUrna(string nomeUrna);
 
-  string getnomeUrna();
+  string getNomeUrna();
 
   void setNumero(unsigned numero);
 
@@ -46,7 +54,7 @@ public:
 
   void setNumeroPartido(unsigned numeroPartido);
 
-  unsigned getnumeroPartido();
+  unsigned getNumeroPartido();
 
   void setSexo(char sexo);
 
@@ -58,16 +66,16 @@ public:
 
   void setVotosNominais(unsigned votosNominais);
 
-  unsigned getvotosNominais();
+  unsigned getVotosNominais();
 
   // Date getIdade();
-  // LocalDate getdataNascimento();
+  string getDataNascimento();
 
-  Candidato::Candidato(string vetorDados[])
-  {
-  }
+  void imprimeCandidato();
 
-  Candidato::~Candidato()
-  {
-  }
+  Candidato(vector<string> vetorDadosCandidato);
+
+  ~Candidato();
 };
+
+#endif // CANDIDATO_H
