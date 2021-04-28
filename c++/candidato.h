@@ -5,7 +5,8 @@
 #include <vector>
 #include <list>
 #include <iostream>
-
+#define MASCULINO 'M'
+#define FEMININO 'F'
 using namespace std;
 class Candidato
 {
@@ -22,8 +23,6 @@ private:
   string dataNascimento;
   // LocalDate dataNascimento;
   // Date idade;
-  const char MASCULINO = 'M';
-  const char FEMININO = 'F';
 
 public:
   Candidato(/* args */);

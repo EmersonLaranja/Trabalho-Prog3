@@ -31,7 +31,7 @@ public:
   unsigned getTotalCandidatos();
   unsigned getTotalCandidatosEleitos();
   unsigned getTotalVotosNominais();
-  unsigned gettotalVotosPartido();
+  unsigned getTotalVotosPartido();
   unsigned getNumero();
   unsigned getVotosLegenda();
 
@@ -47,9 +47,10 @@ public:
   void setSigla(string sigla);
   void setVotosLegenda(unsigned votosLegenda);
   void setNome(string nome);
+  bool ordenaPartidoPorVotos(Partido partido);
 
-  Candidato buscaCandidatoPorPosicao(unsigned &posicao);
-  list<Candidato> getlistaCandidatos();
+  Candidato buscaCandidatoPorPosicao(unsigned posicao);
+  list<Candidato> getListaCandidatos();
 };
 
 #endif // PARTIDO_H

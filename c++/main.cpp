@@ -5,14 +5,29 @@
 #include <cstring>
 #include <vector>
 #include <list>
-#include "partido.h"
+#include "eleicao.h"
+#include <algorithm>
 
 using namespace std;
+
+bool ordenaPartidoPorVotos(Partido partido1, Partido partido2)
+{
+  if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())
+    return true;
+  else if (partido1.getTotalVotosPartido() < partido2.getTotalVotosPartido())
+    return false;
+  else
+  {
+    if (partido1.getNumero() < partido2.getNumero())
+      return true;
+    return false;
+  }
+}
 
 int main(int argc, char const *argv[])
 {
 
-  ifstream in("candidatos.csv"); // TODO verificar quando arquivo não abrir
+  ifstream in(argv[1]); // TODO verificar quando arquivo não abrir
 
   string linha, palavra;
   vector<string> vetorDados;
@@ -48,7 +63,7 @@ int main(int argc, char const *argv[])
   // }
 
   //LENDO ARQUIVO DE PARTIDOS
-  ifstream inPartido("partidos.csv"); // TODO verificar quando arquivo não abrir
+  ifstream inPartido(argv[2]); // TODO verificar quando arquivo não abrir
 
   list<Partido> listaDePartidos;
 
@@ -67,8 +82,9 @@ int main(int argc, char const *argv[])
     }
 
     Partido partido(vetorDados, listaDeCandidatos);
-    
+
     listaDePartidos.push_back(partido);
+    listaDePartidos.sort(ordenaPartidoPorVotos);
     vetorDados.clear();
   }
 
@@ -76,9 +92,19 @@ int main(int argc, char const *argv[])
 
   // cout << "IMPRIMINDO LISTA DE PARTIDOS!" << endl;
 
-  // todo testar assim:    for (const auto& par : w)
-  // for (auto partido : listaDePartidos)
-  // {
-  //   partido.imprimePartido();
-  // }
+  // TODO testar assim:for (const auto& para w)
+  for (auto partido : listaDePartidos)
+  {
+    // partido.imprimePartido();
+    // cout << partido.getNome() << endl;
+    // if (partido.getTotalCandidatos() > 0)
+    // {
+    //   Candidato candidato = partido.buscaCandidatoPorPosicao(0);
+    //   candidato.imprimeCandidato();
+  }
+
+  //CRIANDO ELEIÇÃO
+  string data = argv[3];
+  Eleicao eleicao(listaDeCandidatos, listaDePartidos, data);
+  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
 }

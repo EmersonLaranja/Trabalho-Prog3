@@ -13,6 +13,8 @@ Partido::Partido(vector<string> vetorDados, list<Candidato> listaDeCandidatosVal
   unsigned totalVotosNominais = 0;
   unsigned totalVotosPartido = 0;
   unsigned totalCandidatos = 0;
+  this->setNome(nomePartido);
+  this->setSigla(sigla);
   this->setListaCandidatos(listaDeCandidatosValidos);
   this->setNumero(numero);
   this->setVotosLegenda(votosLegenda);
@@ -20,15 +22,13 @@ Partido::Partido(vector<string> vetorDados, list<Candidato> listaDeCandidatosVal
   this->setTotalVotosNominais();
   this->setTotalVotosPartido();
   this->setTotalCandidatos();
-  this->setNome(nomePartido);
-  this->setSigla(sigla);
 }
 
 void Partido::imprimePartido()
 {
-  cout << this->getNumero() << " "
-       << this->getVotosLegenda() << " "
-       << this->gettotalVotosPartido() << " "
+  cout << "Numero: " << this->getNumero() << " "
+       << this->getVotosLegenda() << " Total: "
+       << this->getTotalVotosPartido() << " "
        << this->getTotalCandidatos() << " "
        << this->getTotalVotosNominais() << " "
        << this->getNome() << " "
@@ -67,7 +67,7 @@ unsigned Partido::getTotalVotosNominais()
 {
   return this->totalVotosNominais;
 }
-unsigned Partido::gettotalVotosPartido()
+unsigned Partido::getTotalVotosPartido()
 {
   return this->totalVotosPartido;
 }
@@ -82,7 +82,7 @@ unsigned Partido::getVotosLegenda()
 
 string Partido::getNome() { return this->nomePartido; }
 string Partido::getSigla() { return this->sigla; }
-list<Candidato> Partido::getlistaCandidatos() { return this->listaCandidatos; }
+list<Candidato> Partido::getListaCandidatos() { return this->listaCandidatos; }
 
 void Partido::setTotalCandidatos()
 {
@@ -100,6 +100,7 @@ void Partido::setTotalVotosNominais()
   for (Candidato candidato : listaCandidatos)
   {
     this->totalVotosNominais += candidato.getVotosNominais();
+    // cout << candidato.getNome() << " " << candidato.getVotosNominais() << endl;
   }
 }
 void Partido::setTotalVotosPartido()
@@ -113,6 +114,8 @@ void Partido::setListaCandidatos(list<Candidato> listaDeCandidatosValidos)
   {
     if (candidato.getNumeroPartido() == this->numero)
     {
+      // cout << candidato.getNome() << " " << candidato.getVotosNominais()
+      //      << " NP: " << this->nomePartido << endl;
       this->listaCandidatos.push_back(candidato);
       candidato.setSiglaPartido(this->sigla);
     }
@@ -135,18 +138,34 @@ void Partido::setNome(string nome)
   this->nomePartido = nome;
 }
 
-Candidato Partido::buscaCandidatoPorPosicao(unsigned &posicao)
+bool Partido::ordenaPartidoPorVotos(Partido partido)
 {
-  auto aux = listaCandidatos.begin();
-  advance(aux, posicao);
-  return *aux;
+  if (this->totalVotosPartido > partido.getTotalVotosPartido())
+    return true;
+  else if (this->totalVotosPartido < partido.getTotalVotosPartido())
+    return false;
+  else
+  {
+    if (this->numero < partido.getNumero())
+      return true;
+    return false;
+  }
+}
 
-  // int i = 0;
-  // for (auto candidato : listaCandidatos)
-  // {
-  //   if (posicao == i)
-  //     return candidato;
-
-  //   i++;
-  // }
+Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
+{
+  // auto aux = listaCandidatos.begin();
+  // advance(aux, posicao);
+  // return *aux;
+  Candidato candidato;
+  int i = 0;
+  //TODO: corrigir a declaração do candidato
+  for (auto candidato : listaCandidatos)
+  {
+    if (posicao == i)
+      return candidato;
+    i++;
+  }
+  cout << "Não encontrou candidato!" << endl;
+  return candidato;
 }

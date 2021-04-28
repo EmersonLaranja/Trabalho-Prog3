@@ -1,6 +1,13 @@
 {
   "files.associations": {
     ".env": "dotenv",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "memory": "cpp",
+    "future": "cpp",
+    "istream": "cpp",
+    "functional": "cpp",
+    "string": "cpp",
+    "list": "cpp",
+    "algorithm": "cpp"
   }
 }
