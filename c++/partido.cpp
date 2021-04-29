@@ -3,7 +3,7 @@
 Partido::Partido() {}
 Partido::~Partido() {}
 
-Partido::Partido(vector<string> vetorDados, list<Candidato> listaDeCandidatosValidos)
+Partido::Partido(vector<string> vetorDados, list<Candidato> &listaDeCandidatosValidos)
 {
   string sigla = vetorDados[3];                //leitura Correta
   string nomePartido = vetorDados[2];          //leitura Correta
@@ -14,15 +14,15 @@ Partido::Partido(vector<string> vetorDados, list<Candidato> listaDeCandidatosVal
   unsigned totalVotosPartido = 0;
   unsigned totalCandidatos = 0;
 
-  this->setSigla(sigla);
-  this->setNome(nomePartido);
-  this->setNumero(numero);
-  this->setListaCandidatos(listaDeCandidatosValidos); //set correto
-  this->setVotosLegenda(votosLegenda);                //set correto
-  this->setTotalCandidatos();                         //set correto
-  this->setTotalCandidatosEleitos();                  //set correto
-  this->setTotalVotosNominais();                      //set correto
-  this->setTotalVotosPartido();                       //set correto
+  setSigla(sigla);
+  setNome(nomePartido);
+  setNumero(numero);
+  setListaCandidatos(listaDeCandidatosValidos); //set correto
+  setVotosLegenda(votosLegenda);                //set correto
+  setTotalCandidatos();                         //set correto
+  setTotalCandidatosEleitos();                  //set correto
+  setTotalVotosNominais();                      //set correto
+  setTotalVotosPartido();                       //set correto
 }
 
 void Partido::imprimePartido()
@@ -138,13 +138,13 @@ void Partido::setTotalVotosPartido()
   this->totalVotosPartido = this->totalVotosNominais + this->votosLegenda;
 }
 
-void Partido::setListaCandidatos(list<Candidato> listaDeCandidatosValidos)
+void Partido::setListaCandidatos(list<Candidato> &listaDeCandidatosValidos)
 {
-  for (Candidato candidato : listaDeCandidatosValidos)
+  for (Candidato &candidato : listaDeCandidatosValidos) //Adicionando o "&" vc altera a lista principal
   {
     if (candidato.getNumeroPartido() == this->numero)
     {
-      candidato.setSiglaPartido(this->sigla); //Não atualiza a sigla na listaGeral de Candidatos Validos
+      candidato.setSiglaPartido(this->sigla);
       this->listaCandidatos.push_back(candidato);
     }
   }
@@ -196,4 +196,18 @@ Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
   }
   cout << "Não encontrou candidato!" << endl;
   return candidato;
+}
+
+bool ComparaPartidos::operator()(Partido partido1, Partido partido2)
+{
+  if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())
+    return true;
+  else if (partido1.getTotalVotosPartido() < partido2.getTotalVotosPartido())
+    return false;
+  else
+  {
+    if (partido1.getNumero() < partido2.getNumero())
+      return true;
+    return false;
+  }
 }

@@ -10,20 +10,6 @@
 
 using namespace std;
 
-bool ordenaPartidoPorVotos(Partido partido1, Partido partido2)
-{
-  if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())
-    return true;
-  else if (partido1.getTotalVotosPartido() < partido2.getTotalVotosPartido())
-    return false;
-  else
-  {
-    if (partido1.getNumero() < partido2.getNumero())
-      return true;
-    return false;
-  }
-}
-
 int main(int argc, char const *argv[])
 {
 
@@ -73,10 +59,10 @@ int main(int argc, char const *argv[])
     Partido partido(vetorDados, listaDeCandidatos);
 
     listaDePartidos.push_back(partido);
-    listaDePartidos.sort(ordenaPartidoPorVotos);
     vetorDados.clear();
   }
   inPartido.close();
+  listaDePartidos.sort(ComparaPartidos());
 
   //CRIANDO ELEIÇÃO
   string data = argv[3];

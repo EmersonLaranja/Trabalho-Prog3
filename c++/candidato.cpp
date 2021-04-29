@@ -34,7 +34,7 @@ bool Candidato::verificaDestinoVoto()
   return this->destinoVoto == "Válido";
 }
 
-void Candidato::setSiglaPartido(string siglaPartido)
+void Candidato::setSiglaPartido(string &siglaPartido)
 {
   this->siglaPartido = siglaPartido;
 };
@@ -157,16 +157,16 @@ void Candidato ::imprimeCandidato()
     cout << " voto)" << endl;
 };
 
-// ostream &operator<<(ostream &out, Candidato &candidato)
-// {
-//   out << candidato.getNumero() << " "
-//       << candidato.getVotosNominais() << " "
-//       << candidato.getSituacao() << " "
-//       << candidato.getNome() << " "
-//       << candidato.getNomeUrna() << " "
-//       << candidato.getSexo() << " "
-//       << candidato.getDataNascimento() << " "
-//       << candidato.getDestinoVoto() << " "
-//       << candidato.getNumeroPartido() << endl;
-//   return out;
-// }
+bool ComparaCandidatos::operator()(Candidato candidato1, Candidato candidato2)
+{
+  if (candidato1.getVotosNominais() > candidato2.getVotosNominais())
+    return true;
+  else if (candidato1.getVotosNominais() < candidato2.getVotosNominais())
+    return false;
+  else
+  {
+    if (candidato1.getDataNascimento() > candidato2.getDataNascimento())
+      return true;
+    return false;
+  }
+}

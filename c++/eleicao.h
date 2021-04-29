@@ -20,7 +20,7 @@ class Eleicao
 public:
   Eleicao();
 
-  Eleicao(list<Candidato> listaDeCandidatosValidos, list<Partido> listaDePartidos, string data);
+  Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &listaDePartidos, string &data);
 
   ~Eleicao();
 
@@ -42,7 +42,7 @@ public:
   void imprimeBeneficiadosPresenteslista1Ausenteslista2(list<Candidato> lista1, list<Candidato> lista2);
   void setNumeroTotalEleitos();
   int getNumeroTotalEleitos();
-  void setDataEleicao(string data);
+  void setDataEleicao(string &data);
   void setListaMaisVotados();
   void setListaMaisVotadosEleitos();
   string getNomePartidoPorNumero(int numero);

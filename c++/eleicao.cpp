@@ -3,7 +3,7 @@
 Eleicao::Eleicao() {}
 Eleicao::~Eleicao() {}
 
-Eleicao::Eleicao(list<Candidato> listaDeCandidatosValidos, list<Partido> listaDePartidos, string data)
+Eleicao::Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &listaDePartidos, string &data)
 {
   numeroTotalEleitos = 0;
   totalVotosNominais = 0;
@@ -160,7 +160,7 @@ int Eleicao::getTotalVotosNominais()
   return this->totalVotosNominais;
 }
 
-void Eleicao::setDataEleicao(string data)
+void Eleicao::setDataEleicao(string &data)
 {
   this->dataEleicao = data;
 };

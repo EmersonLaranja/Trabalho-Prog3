@@ -29,7 +29,7 @@ public:
 
   bool verificaDestinoVoto();
 
-  void setSiglaPartido(string siglaPartido);
+  void setSiglaPartido(string &siglaPartido);
 
   string getSiglaPartido();
 
@@ -76,5 +76,9 @@ public:
 
   ~Candidato();
 };
-
+class ComparaCandidatos
+{
+public:
+  bool operator()(Candidato candidato1, Candidato candidato2);
+};
 #endif // CANDIDATO_H
