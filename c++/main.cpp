@@ -10,20 +10,6 @@
 
 using namespace std;
 
-bool ordenaPartidoPorVotos(Partido partido1, Partido partido2)
-{
-  if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())
-    return true;
-  else if (partido1.getTotalVotosPartido() < partido2.getTotalVotosPartido())
-    return false;
-  else
-  {
-    if (partido1.getNumero() < partido2.getNumero())
-      return true;
-    return false;
-  }
-}
-
 int main(int argc, char const *argv[])
 {
 
@@ -44,8 +30,6 @@ int main(int argc, char const *argv[])
     while (getline(s, palavra, ','))
     {
       vetorDados.push_back(palavra);
-      if (palavra == "\n")
-        break;
     }
 
     Candidato candidato(vetorDados);
@@ -57,17 +41,10 @@ int main(int argc, char const *argv[])
   }
   in.close();
 
-  //IMPRIMINDO LISTA DE CANDIDATOS
-  // for (auto candidato : listaDeCandidatos)
-  // {
-  //   candidato.imprimeCandidato();
-  // }
-
   //LENDO ARQUIVO DE PARTIDOS
   ifstream inPartido(argv[2]); // TODO verificar quando arquivo não abrir
 
   list<Partido> listaDePartidos;
-
   getline(inPartido, linha); //pulando a primeira linha
 
   while (getline(inPartido, linha))
@@ -77,8 +54,6 @@ int main(int argc, char const *argv[])
     while (getline(s, palavra, ','))
     {
       vetorDados.push_back(palavra);
-      if (palavra == "\n")
-        break;
     }
 
     Partido partido(vetorDados, listaDeCandidatos);
@@ -87,6 +62,7 @@ int main(int argc, char const *argv[])
     listaDePartidos.push_back(partido);
     vetorDados.clear();
   }
+<<<<<<< HEAD
 
   // listaDePartidos.sort(ordenaPartidoPorVotos);
 
@@ -107,9 +83,23 @@ int main(int argc, char const *argv[])
     // candidato.imprimeCandidato();
     // }
   }
+=======
+  inPartido.close();
+  listaDePartidos.sort(ComparaPartidos());
+>>>>>>> c891e9aff17cf750766af77d79a2da3b203de238
 
   //CRIANDO ELEIÇÃO
   string data = argv[3];
   Eleicao eleicao(listaDeCandidatos, listaDePartidos, data);
+<<<<<<< HEAD
   // cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
+=======
+
+  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos()
+       << endl
+       << endl;
+  // eleicao.imprimelistaPartidos();
+
+  eleicao.imprimeCandidatosEleitos(); //Siglas não estão atualizadas nessa lista
+>>>>>>> c891e9aff17cf750766af77d79a2da3b203de238
 }
