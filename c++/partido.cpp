@@ -9,19 +9,15 @@ Partido::Partido(vector<string> vetorDados, list<Candidato> listaDeCandidatosVal
   unsigned votosLegenda = stoi(vetorDados[1]);
   string nomePartido = vetorDados[2];
   string sigla = vetorDados[3];
-  unsigned totalCandidatosEleitos = 0;
-  unsigned totalVotosNominais = 0;
-  unsigned totalVotosPartido = 0;
-  unsigned totalCandidatos = 0;
   this->setNome(nomePartido);
   this->setSigla(sigla);
   this->setListaCandidatos(listaDeCandidatosValidos);
   this->setNumero(numero);
-  this->setVotosLegenda(votosLegenda);
-  this->setTotalCandidatosEleitos();
-  this->setTotalVotosNominais();
-  this->setTotalVotosPartido();
   this->setTotalCandidatos();
+  this->setTotalCandidatosEleitos();
+  this->setVotosLegenda(votosLegenda);
+  this->setTotalVotosPartido();
+  this->setTotalVotosNominais();
 }
 
 void Partido::imprimePartido()
@@ -86,9 +82,10 @@ list<Candidato> Partido::getListaCandidatos() { return this->listaCandidatos; }
 
 void Partido::setTotalCandidatos()
 {
+  this->totalCandidatos = 0;
   this->totalCandidatos = this->listaCandidatos.size();
 }
-void Partido::setTotalCandidatosEleitos()
+void Partido::setTotalCandidatosEleitos() //TODO q?
 {
   for (Candidato candidato : listaCandidatos)
   {
@@ -97,23 +94,37 @@ void Partido::setTotalCandidatosEleitos()
 }
 void Partido::setTotalVotosNominais()
 {
+  this->totalVotosNominais = 0;
   for (Candidato candidato : listaCandidatos)
   {
+    // candidato.imprimeCandidato();
     this->totalVotosNominais += candidato.getVotosNominais();
     // cout << candidato.getNome() << " " << candidato.getVotosNominais() << endl;
   }
+  // cout << this->getNome() << " " << this->getTotalVotosNominais() << endl;
 }
 void Partido::setTotalVotosPartido()
 {
-  this->totalVotosPartido = this->totalVotosNominais + this->votosLegenda;
+  this->totalVotosPartido = 0;
+  this->totalVotosPartido = this->getTotalVotosNominais() + this->getVotosLegenda();
+  // cout << "Nominais " << this->totalVotosNominais << " "
+  //  << "Legenda " << this->votosLegenda << endl;
 }
 
 void Partido::setListaCandidatos(list<Candidato> listaDeCandidatosValidos)
 {
+  for (auto candidato : listaDeCandidatosValidos)
+  {
+    candidato.imprimeCandidato();
+    break;
+  }
+  cout << "OPAAAA" << endl;
   for (Candidato candidato : listaDeCandidatosValidos)
   {
     if (candidato.getNumeroPartido() == this->numero)
     {
+      candidato.imprimeCandidato();
+      break;
       // cout << candidato.getNome() << " " << candidato.getVotosNominais()
       //      << " NP: " << this->nomePartido << endl;
       this->listaCandidatos.push_back(candidato);
@@ -131,6 +142,7 @@ void Partido::setSigla(string sigla)
 }
 void Partido::setVotosLegenda(unsigned votosLegenda)
 {
+  this->votosLegenda = 0;
   this->votosLegenda = votosLegenda;
 }
 void Partido::setNome(string nome)

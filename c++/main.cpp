@@ -51,6 +51,7 @@ int main(int argc, char const *argv[])
     Candidato candidato(vetorDados);
     if (candidato.verificaDestinoVoto())
       listaDeCandidatos.push_back(candidato);
+    // candidato.imprimeCandidato();
 
     vetorDados.clear();
   }
@@ -73,7 +74,6 @@ int main(int argc, char const *argv[])
   {
 
     stringstream s(linha);
-
     while (getline(s, palavra, ','))
     {
       vetorDados.push_back(palavra);
@@ -82,11 +82,13 @@ int main(int argc, char const *argv[])
     }
 
     Partido partido(vetorDados, listaDeCandidatos);
+    // partido.imprimePartido();
 
     listaDePartidos.push_back(partido);
-    listaDePartidos.sort(ordenaPartidoPorVotos);
     vetorDados.clear();
   }
+
+  // listaDePartidos.sort(ordenaPartidoPorVotos);
 
   inPartido.close();
 
@@ -96,15 +98,18 @@ int main(int argc, char const *argv[])
   for (auto partido : listaDePartidos)
   {
     // partido.imprimePartido();
+    // cout << partido.getTotalVotosNominais() << endl;
+    // break;
     // cout << partido.getNome() << endl;
     // if (partido.getTotalCandidatos() > 0)
     // {
-    //   Candidato candidato = partido.buscaCandidatoPorPosicao(0);
-    //   candidato.imprimeCandidato();
+    // Candidato candidato = partido.buscaCandidatoPorPosicao(0);
+    // candidato.imprimeCandidato();
+    // }
   }
 
   //CRIANDO ELEIÇÃO
   string data = argv[3];
   Eleicao eleicao(listaDeCandidatos, listaDePartidos, data);
-  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
+  // cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
 }
