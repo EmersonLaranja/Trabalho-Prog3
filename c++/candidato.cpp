@@ -145,15 +145,16 @@ unsigned Candidato::getVotosNominais()
 
 void Candidato ::imprimeCandidato()
 {
-  cout << this->getNumero() << " "
-       << this->getVotosNominais() << " "
-       << this->getSituacao() << " "
-       << this->getNome() << " "
-       << this->getNomeUrna() << " "
-       << this->getSexo() << " "
-       << this->getDataNascimento() << " "
-       << this->getDestinoVoto() << " "
-       << this->getNumeroPartido() << endl;
+  cout << this->getNome() << " / "
+       << this->getNomeUrna() << " ("
+       << this->getSiglaPartido() << ", "
+       << this->getVotosNominais();
+
+  if (this->getVotosNominais() > 1)
+    cout
+        << " votos)" << endl;
+  else
+    cout << " voto)" << endl;
 };
 
 // ostream &operator<<(ostream &out, Candidato &candidato)

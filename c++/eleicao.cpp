@@ -13,13 +13,13 @@ Eleicao::Eleicao(list<Candidato> listaDeCandidatosValidos, list<Partido> listaDe
   this->listaDeCandidatosValidos = listaDeCandidatosValidos;
   this->listaDePartidos = listaDePartidos;
 
-  setNumeroTotalEleitos();
-  setTotalVotosLegenda();
-  setTotalVotosNominais();
-  setTotalVotosValidos();
+  setListaMaisVotadosEleitos();
+  setNumeroTotalEleitos(); //set corretos
+  setTotalVotosLegenda();  //set corretos
+  setTotalVotosNominais(); //set corretos
+  setTotalVotosValidos();  //set corretos
+  setListaMaisVotados();
   setDataEleicao(data);
-  setlistaMaisVotadosEleitos();
-  setlistaMaisVotados();
 }
 
 string Eleicao::calculaPercentual(unsigned quant, unsigned total)
@@ -38,11 +38,16 @@ void Eleicao::ordenaPrimeiroUltimolistaPartido(){};
 
 void Eleicao::imprimeVotosTotaisEleicao(){};
 
-void Eleicao::imprimeCandidatosEleitos(){};
+void Eleicao::imprimeCandidatosEleitos()
+{
+  cout << "Vereadores eleitos:" << endl;
 
-void Eleicao::imprimelistaCandidatosValidos(){};
+  imprimeListaCandidatos(listaDeCandidatosMaisVotadosEleitos);
+};
 
-void Eleicao::imprimelistaCandidatosMaisVotadosPorLimiteVagas(){};
+void Eleicao::imprimeListaCandidatosValidos(){};
+
+void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas(){};
 
 void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria(){};
 
@@ -52,9 +57,27 @@ void Eleicao::imprimeCandidatosPorIdade(){};
 
 void Eleicao::imprimeCandidatosPorSexo(){};
 
-void Eleicao::imprimelistaPartidos(){};
+void Eleicao::imprimeListaPartidos()
+{
+  int id = 1;
+  for (auto partido : listaDePartidos)
+  {
+    cout << id << " - ";
+    partido.imprimePartido();
+    id++;
+  }
+};
 
-void Eleicao::imprimelistaCandidatos(list<Candidato> lista){};
+void Eleicao::imprimeListaCandidatos(list<Candidato> lista)
+{
+  int i = 1;
+  for (Candidato candidato : lista)
+  {
+    cout << i << " - ";
+    candidato.imprimeCandidato();
+    i++;
+  }
+};
 
 void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> lista){};
 
@@ -74,26 +97,21 @@ int Eleicao::getNumeroTotalEleitos()
   return this->numeroTotalEleitos;
 }
 
-void Eleicao::setlistaMaisVotados()
+void Eleicao::setListaMaisVotados()
 {
-  // listaDeCandidatosMaisVotados = new Arraylist<Candidato>();
-  // for (int i = 0; i < getNumeroTotalEleitos(); i++)
-  // {
-  //   Candidato aux = listaDeCandidatosValidos.get(i);
-  //   listaDeCandidatosMaisVotados.add(aux);
-  // }
+  for (Candidato candidato : listaDeCandidatosValidos)
+  {
+    listaDeCandidatosMaisVotados.push_back(candidato);
+  }
 }
 
-void Eleicao::setlistaMaisVotadosEleitos()
+void Eleicao::setListaMaisVotadosEleitos()
 {
-  //   listaDeCandidatosMaisVotadosEleitos = new Arraylist<Candidato>();
-
-  //   for (int i = 0; i < this->listaDeCandidatosValidos.size(); i++)
-  //   {
-  //     Candidato aux = listaDeCandidatosValidos.get(i);
-  //     if (aux.getSituacao().equals("Eleito"))
-  //       listaDeCandidatosMaisVotadosEleitos.add(aux);
-  //   }
+  for (Candidato candidato : listaDeCandidatosValidos)
+  {
+    if (candidato.getSituacao() == "Eleito")
+      listaDeCandidatosMaisVotadosEleitos.push_back(candidato);
+  }
 }
 
 string Eleicao::getNomePartidoPorNumero(int numero)
@@ -109,17 +127,17 @@ string Eleicao::getNomePartidoPorNumero(int numero)
   return aux;
 }
 
-list<Partido> Eleicao::getlistaDePartidos()
+list<Partido> Eleicao::getListaDePartidos()
 {
   return this->listaDePartidos;
 }
 
-list<Candidato> Eleicao::getlistaDeCandidatosMaisVotadosEleitos()
+list<Candidato> Eleicao::getListaDeCandidatosMaisVotadosEleitos()
 {
   return this->listaDeCandidatosMaisVotadosEleitos;
 }
 
-list<Candidato> Eleicao::getlistaDeCandidatosMaisVotados()
+list<Candidato> Eleicao::getListaDeCandidatosMaisVotados()
 {
   return this->listaDeCandidatosMaisVotados;
 }

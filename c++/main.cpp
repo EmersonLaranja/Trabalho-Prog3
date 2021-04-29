@@ -44,8 +44,6 @@ int main(int argc, char const *argv[])
     while (getline(s, palavra, ','))
     {
       vetorDados.push_back(palavra);
-      if (palavra == "\n")
-        break;
     }
 
     Candidato candidato(vetorDados);
@@ -56,17 +54,10 @@ int main(int argc, char const *argv[])
   }
   in.close();
 
-  //IMPRIMINDO LISTA DE CANDIDATOS
-  // for (auto candidato : listaDeCandidatos)
-  // {
-  //   candidato.imprimeCandidato();
-  // }
-
   //LENDO ARQUIVO DE PARTIDOS
   ifstream inPartido(argv[2]); // TODO verificar quando arquivo não abrir
 
   list<Partido> listaDePartidos;
-
   getline(inPartido, linha); //pulando a primeira linha
 
   while (getline(inPartido, linha))
@@ -77,8 +68,6 @@ int main(int argc, char const *argv[])
     while (getline(s, palavra, ','))
     {
       vetorDados.push_back(palavra);
-      if (palavra == "\n")
-        break;
     }
 
     Partido partido(vetorDados, listaDeCandidatos);
@@ -87,24 +76,16 @@ int main(int argc, char const *argv[])
     listaDePartidos.sort(ordenaPartidoPorVotos);
     vetorDados.clear();
   }
-
   inPartido.close();
-
-  // cout << "IMPRIMINDO LISTA DE PARTIDOS!" << endl;
-
-  // TODO testar assim:for (const auto& para w)
-  for (auto partido : listaDePartidos)
-  {
-    // partido.imprimePartido();
-    // cout << partido.getNome() << endl;
-    // if (partido.getTotalCandidatos() > 0)
-    // {
-    //   Candidato candidato = partido.buscaCandidatoPorPosicao(0);
-    //   candidato.imprimeCandidato();
-  }
 
   //CRIANDO ELEIÇÃO
   string data = argv[3];
   Eleicao eleicao(listaDeCandidatos, listaDePartidos, data);
-  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
+
+  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos()
+       << endl
+       << endl;
+  // eleicao.imprimelistaPartidos();
+
+  eleicao.imprimeCandidatosEleitos(); //Siglas não estão atualizadas nessa lista
 }
