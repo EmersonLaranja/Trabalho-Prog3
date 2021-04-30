@@ -241,7 +241,7 @@ bool ComparaCandidatos::compare(string dataNascimentoCandidato1, string dataNasc
   }
 }
 
-bool ComparaCandidatos::operator()(Candidato candidato1, Candidato candidato2)
+bool ComparaCandidatos::operator()(Candidato &candidato1, Candidato &candidato2)
 {
   if (candidato1.getVotosNominais() > candidato2.getVotosNominais())
     return true;

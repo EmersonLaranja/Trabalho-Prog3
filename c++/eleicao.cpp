@@ -34,7 +34,9 @@ float Eleicao::calculaPercentual(unsigned quant, unsigned total)
 // {
 // }
 
-void Eleicao::ordenaPrimeiroUltimolistaPartido(){};
+void Eleicao::ordenaPrimeiroUltimoListaPartido(){
+
+};
 
 // --------------Imprimir---------------//
 
@@ -58,9 +60,19 @@ void Eleicao::imprimeCandidatosEleitos()
 
 void Eleicao::imprimeListaCandidatosValidos(){};
 
-void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria(){};
+void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria()
+{
+  cout << "Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:" << endl;
+  cout << "(com sua posição no ranking de mais votados)" << endl;
+  imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotados, listaDeCandidatosMaisVotadosEleitos);
+};
 
-void Eleicao::imprimeCandidatosBeneficiadosVotacaoProporcional(){};
+void Eleicao::imprimeCandidatosBeneficiadosVotacaoProporcional()
+{
+  cout << "Eleitos, que se beneficiaram do sistema proporcional:" << endl;
+  cout << "(com sua posição no ranking de mais votados)" << endl;
+  imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotadosEleitos, listaDeCandidatosMaisVotados);
+};
 
 void Eleicao::imprimeCandidatosPorIdade()
 {
@@ -129,18 +141,20 @@ void Eleicao::imprimeCandidatosPorSexo()
 void Eleicao::imprimeListaPartidos()
 {
   int id = 1;
-  for (auto partido : listaDePartidos)
+  cout << "Votação dos partidos e número de candidatos eleitos:" << endl;
+  for (Partido &partido : listaDePartidos)
   {
     cout << id << " - ";
     partido.imprimePartido();
     id++;
   }
-};
+  cout << endl;
+}
 
-void Eleicao::imprimeListaCandidatos(list<Candidato> lista)
+void Eleicao::imprimeListaCandidatos(list<Candidato> &lista)
 {
   int i = 1;
-  for (Candidato candidato : lista)
+  for (Candidato &candidato : lista)
   {
     cout << i << " - ";
     candidato.imprimeCandidato();
@@ -158,77 +172,56 @@ void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
     candidato.imprimeCandidato();
     i++;
   }
+  cout << endl;
 }
 
-void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> lista){
-
-    // int i, j;
-
-    // for (i = 0, j = 0; j < lista.size(); i++)
-    // {
-
-    //   Candidato aux1 = lista.get(j);
-    //    advance(it, j);
-    //   Candidato aux2 = listaDeCandidatosValidos.get(i);
-
-    //   if (aux1.getNome() == (aux2.getNome()))
-    //   {
-    //     System.out.println((i + 1) + " - " + aux1);
-    //     j++;
-    //   }
-    // }
-
-    /*
-#include <bits/stdc++.h>
-using namespace std;
-
-// Driver Code
-int main()
+void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
 {
-	// Create list with initial value 100
-	list<int> li(5, 100);
+  unsigned j = 0, i = 0;
+  list<Candidato>::iterator it = lista.begin();
+  for (Candidato &candListaValido : listaDeCandidatosValidos)
+  {
 
-	// Insert 20 and 30 to the list
-	li.push_back(20);
-	li.push_back(30);
+    if (j == lista.size())
+    {
+      break;
+    }
+    advance(it = lista.begin(), j);
+    Candidato &aux = *it;
 
-	// Elements of list are
-	// 100, 100, 100, 100, 100, 20, 30
-
-	// Initialize iterator to list
-	list<int>::iterator it = li.begin();
-
-	// Move the iterator by 5 elements
-	advance(it, 5);
-
-	// Print the element at the it
-	cout << *it;
-
-	return 0;
+    if (candListaValido.getNome() == aux.getNome())
+    {
+      cout << i + 1 << " - ";
+      aux.imprimeCandidato();
+      j++;
+    }
+    i++;
+  }
+  cout << endl;
 }
-*/
-
-};
 
 //tem que ser por cópia
-void Eleicao::imprimeBeneficiadosPresenteslista1Ausenteslista2(list<Candidato> lista1, list<Candidato> lista2)
+void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2)
 {
+
   list<Candidato> beneficiados;
   unsigned presente;
 
-  for (Candidato candidatoLista1 : lista1)
+  for (Candidato &candidatoLista1 : lista1)
   {
-    for (Candidato candidatoLista2 : lista2)
+    for (Candidato &candidatoLista2 : lista2)
     {
       if (candidatoLista1.getNome() == candidatoLista2.getNome())
       {
         presente = 1;
       }
     }
-    if (presente)
+    if (!presente)
       beneficiados.push_back(candidatoLista1);
+    presente = 0;
   }
-  imprimeListaCandidatos(beneficiados);
+
+  imprimePreservandoPosicaoMaisVotados(beneficiados);
 }
 
 void Eleicao::setNumeroTotalEleitos()
@@ -250,7 +243,7 @@ int Eleicao::getNumeroTotalEleitos()
 void Eleicao::setListaMaisVotados()
 {
   int i = 0;
-  for (Candidato candidato : listaDeCandidatosValidos)
+  for (Candidato &candidato : listaDeCandidatosValidos)
   {
     if (i == getNumeroTotalEleitos())
     {
@@ -264,7 +257,7 @@ void Eleicao::setListaMaisVotados()
 void Eleicao::setListaMaisVotadosEleitos()
 {
   int i = 0;
-  for (Candidato candidato : this->listaDeCandidatosValidos)
+  for (Candidato &candidato : this->listaDeCandidatosValidos)
   {
     if (i == getNumeroTotalEleitos())
       break;
@@ -281,7 +274,7 @@ void Eleicao::setListaMaisVotadosEleitos()
   // }
 }
 
-string Eleicao::getNomePartidoPorNumero(int numero)
+string Eleicao::getNomePartidoPorNumero(int &numero) //TODO
 {
 
   string aux = "1";
@@ -311,7 +304,7 @@ list<Candidato> Eleicao::getListaDeCandidatosMaisVotados()
 
 void Eleicao::setTotalVotosLegenda()
 {
-  for (Partido partido : listaDePartidos)
+  for (Partido &partido : listaDePartidos)
   {
     this->totalVotosLegenda += partido.getVotosLegenda();
   }
@@ -332,9 +325,9 @@ void Eleicao::setDataEleicao(string &data)
   this->dataEleicao = data;
 };
 
-void Eleicao::setTotalVotosNominais()
+void Eleicao::setTotalVotosNominais() //Verificar soma;
 {
-  for (Candidato candidato : listaDeCandidatosValidos)
+  for (Candidato &candidato : listaDeCandidatosValidos)
   {
     this->totalVotosNominais += candidato.getVotosNominais();
   }

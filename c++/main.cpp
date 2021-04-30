@@ -76,13 +76,22 @@ int main(int argc, char const *argv[])
   //      << endl;
 
   //relatório 2
-  eleicao.imprimeCandidatosEleitos(); //Siglas não estão atualizadas nessa lista
+  // eleicao.imprimeCandidatosEleitos();
 
   //relatório 3
   // eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
 
   //relatório 4
-  // eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
+  // eleicao.imprimeCandidatosBeneficiadosVotacaoMajoritaria();
+
+  //relatório 5
+  // eleicao.imprimeCandidatosBeneficiadosVotacaoProporcional();
+
+  //relatório 6
+  // eleicao.imprimeListaPartidos();
+
+  //relatório 7
+  // eleicao.ordenaPrimeiroUltimoListaPartido(); //To Do
 
   //relatório 8
   // eleicao.imprimeCandidatosPorIdade();

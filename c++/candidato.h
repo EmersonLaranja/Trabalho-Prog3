@@ -92,7 +92,7 @@ public:
 class ComparaCandidatos
 {
 public:
-  bool operator()(Candidato candidato1, Candidato candidato2);
+  bool operator()(Candidato &candidato1, Candidato &candidato2);
   bool compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2);
 };
 #endif // CANDIDATO_H

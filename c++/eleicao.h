@@ -27,7 +27,7 @@ public:
 
   // int calculaIdadeCandidato(LocalDate nascimento, LocalDate diaEleicao); //TODO: Quando usarmos LocaleDate
 
-  void ordenaPrimeiroUltimolistaPartido();
+  void ordenaPrimeiroUltimoListaPartido();
   // --------------Imprimir---------------//
   void imprimeVotosTotaisEleicao();
   void imprimeCandidatosEleitos();
@@ -38,15 +38,15 @@ public:
   void imprimeCandidatosPorIdade();
   void imprimeCandidatosPorSexo();
   void imprimeListaPartidos();
-  void imprimeListaCandidatos(list<Candidato> lista);
-  void imprimePreservandoPosicaoMaisVotados(list<Candidato> lista);
-  void imprimeBeneficiadosPresenteslista1Ausenteslista2(list<Candidato> lista1, list<Candidato> lista2);
+  void imprimeListaCandidatos(list<Candidato> &lista);
+  void imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista);
+  void imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2);
   void setNumeroTotalEleitos();
   int getNumeroTotalEleitos();
   void setDataEleicao(string &data);
   void setListaMaisVotados();
   void setListaMaisVotadosEleitos();
-  string getNomePartidoPorNumero(int numero);
+  string getNomePartidoPorNumero(int &numero);
   list<Partido> getListaDePartidos();
   list<Candidato> getListaDeCandidatosMaisVotadosEleitos();
   list<Candidato> getListaDeCandidatosMaisVotados();

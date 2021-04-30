@@ -172,6 +172,7 @@ public class Eleicao {
       System.out.println(i + " - " + partido);
       i++;
     }
+    cout << endl;
   }
 
   private void imprimeListaCandidatos(List<Candidato> lista) {
