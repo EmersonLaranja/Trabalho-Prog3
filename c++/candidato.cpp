@@ -3,7 +3,7 @@
 Candidato::Candidato(){
 
 };
-Candidato::Candidato(vector<string> vetorDadosCandidato)
+Candidato::Candidato(vector<string> vetorDadosCandidato, string &dataEleicao)
 {
   unsigned numero = stoi(vetorDadosCandidato[0]);
   unsigned votosNominais = stoi(vetorDadosCandidato[1]);
@@ -24,6 +24,7 @@ Candidato::Candidato(vector<string> vetorDadosCandidato)
   this->setDestinoVoto(destinoVoto);
   this->setNumeroPartido(numeroPartido);
   this->setDataNascimento(dataNascimento);
+  this->setIdade(dataEleicao);
 };
 
 Candidato::~Candidato() {}
@@ -113,6 +114,16 @@ char Candidato::getSexo()
   return sexo;
 };
 
+void Candidato::setIdade(string &dataEleicao)
+{
+  this->idade = calculaIdadeCandidato(dataEleicao, this->getDataNascimento());
+};
+
+int Candidato::getIdade()
+{
+  return this->idade;
+};
+
 void Candidato::setSituacao(string situacao)
 {
   this->situacao = situacao;
@@ -157,6 +168,79 @@ void Candidato ::imprimeCandidato()
     cout << " voto)" << endl;
 };
 
+int Candidato ::calculaIdadeCandidato(string dataEleicao, string dataNascimento)
+{
+  string data, linha;
+  vector<int> vetorDataEleicao;
+  vector<int> vetorDataNascimento;
+
+  stringstream s1(dataEleicao);
+  while (getline(s1, data, '/')) //Otimiza repetição de while
+  {
+    int aux = stoi(data);
+    vetorDataEleicao.push_back(aux);
+  }
+
+  stringstream s2(dataNascimento);
+  while (getline(s2, data, '/'))
+  {
+    int aux = stoi(data);
+    vetorDataNascimento.push_back(aux);
+  }
+
+  if (vetorDataNascimento[1] < vetorDataEleicao[1])
+  {
+    return vetorDataEleicao[2] - vetorDataNascimento[2];
+  }
+  else if (vetorDataNascimento[1] == vetorDataEleicao[1] && vetorDataNascimento[0] <= vetorDataEleicao[0])
+  {
+    return vetorDataEleicao[2] - vetorDataNascimento[2];
+  }
+  else
+  {
+    return ((vetorDataEleicao[2] - vetorDataNascimento[2]) - 1);
+  }
+}
+
+bool ComparaCandidatos::compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2)
+{
+  string data, linha;
+  vector<int> vetorDataNascimentoCandidato1;
+  vector<int> vetorDataNascimentoCandidato2;
+
+  stringstream s1(dataNascimentoCandidato1);
+  while (getline(s1, data, '/')) //Otimiza repetição de while
+  {
+    int aux = stoi(data);
+    vetorDataNascimentoCandidato1.push_back(aux);
+  }
+
+  stringstream s2(dataNascimentoCandidato2);
+  while (getline(s2, data, '/'))
+  {
+    int aux = stoi(data);
+    vetorDataNascimentoCandidato2.push_back(aux);
+  }
+
+  if (vetorDataNascimentoCandidato2[2] < vetorDataNascimentoCandidato1[2])
+  {
+    return false;
+  }
+  else if (vetorDataNascimentoCandidato2[2] == vetorDataNascimentoCandidato1[2] && vetorDataNascimentoCandidato2[1] < vetorDataNascimentoCandidato1[1])
+  {
+    return false;
+  }
+  else if (vetorDataNascimentoCandidato2[2] == vetorDataNascimentoCandidato1[2] && vetorDataNascimentoCandidato2[1] == vetorDataNascimentoCandidato1[1] && vetorDataNascimentoCandidato2[0] < vetorDataNascimentoCandidato1[0])
+  {
+    return false;
+  }
+  else
+  {
+    return true;
+    ;
+  }
+}
+
 bool ComparaCandidatos::operator()(Candidato candidato1, Candidato candidato2)
 {
   if (candidato1.getVotosNominais() > candidato2.getVotosNominais())
@@ -165,8 +249,7 @@ bool ComparaCandidatos::operator()(Candidato candidato1, Candidato candidato2)
     return false;
   else
   {
-    if (candidato1.getDataNascimento() > candidato2.getDataNascimento())
-      return true;
-    return false;
+    return compare(candidato1.getDataNascimento(), candidato2.getDataNascimento());
   }
 }
+//ja volto

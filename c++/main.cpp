@@ -3,17 +3,20 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <locale.h>
 #include <vector>
 #include <list>
+#include <ctime>
 #include "eleicao.h"
 #include <algorithm>
-
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
+  setlocale(LC_ALL, "pt_BR.utf8");
 
   ifstream in(argv[1]); // TODO verificar quando arquivo não abrir
+  string dataEleicao = argv[3];
 
   string linha, palavra;
   vector<string> vetorDados;
@@ -24,7 +27,6 @@ int main(int argc, char const *argv[])
   //LENDO ARQUIVO DE CANDIDATOS
   while (getline(in, linha))
   {
-
     stringstream s(linha);
 
     while (getline(s, palavra, ','))
@@ -32,13 +34,14 @@ int main(int argc, char const *argv[])
       vetorDados.push_back(palavra);
     }
 
-    Candidato candidato(vetorDados);
+    Candidato candidato(vetorDados, dataEleicao);
     if (candidato.verificaDestinoVoto())
       listaDeCandidatos.push_back(candidato);
-    // candidato.imprimeCandidato();
 
     vetorDados.clear();
   }
+  listaDeCandidatos.sort(ComparaCandidatos());
+
   in.close();
 
   //LENDO ARQUIVO DE PARTIDOS
@@ -57,49 +60,36 @@ int main(int argc, char const *argv[])
     }
 
     Partido partido(vetorDados, listaDeCandidatos);
-    // partido.imprimePartido();
 
     listaDePartidos.push_back(partido);
     vetorDados.clear();
   }
-<<<<<<< HEAD
-
-  // listaDePartidos.sort(ordenaPartidoPorVotos);
-
-  inPartido.close();
-
-  // cout << "IMPRIMINDO LISTA DE PARTIDOS!" << endl;
-
-  // TODO testar assim:for (const auto& para w)
-  for (auto partido : listaDePartidos)
-  {
-    // partido.imprimePartido();
-    // cout << partido.getTotalVotosNominais() << endl;
-    // break;
-    // cout << partido.getNome() << endl;
-    // if (partido.getTotalCandidatos() > 0)
-    // {
-    // Candidato candidato = partido.buscaCandidatoPorPosicao(0);
-    // candidato.imprimeCandidato();
-    // }
-  }
-=======
   inPartido.close();
   listaDePartidos.sort(ComparaPartidos());
->>>>>>> c891e9aff17cf750766af77d79a2da3b203de238
 
   //CRIANDO ELEIÇÃO
-  string data = argv[3];
-  Eleicao eleicao(listaDeCandidatos, listaDePartidos, data);
-<<<<<<< HEAD
-  // cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos() << endl;
-=======
+  Eleicao eleicao(listaDeCandidatos, listaDePartidos, dataEleicao);
 
-  cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos()
-       << endl
-       << endl;
-  // eleicao.imprimelistaPartidos();
+  //relatório 1
+  // cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos()
+  //      << endl
+  //      << endl;
 
+  //relatório 2
   eleicao.imprimeCandidatosEleitos(); //Siglas não estão atualizadas nessa lista
->>>>>>> c891e9aff17cf750766af77d79a2da3b203de238
+
+  //relatório 3
+  // eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
+
+  //relatório 4
+  // eleicao.imprimeListaCandidatosMaisVotadosPorLimiteVagas();
+
+  //relatório 8
+  // eleicao.imprimeCandidatosPorIdade();
+
+  //relatório 9
+  // eleicao.imprimeCandidatosPorSexo();
+
+  //relatório 10
+  // eleicao.imprimeVotosTotaisEleicao();
 }

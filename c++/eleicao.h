@@ -2,6 +2,7 @@
 #define ELEICAO_H
 
 #include "partido.h"
+#include <iterator>
 class Eleicao
 {
 
@@ -11,11 +12,11 @@ class Eleicao
   int totalVotosValidos;
 
   list<Candidato> listaDeCandidatosValidos;
-  list<Candidato> listaDeCandidatosMaisVotadosEleitos;
   list<Candidato> listaDeCandidatosMaisVotados;
+  list<Candidato> listaDeCandidatosMaisVotadosEleitos;
   list<Partido> listaDePartidos;
   string dataEleicao; //TODO mudar para locale
-  string calculaPercentual(unsigned quant, unsigned total);
+  float calculaPercentual(unsigned quant, unsigned total);
 
 public:
   Eleicao();

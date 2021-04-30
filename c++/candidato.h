@@ -2,9 +2,11 @@
 #define CANDIDATO_H
 
 #include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 #include <list>
-#include <iostream>
 #define MASCULINO 'M'
 #define FEMININO 'F'
 using namespace std;
@@ -14,6 +16,7 @@ private:
   unsigned numero;
   unsigned votosNominais;
   unsigned numeroPartido;
+  unsigned idade;
   char sexo;
   string situacao;
   string destinoVoto;
@@ -21,8 +24,6 @@ private:
   string nomeUrna;
   string siglaPartido;
   string dataNascimento;
-  // LocalDate dataNascimento;
-  // Date idade;
 
 public:
   Candidato(/* args */);
@@ -59,6 +60,10 @@ public:
 
   char getSexo();
 
+  void setIdade(string &dataEleicao);
+
+  int getIdade();
+
   void setSituacao(string situacao);
 
   string getSituacao();
@@ -72,13 +77,22 @@ public:
 
   void imprimeCandidato();
 
-  Candidato(vector<string> vetorDadosCandidato);
+  int calculaIdadeCandidato(string dataEleicao, string dataNascimento);
+
+  Candidato(vector<string> vetorDadosCandidato, string &dataEleicao);
 
   ~Candidato();
 };
+// class ComparaIdades
+// {
+// public:
+//   bool compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2);
+// };
+
 class ComparaCandidatos
 {
 public:
   bool operator()(Candidato candidato1, Candidato candidato2);
+  bool compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2);
 };
 #endif // CANDIDATO_H

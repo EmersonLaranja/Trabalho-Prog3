@@ -3,4 +3,4 @@ compile: eleicao.cpp candidato.cpp main.cpp partido.cpp  #TODO Adicionar elei√ß√
 	g++ -std=c++11 -o vereadores *.cpp
 
 run: 
-	./vereadores candidatos.csv partidos.csv 15/11/2020
+	valgrind ./vereadores candidatos.csv partidos.csv 15/11/2020

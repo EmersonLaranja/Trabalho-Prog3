@@ -6,6 +6,13 @@
     "istream": "cpp",
     "functional": "cpp",
     "iostream": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "algorithm": "cpp",
+    "*.tcc": "cpp",
+    "list": "cpp",
+    "iosfwd": "cpp",
+    "fstream": "cpp",
+    "string": "cpp",
+    "sstream": "cpp"
   }
 }
