@@ -58,4 +58,11 @@ public:
   int getTotalVotosValidos();
 };
 
+class OrdenaPrimeiroUltimoListaPartido
+{
+public:
+  bool operator()(Partido &partido1, Partido &partido2);
+  bool compare(unsigned numeroPartidario1, unsigned numeroPartidario2);
+};
+
 #endif // ELEICAO_H

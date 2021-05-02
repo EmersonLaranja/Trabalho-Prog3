@@ -11,11 +11,35 @@
 #include <algorithm>
 using namespace std;
 
+class Excecao
+{
+  string motivo;
+
+public:
+  Excecao(const string &motivo) { this->motivo = motivo; }
+  friend ostream &operator<<(ostream &out, const Excecao &excecao);
+};
+ostream &operator<<(ostream &out, const Excecao &excecao)
+{
+  return out << excecao.motivo;
+}
+
 int main(int argc, char const *argv[])
 {
   setlocale(LC_ALL, "pt_BR.utf8");
 
   ifstream in(argv[1]); // TODO verificar quando arquivo não abrir
+
+  if (!in.good())
+  {
+    cout << "Problemas ao ler arquivo de entrada de candidatos" << endl;
+    return 0;
+  }
+  if (argc < 3)
+  {
+    cout << "Problemas ao ler data de entrada" << endl;
+    return 0;
+  }
   string dataEleicao = argv[3];
 
   string linha, palavra;
@@ -41,11 +65,16 @@ int main(int argc, char const *argv[])
     vetorDados.clear();
   }
   listaDeCandidatos.sort(ComparaCandidatos());
-
   in.close();
 
   //LENDO ARQUIVO DE PARTIDOS
   ifstream inPartido(argv[2]); // TODO verificar quando arquivo não abrir
+
+  if (!inPartido.good())
+  {
+    cout << "Problemas ao ler arquivo de entrada de partidos" << endl;
+    return 0;
+  }
 
   list<Partido> listaDePartidos;
   getline(inPartido, linha); //pulando a primeira linha
@@ -91,7 +120,7 @@ int main(int argc, char const *argv[])
   // eleicao.imprimeListaPartidos();
 
   //relatório 7
-  // eleicao.ordenaPrimeiroUltimoListaPartido(); //To Do
+  eleicao.ordenaPrimeiroUltimoListaPartido();
 
   //relatório 8
   // eleicao.imprimeCandidatosPorIdade();
@@ -101,4 +130,6 @@ int main(int argc, char const *argv[])
 
   //relatório 10
   // eleicao.imprimeVotosTotaisEleicao();
+
+  return 0;
 }

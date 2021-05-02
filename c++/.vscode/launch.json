@@ -8,8 +8,12 @@
       "name": "g++ - Build and debug active file",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/vereadores",
-      "args": [],
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
+      "args": [
+        "candidatos.csv",
+        "partidos.csv",
+        "15/11/2020"
+      ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],

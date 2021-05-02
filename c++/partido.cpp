@@ -60,7 +60,46 @@ void Partido::imprimePartido()
   }
 }
 
-void Partido::imprimePrimeiroUltimoPartido() {}
+void Partido::imprimePrimeiroUltimoPartido()
+{
+  cout << this->getSigla() << " - " << this->getNumero() << ", ";
+  if (this->listaCandidatos.size() > 0)
+  {
+    Candidato aux;
+
+    //------ GAMBIARRA TIME-------- //!Tirar isso aqui, pelo amor de Deus kkk
+    for (auto candidato : listaCandidatos)
+    {
+      aux = candidato;
+      break;
+    }
+
+    if (aux.getVotosNominais() > 1)
+      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos) / ";
+    else
+      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " voto) / ";
+
+    //------ GAMBIARRA TIME-------- //!Tirar isso aqui, pelo amor de Deus kkk
+    int i = 0;
+    for (auto candidato : listaCandidatos)
+    {
+      if (i == listaCandidatos.size() - 1)
+      {
+
+        aux = candidato;
+        break;
+      }
+      i++;
+    }
+
+    if (aux.getVotosNominais() > 1)
+      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos)";
+    else
+      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " voto)";
+  }
+
+  cout << endl;
+}
 
 void Partido::imprimeListaCandidatosDoPartido()
 {
@@ -181,7 +220,6 @@ bool Partido::ordenaPartidoPorVotos(Partido partido)
     return false;
   }
 }
-
 Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
 {
   // auto aux = listaCandidatos.begin();
@@ -193,9 +231,12 @@ Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
   for (auto candidato : listaCandidatos)
   {
     if (posicao == i)
+    {
       return candidato;
+    }
     i++;
   }
+
   cout << "Não encontrou candidato!" << endl;
   return candidato;
 }

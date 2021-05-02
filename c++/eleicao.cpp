@@ -34,8 +34,21 @@ float Eleicao::calculaPercentual(unsigned quant, unsigned total)
 // {
 // }
 
-void Eleicao::ordenaPrimeiroUltimoListaPartido(){
+void Eleicao::ordenaPrimeiroUltimoListaPartido()
+{
+  cout << "Primeiro e último colocados de cada partido:" << endl;
+  listaDePartidos.sort(OrdenaPrimeiroUltimoListaPartido());
 
+  int i = 1;
+  for (auto &partido : listaDePartidos)
+  {
+    if (!(partido.getTotalVotosNominais() <= 0))
+    {
+      cout << i << " - ";
+      partido.imprimePrimeiroUltimoPartido();
+    }
+    i++;
+  }
 };
 
 // --------------Imprimir---------------//
@@ -48,7 +61,7 @@ void Eleicao::imprimeVotosTotaisEleicao()
   printf(" (%.2f%%)\n", ((float)totalVotosNominais / totalVotosValidos) * 100);
 
   printf("Total de votos de Legenda: %d", totalVotosLegenda);
-  printf(" (%.2f%%)", ((float)totalVotosLegenda / totalVotosValidos) * 100);
+  printf(" (%.2f%%)\n", ((float)totalVotosLegenda / totalVotosValidos) * 100);
 };
 
 void Eleicao::imprimeCandidatosEleitos()
@@ -56,6 +69,7 @@ void Eleicao::imprimeCandidatosEleitos()
   cout << "Vereadores eleitos:" << endl;
 
   imprimeListaCandidatos(listaDeCandidatosMaisVotadosEleitos);
+  cout << endl;
 };
 
 void Eleicao::imprimeListaCandidatosValidos(){};
@@ -111,7 +125,7 @@ void Eleicao::imprimeCandidatosPorIdade()
   printf("30 <= Idade < 40: %d (%.2f%%)\n", d30_40, calculaPercentual(d30_40, total));
   printf("40 <= Idade < 50: %d (%.2f%%)\n", d40_50, calculaPercentual(d40_50, total));
   printf("50 <= Idade < 60: %d (%.2f%%)\n", d50_60, calculaPercentual(d50_60, total));
-  printf("60 <= Idade     : %d (%.2f%%)\n", maior60, calculaPercentual(maior60, total));
+  printf("60 <= Idade     : %d (%.2f%%)\n\n", maior60, calculaPercentual(maior60, total));
 };
 
 void Eleicao::imprimeCandidatosPorSexo()
@@ -127,7 +141,6 @@ void Eleicao::imprimeCandidatosPorSexo()
     }
   }
   qntMasculino = getNumeroTotalEleitos() - qntFeminino;
-  cout << qntFeminino << endl;
 
   cout << "Eleitos, por sexo:" << endl;
 
@@ -135,7 +148,7 @@ void Eleicao::imprimeCandidatosPorSexo()
 
   printf("Feminino:  %.0f (%.2f%%)\n", qntFeminino, porcentagem);
   porcentagem = (qntMasculino / numeroTotalEleitos) * 100;
-  printf("Masculino: %.0f (%.2f%%)\n", qntMasculino, porcentagem);
+  printf("Masculino: %.0f (%.2f%%)\n\n", qntMasculino, porcentagem);
 };
 
 void Eleicao::imprimeListaPartidos()
@@ -148,7 +161,6 @@ void Eleicao::imprimeListaPartidos()
     partido.imprimePartido();
     id++;
   }
-  cout << endl;
 }
 
 void Eleicao::imprimeListaCandidatos(list<Candidato> &lista)
@@ -164,7 +176,7 @@ void Eleicao::imprimeListaCandidatos(list<Candidato> &lista)
 
 void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
 {
-  cout << "Candidatos mais votados(em ordem decrescente de votação e respeitando número de vagas) :" << endl;
+  cout << "Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):" << endl;
   int i = 1;
   for (auto candidato : getListaDeCandidatosMaisVotados())
   {
@@ -341,4 +353,22 @@ void Eleicao::setTotalVotosValidos()
 int Eleicao::getTotalVotosValidos()
 {
   return this->totalVotosValidos;
+}
+
+bool OrdenaPrimeiroUltimoListaPartido::compare(unsigned numeroPartidario1, unsigned numeroPartidario2)
+{
+  return numeroPartidario1 < numeroPartidario2;
+}
+
+bool OrdenaPrimeiroUltimoListaPartido::operator()(Partido &partido1, Partido &partido2)
+{
+
+  if (partido1.buscaCandidatoPorPosicao(0).getVotosNominais() > partido2.buscaCandidatoPorPosicao(0).getVotosNominais())
+    return true;
+  else if (partido1.buscaCandidatoPorPosicao(0).getVotosNominais() < partido2.buscaCandidatoPorPosicao(0).getVotosNominais())
+    return false;
+  else
+  {
+    return compare(partido1.getNumero(), partido2.getNumero());
+  }
 }

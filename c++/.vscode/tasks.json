@@ -6,9 +6,9 @@
       "command": "/usr/bin/g++",
       "args": [
         "-g",
-        "*.cpp",
+        "${file}",
         "-o",
-        "${workspaceFolder}\\vereadores"
+        "${fileDirname}/${fileBasenameNoExtension}"
       ],
       "options": {
         "cwd": "${workspaceFolder}"
