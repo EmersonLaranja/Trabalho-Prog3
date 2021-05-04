@@ -74,7 +74,7 @@ void Eleicao::imprimeVotosTotaisEleicao()
   printf(" (%.2f%%)\n", ((float)totalVotosNominais / totalVotosValidos) * 100);
 
   printf("Total de votos de Legenda: %d", totalVotosLegenda);
-  printf(" (%.2f%%)\n", ((float)totalVotosLegenda / totalVotosValidos) * 100);
+  printf(" (%.2f%%)\n\n", ((float)totalVotosLegenda / totalVotosValidos) * 100);
 };
 
 void Eleicao::imprimeCandidatosEleitos()
@@ -112,7 +112,7 @@ void Eleicao::imprimeCandidatosPorIdade()
   unsigned maior60 = 0;
   unsigned total = 0;
 
-  for (Candidato candidato : getListaDeCandidatosMaisVotados())
+  for (Candidato candidato : getListaDeCandidatosMaisVotadosEleitos())
   {
     idade = candidato.getIdade();
 

@@ -180,7 +180,6 @@ unsigned Candidato ::calculaIdadeCandidato(string dataEleicao, string dataNascim
     unsigned aux = stoi(data);
     vetorDataEleicao.push_back(aux);
   }
-
   stringstream s2(dataNascimento);
   while (getline(s2, data, '/'))
   {
