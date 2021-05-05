@@ -20,7 +20,7 @@ EXECUTAVEL = vereadores
 #
 
 # comando para compilar o sistema
-make: eleicao.cpp candidato.cpp main.cpp partido.cpp  #TODO Adicionar eleição.cpp
+make: eleicao.cpp candidato.cpp main.cpp partido.cpp excecao.cpp
 	g++ -std=c++11 -o vereadores *.cpp
 
 # alvo principal é o executável  

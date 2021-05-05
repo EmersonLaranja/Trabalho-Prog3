@@ -34,7 +34,7 @@ bool Candidato::verificaDestinoVoto()
   return this->destinoVoto == "Válido";
 }
 
-void Candidato::setSiglaPartido(string &siglaPartido)
+void Candidato::setSiglaPartido(const string &siglaPartido)
 {
   this->siglaPartido = siglaPartido;
 };
@@ -44,7 +44,7 @@ const string &Candidato::getSiglaPartido()
   return this->siglaPartido;
 };
 
-void Candidato::setDestinoVoto(string destinoVoto)
+void Candidato::setDestinoVoto(const string &destinoVoto)
 {
   this->destinoVoto = destinoVoto;
 };
@@ -54,7 +54,7 @@ const string &Candidato::getDestinoVoto()
   return this->destinoVoto;
 };
 
-void Candidato::setNome(string nome)
+void Candidato::setNome(const string &nome)
 {
   this->nome = nome;
 };
@@ -64,7 +64,7 @@ const string &Candidato::getNome()
   return nome;
 };
 
-void Candidato::setNomeUrna(string nomeUrna)
+void Candidato::setNomeUrna(const string &nomeUrna)
 {
   this->nomeUrna = nomeUrna;
 };
@@ -74,7 +74,7 @@ const string &Candidato::getNomeUrna()
   return nomeUrna;
 };
 
-void Candidato::setNumero(unsigned numero)
+void Candidato::setNumero(const unsigned &numero)
 {
   this->numero = numero;
 };
@@ -84,7 +84,7 @@ const unsigned &Candidato::getNumero()
   return numero;
 };
 
-void Candidato::setNumeroPartido(unsigned numeroPartido)
+void Candidato::setNumeroPartido(const unsigned &numeroPartido)
 {
   this->numeroPartido = numeroPartido;
 };

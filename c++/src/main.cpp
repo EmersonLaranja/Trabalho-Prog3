@@ -17,17 +17,19 @@ ostream &operator<<(ostream &out, const Excecao &excecao)
 
 int main(int argc, char const *argv[])
 {
-  setlocale(LC_ALL, "pt_BR.utf8");
+  setlocale(LC_ALL, "pt_BR.utf8"); //TODO mudar o locale
 
   ifstream in(argv[1]);
 
   if (!in.good())
   {
+    //TODO lançar exception
     cout << "Problemas ao ler arquivo de entrada de candidatos" << endl;
     return 0;
   }
   if (argc < 3)
   {
+    //TODO lançar exception
     cout << "Problemas ao ler data de entrada" << endl;
     return 0;
   }
@@ -63,6 +65,7 @@ int main(int argc, char const *argv[])
 
   if (!inPartido.good())
   {
+    //TODO lançar exception
     cout << "Problemas ao ler arquivo de entrada de partidos" << endl;
     return 0;
   }

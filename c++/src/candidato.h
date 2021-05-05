@@ -30,29 +30,29 @@ public:
 
   bool verificaDestinoVoto();
 
-  void setSiglaPartido(string &siglaPartido);
+  void setSiglaPartido(const string &siglaPartido);
 
   const string &getSiglaPartido();
 
-  void setDestinoVoto(string destinoVoto);
+  void setDestinoVoto(const string &destinoVoto);
 
   const string &getDestinoVoto();
 
   void setDataNascimento(string dataNascimento);
 
-  void setNome(string nome);
+  void setNome(const string &nome);
 
   const string &getNome();
 
-  void setNomeUrna(string nomeUrna);
+  void setNomeUrna(const string &nomeUrna);
 
   const string &getNomeUrna();
 
-  void setNumero(unsigned numero);
+  void setNumero(const unsigned &numero);
 
   const unsigned &getNumero();
 
-  void setNumeroPartido(unsigned numeroPartido);
+  void setNumeroPartido(const unsigned &numeroPartido);
 
   const unsigned &getNumeroPartido();
 

@@ -1,7 +1,6 @@
 #include "eleicao.h"
 #include <iterator>
 #include <iostream>
-#include <algorithm>
 
 Eleicao::Eleicao() {}
 Eleicao::~Eleicao() {}
@@ -140,7 +139,7 @@ void Eleicao::imprimeCandidatosPorSexo()
   float qntFeminino = 0.0F;
   float qntMasculino = 0.0F;
 
-  for (Candidato candidato : listaDeCandidatosValidos)
+  for (Candidato &candidato : listaDeCandidatosValidos)
   {
     if (candidato.getSexo() == 'F' && candidato.getSituacao() == "Eleito")
     {

@@ -86,7 +86,7 @@ void Partido::imprimePrimeiroUltimoPartido()
 void Partido::imprimeListaCandidatosDoPartido()
 {
   unsigned i = 1;
-  for (Candidato candidato : listaCandidatos)
+  for (Candidato &candidato : listaCandidatos)
   {
     cout << i << " - ";
     candidato.imprimeCandidato();
@@ -139,7 +139,7 @@ void Partido::setTotalCandidatosEleitos()
 {
   unsigned contador = 0;
 
-  for (Candidato candidato : listaCandidatos)
+  for (Candidato &candidato : listaCandidatos)
     if (candidato.getSituacao() == "Eleito")
       contador++;
 
@@ -148,7 +148,7 @@ void Partido::setTotalCandidatosEleitos()
 void Partido::setTotalVotosNominais()
 {
   unsigned contador = 0;
-  for (Candidato candidato : listaCandidatos)
+  for (Candidato &candidato : listaCandidatos)
   {
     contador += candidato.getVotosNominais();
   }
@@ -204,7 +204,7 @@ Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
 {
   Candidato aux;
   unsigned i = 0;
-  for (auto candidato : listaCandidatos)
+  for (auto &candidato : listaCandidatos)
   {
     if (posicao == i)
     {
