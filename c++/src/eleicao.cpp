@@ -16,11 +16,11 @@ Eleicao::Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &lista
   this->listaDeCandidatosValidos = listaDeCandidatosValidos;
   this->listaDePartidos = listaDePartidos;
 
-  setNumeroTotalEleitos(); //set corretos
+  setNumeroTotalEleitos();
   setListaMaisVotadosEleitos();
-  setTotalVotosLegenda();  //set corretos
-  setTotalVotosNominais(); //set corretos
-  setTotalVotosValidos();  //set corretos
+  setTotalVotosLegenda();
+  setTotalVotosNominais();
+  setTotalVotosValidos();
   setListaMaisVotados();
   setDataEleicao(data);
 }
@@ -29,12 +29,6 @@ float Eleicao::calculaPercentual(unsigned &quant, unsigned &total)
 {
   return ((float)quant / total) * 100;
 }
-
-// unsigned Eleicao::calculaIdadeCandidato(LocalDate nascimento, LocalDate diaEleicao)
-// {
-// }
-
-// Unlike member function list::erase, which erases elements by their position (using an iterator), this function (list::remove) removes elements by their value.
 
 void Eleicao::ordenaPrimeiroUltimoListaPartido()
 {
@@ -226,7 +220,6 @@ void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
   cout << endl;
 }
 
-//tem que ser por cópia
 void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2)
 {
 
@@ -294,10 +287,6 @@ void Eleicao::setListaMaisVotadosEleitos()
       i++;
     }
   }
-  // for (Candidato candidato : listaDeCandidatosMaisVotadosEleitos)
-  // {
-  //   candidato.imprimeCandidato();
-  // }
 }
 
 const list<Partido> &Eleicao::getListaDePartidos()
@@ -338,7 +327,7 @@ void Eleicao::setDataEleicao(string &data)
   this->dataEleicao = data;
 };
 
-void Eleicao::setTotalVotosNominais() //Verificar soma;
+void Eleicao::setTotalVotosNominais()
 {
   for (Candidato &candidato : listaDeCandidatosValidos)
   {

@@ -14,7 +14,6 @@ Candidato::Candidato(vector<string> vetorDadosCandidato, string &dataEleicao)
   string dataNascimento = vetorDadosCandidato[6];
   string destinoVoto = vetorDadosCandidato[7];
   unsigned numeroPartido = stoi(vetorDadosCandidato[8]);
-  // string siglaPartido = vetorDadosCandidato[]; //TODO quando tiver partido, voltar aqui
   this->setNumero(numero);
   this->setVotosNominais(votosNominais);
   this->setSituacao(situacao);
@@ -175,7 +174,7 @@ unsigned Candidato ::calculaIdadeCandidato(string dataEleicao, string dataNascim
   vector<unsigned> vetorDataNascimento;
 
   stringstream s1(dataEleicao);
-  while (getline(s1, data, '/')) //Otimiza repetição de while
+  while (getline(s1, data, '/'))
   {
     unsigned aux = stoi(data);
     vetorDataEleicao.push_back(aux);
@@ -208,7 +207,7 @@ bool ComparaCandidatos::compare(string dataNascimentoCandidato1, string dataNasc
   vector<unsigned> vetorDataNascimentoCandidato2;
 
   stringstream s1(dataNascimentoCandidato1);
-  while (getline(s1, data, '/')) //Otimiza repetição de while
+  while (getline(s1, data, '/'))
   {
     unsigned aux = stoi(data);
     vetorDataNascimentoCandidato1.push_back(aux);
@@ -251,4 +250,3 @@ bool ComparaCandidatos::operator()(Candidato &candidato1, Candidato &candidato2)
     return compare(candidato1.getDataNascimento(), candidato2.getDataNascimento());
   }
 }
-//ja volto

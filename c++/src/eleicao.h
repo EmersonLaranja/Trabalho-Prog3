@@ -1,6 +1,5 @@
 #if !defined(ELEICAO_H)
 #define ELEICAO_H
-
 #include "partido.h"
 #include <iterator>
 class Eleicao
@@ -15,7 +14,7 @@ class Eleicao
   list<Candidato> listaDeCandidatosMaisVotados;
   list<Candidato> listaDeCandidatosMaisVotadosEleitos;
   list<Partido> listaDePartidos;
-  string dataEleicao; //TODO mudar para locale
+  string dataEleicao;
   float calculaPercentual(unsigned &quant, unsigned &total);
 
 public:
@@ -24,8 +23,6 @@ public:
   Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &listaDePartidos, string &data);
 
   ~Eleicao();
-
-  // unsigned calculaIdadeCandidato(LocalDate nascimento, LocalDate diaEleicao); //TODO: Quando usarmos LocaleDate
 
   void ordenaPrimeiroUltimoListaPartido();
   // --------------Imprimir---------------//
@@ -41,11 +38,11 @@ public:
   void imprimeListaCandidatos(list<Candidato> &lista);
   void imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista);
   void imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2);
+
   void setNumeroTotalEleitos();
   void setDataEleicao(string &data);
   void setListaMaisVotados();
   void setListaMaisVotadosEleitos();
-
   void setTotalVotosLegenda();
   void setTotalVotosNominais();
   void setTotalVotosValidos();

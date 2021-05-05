@@ -1,14 +1,5 @@
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include <cstring>
 #include <locale.h>
-#include <vector>
-#include <list>
-#include <ctime>
 #include "eleicao.h"
-#include <algorithm>
 using namespace std;
 
 class Excecao
@@ -28,7 +19,7 @@ int main(int argc, char const *argv[])
 {
   setlocale(LC_ALL, "pt_BR.utf8");
 
-  ifstream in(argv[1]); // TODO verificar quando arquivo não abrir
+  ifstream in(argv[1]);
 
   if (!in.good())
   {
@@ -68,7 +59,7 @@ int main(int argc, char const *argv[])
   in.close();
 
   //LENDO ARQUIVO DE PARTIDOS
-  ifstream inPartido(argv[2]); // TODO verificar quando arquivo não abrir
+  ifstream inPartido(argv[2]);
 
   if (!inPartido.good())
   {

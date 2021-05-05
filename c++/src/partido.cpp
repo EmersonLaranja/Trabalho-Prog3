@@ -9,10 +9,6 @@ Partido::Partido(vector<string> vetorDados, list<Candidato> &listaDeCandidatosVa
   string nomePartido = vetorDados[2];
   unsigned votosLegenda = stoi(vetorDados[1]);
   unsigned numero = stoi(vetorDados[0]);
-  unsigned totalCandidatosEleitos = 0;
-  unsigned totalVotosNominais = 0;
-  unsigned totalVotosPartido = 0;
-  unsigned totalCandidatos = 0;
 
   setSigla(sigla);
   setNome(nomePartido);
@@ -67,30 +63,16 @@ void Partido::imprimePrimeiroUltimoPartido()
   {
     Candidato aux;
 
-    //------ GAMBIARRA TIME-------- //!Tirar isso aqui, pelo amor de Deus kkk
-    for (auto candidato : listaCandidatos)
-    {
-      aux = candidato;
-      break;
-    }
+    // -----------------------PRIMEIRO-----------------------------------
+    aux = buscaCandidatoPorPosicao(0);
 
     if (aux.getVotosNominais() > 1)
       cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos) / ";
     else
       cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " voto) / ";
 
-    //------ GAMBIARRA TIME-------- //!Tirar isso aqui, pelo amor de Deus kkk
-    unsigned i = 0;
-    for (auto candidato : listaCandidatos)
-    {
-      if (i == listaCandidatos.size() - 1)
-      {
-
-        aux = candidato;
-        break;
-      }
-      i++;
-    }
+    // -----------------------ULTIMO-----------------------------------
+    aux = buscaCandidatoPorPosicao(listaCandidatos.size() - 1);
 
     if (aux.getVotosNominais() > 1)
       cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos)";
@@ -174,13 +156,12 @@ void Partido::setTotalVotosNominais()
 }
 void Partido::setTotalVotosPartido()
 {
-
   this->totalVotosPartido = this->totalVotosNominais + this->votosLegenda;
 }
 
 void Partido::setListaCandidatos(list<Candidato> &listaDeCandidatosValidos)
 {
-  for (Candidato &candidato : listaDeCandidatosValidos) //Adicionando o "&" vc altera a lista principal
+  for (Candidato &candidato : listaDeCandidatosValidos)
   {
     if (candidato.getNumeroPartido() == this->numero)
     {
@@ -221,12 +202,8 @@ bool Partido::ordenaPartidoPorVotos(Partido partido)
 }
 Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
 {
-  // auto aux = listaCandidatos.begin();
-  // advance(aux, posicao);
-  // return *aux;
   Candidato aux;
   unsigned i = 0;
-  //TODO: corrigir a declaração do candidato
   for (auto candidato : listaCandidatos)
   {
     if (posicao == i)

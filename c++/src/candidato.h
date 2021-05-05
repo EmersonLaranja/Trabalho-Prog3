@@ -83,12 +83,6 @@ public:
 
   ~Candidato();
 };
-// class ComparaIdades
-// {
-// public:
-//   bool compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2);
-// };
-
 class ComparaCandidatos
 {
 public:

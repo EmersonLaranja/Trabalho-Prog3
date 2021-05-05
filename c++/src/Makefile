@@ -1,19 +1,3 @@
-# comando para compilar o sistema
-compile: eleicao.cpp candidato.cpp main.cpp partido.cpp  #TODO Adicionar eleição.cpp
-	g++ -std=c++11 -o vereadores *.cpp
-
-start: 
-	./vereadores candidatos.csv partidos.csv 15/11/2020
-
-############
-# Exemplo de makefile
-# Prof. João Paulo A. Almeida
-# Programação III
-# 
-# A princípio, você não precisa alterar nada, mas aqui assume-se que o diretório atual
-# é o diretório onde estão os códigos fonte (.cpp).
-#
-
 # nome do compilador
 CPP = g++
 
@@ -34,6 +18,10 @@ EXECUTAVEL = vereadores
 #
 # use @ antes de todos os comandos, pois é necessário no script de teste
 #
+
+# comando para compilar o sistema
+make: eleicao.cpp candidato.cpp main.cpp partido.cpp  #TODO Adicionar eleição.cpp
+	g++ -std=c++11 -o vereadores *.cpp
 
 # alvo principal é o executável  
 all: $(EXECUTAVEL)
