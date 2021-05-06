@@ -3,7 +3,7 @@
 Candidato::Candidato(){
 
 };
-Candidato::Candidato(vector<string> vetorDadosCandidato, string &dataEleicao)
+Candidato::Candidato(const vector<string> &vetorDadosCandidato, const string &dataEleicao)
 {
   unsigned numero = stoi(vetorDadosCandidato[0]);
   unsigned votosNominais = stoi(vetorDadosCandidato[1]);
@@ -14,6 +14,7 @@ Candidato::Candidato(vector<string> vetorDadosCandidato, string &dataEleicao)
   string dataNascimento = vetorDadosCandidato[6];
   string destinoVoto = vetorDadosCandidato[7];
   unsigned numeroPartido = stoi(vetorDadosCandidato[8]);
+
   this->setNumero(numero);
   this->setVotosNominais(votosNominais);
   this->setSituacao(situacao);
@@ -94,7 +95,7 @@ const unsigned &Candidato::getNumeroPartido()
   return numeroPartido;
 };
 
-void Candidato::setSexo(char sexo)
+void Candidato::setSexo(const char &sexo)
 {
   switch (sexo)
   {
@@ -113,7 +114,7 @@ const char &Candidato::getSexo()
   return sexo;
 };
 
-void Candidato::setIdade(string &dataEleicao)
+void Candidato::setIdade(const string &dataEleicao)
 {
   this->idade = calculaIdadeCandidato(dataEleicao, this->getDataNascimento());
 };
@@ -123,7 +124,7 @@ const unsigned &Candidato::getIdade()
   return this->idade;
 };
 
-void Candidato::setSituacao(string situacao)
+void Candidato::setSituacao(const string &situacao)
 {
   this->situacao = situacao;
 };
@@ -133,7 +134,7 @@ const string &Candidato::getSituacao()
   return situacao;
 };
 
-void Candidato::setVotosNominais(unsigned votosNominais)
+void Candidato::setVotosNominais(const unsigned &votosNominais)
 {
   this->votosNominais = votosNominais;
 };
@@ -143,7 +144,7 @@ const string &Candidato::getDataNascimento()
   return dataNascimento;
 };
 
-void Candidato::setDataNascimento(string dataNascimento)
+void Candidato::setDataNascimento(const string &dataNascimento)
 {
   this->dataNascimento = dataNascimento;
 };
@@ -167,7 +168,7 @@ void Candidato ::imprimeCandidato()
     cout << " voto)" << endl;
 };
 
-unsigned Candidato ::calculaIdadeCandidato(string dataEleicao, string dataNascimento)
+const unsigned Candidato ::calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento)
 {
   string data, linha;
   vector<unsigned> vetorDataEleicao;
@@ -239,6 +240,7 @@ bool ComparaCandidatos::compare(string dataNascimentoCandidato1, string dataNasc
   }
 }
 
+//TODO ver static
 bool ComparaCandidatos::operator()(Candidato &candidato1, Candidato &candidato2)
 {
   if (candidato1.getVotosNominais() > candidato2.getVotosNominais())

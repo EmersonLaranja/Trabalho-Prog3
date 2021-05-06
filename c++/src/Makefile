@@ -1,3 +1,4 @@
+
 # nome do compilador
 CPP = g++
 
@@ -40,6 +41,8 @@ run: $(EXECUTAVEL)
 	@./$(EXECUTAVEL) candidatos.csv partidos.csv 15/11/2020
 
 # comando para limpeza
+start:
+	valgrind ./vereadores candidatos.csv partidos.csv 15/11/2020 >saida.txt
 clean: 
 	@rm *.o vereadores *.csv *.txt
 

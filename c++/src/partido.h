@@ -21,13 +21,12 @@ public:
   Partido();
   ~Partido();
 
-  Partido(vector<string> vetorDadosCandidato, list<Candidato> &listaDeCandidatosValidos);
+  Partido(const vector<string> &vetorDadosCandidato, list<Candidato> &listaDeCandidatosValidos);
 
   void imprimePartido();
   void imprimePrimeiroUltimoPartido();
   void imprimeListaCandidatosDoPartido();
 
-  unsigned verificaListaCandidatosVazia();
   const unsigned &getTotalCandidatos();
   const unsigned &getTotalCandidatosEleitos();
   const unsigned &getTotalVotosNominais();
@@ -43,13 +42,12 @@ public:
   void setTotalVotosNominais();
   void setTotalVotosPartido();
   void setListaCandidatos(list<Candidato> &listaDeCandidatosValidos);
-  void setNumero(unsigned numero);
-  void setSigla(string sigla);
-  void setVotosLegenda(unsigned votosLegenda);
-  void setNome(string nome);
-  bool ordenaPartidoPorVotos(Partido partido);
-
-  Candidato buscaCandidatoPorPosicao(unsigned posicao);
+  void setNumero(const unsigned &numero);
+  void setSigla(const string &sigla);
+  void setVotosLegenda(const unsigned &votosLegenda);
+  void setNome(const string &nome);
+  bool ordenaPartidoPorVotos(const Partido &partido);
+  Candidato buscaCandidatoPorPosicao(const unsigned &posicao);
 };
 
 class ComparaPartidos

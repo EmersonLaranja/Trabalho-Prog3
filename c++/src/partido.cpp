@@ -3,12 +3,12 @@
 Partido::Partido() {}
 Partido::~Partido() {}
 
-Partido::Partido(vector<string> vetorDados, list<Candidato> &listaDeCandidatosValidos)
+Partido::Partido(const vector<string> &vetorDadosCandidato, list<Candidato> &listaDeCandidatosValidos)
 {
-  string sigla = vetorDados[3];
-  string nomePartido = vetorDados[2];
-  unsigned votosLegenda = stoi(vetorDados[1]);
-  unsigned numero = stoi(vetorDados[0]);
+  string sigla = vetorDadosCandidato[3];
+  string nomePartido = vetorDadosCandidato[2];
+  unsigned votosLegenda = stoi(vetorDadosCandidato[1]);
+  unsigned numero = stoi(vetorDadosCandidato[0]);
 
   setSigla(sigla);
   setNome(nomePartido);
@@ -64,18 +64,20 @@ void Partido::imprimePrimeiroUltimoPartido()
     Candidato aux;
 
     // -----------------------PRIMEIRO-----------------------------------
-    aux = buscaCandidatoPorPosicao(0);
+    aux = listaCandidatos.front();
 
     if (aux.getVotosNominais() > 1)
-      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos) / ";
+      cout
+          << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos) / ";
     else
       cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " voto) / ";
 
     // -----------------------ULTIMO-----------------------------------
-    aux = buscaCandidatoPorPosicao(listaCandidatos.size() - 1);
+    aux = listaCandidatos.back();
 
     if (aux.getVotosNominais() > 1)
-      cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos)";
+      cout
+          << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " votos)";
     else
       cout << aux.getNomeUrna() << " (" << aux.getNumero() << ", " << aux.getVotosNominais() << " voto)";
   }
@@ -94,13 +96,6 @@ void Partido::imprimeListaCandidatosDoPartido()
   }
 }
 
-unsigned Partido::verificaListaCandidatosVazia()
-{
-  if (listaCandidatos.empty())
-    return 1;
-
-  return 0;
-}
 const unsigned &Partido::getTotalCandidatos()
 {
   return this->totalCandidatos;
@@ -170,41 +165,42 @@ void Partido::setListaCandidatos(list<Candidato> &listaDeCandidatosValidos)
     }
   }
 }
-void Partido::setNumero(unsigned numero)
+void Partido::setNumero(const unsigned &numero)
 {
   this->numero = numero;
 }
-void Partido::setSigla(string sigla)
+void Partido::setSigla(const string &sigla)
 {
   this->sigla = sigla;
 }
-void Partido::setVotosLegenda(unsigned votosLegenda)
+void Partido::setVotosLegenda(const unsigned &votosLegenda)
 {
   this->votosLegenda = votosLegenda;
 }
-void Partido::setNome(string nome)
+void Partido::setNome(const string &nome)
 {
   this->nomePartido = nome;
 }
 
-bool Partido::ordenaPartidoPorVotos(Partido partido)
+//todo static ver
+bool Partido::ordenaPartidoPorVotos(const Partido &partido)
 {
-  if (this->totalVotosPartido > partido.getTotalVotosPartido())
+  if (this->totalVotosPartido > partido.totalVotosPartido)
     return true;
-  else if (this->totalVotosPartido < partido.getTotalVotosPartido())
+  else if (this->totalVotosPartido < partido.totalVotosPartido)
     return false;
   else
   {
-    if (this->numero < partido.getNumero())
+    if (this->numero < partido.numero)
       return true;
     return false;
   }
 }
-Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
+Candidato Partido::buscaCandidatoPorPosicao(const unsigned &posicao)
 {
   Candidato aux;
   unsigned i = 0;
-  for (auto &candidato : listaCandidatos)
+  for (Candidato &candidato : listaCandidatos)
   {
     if (posicao == i)
     {
@@ -215,6 +211,7 @@ Candidato Partido::buscaCandidatoPorPosicao(unsigned posicao)
   return aux;
 }
 
+//! BUG COM CONST
 bool ComparaPartidos::operator()(Partido &partido1, Partido &partido2)
 {
   if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())

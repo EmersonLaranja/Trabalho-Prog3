@@ -1,4 +1,4 @@
-#include <locale.h>
+
 #include "eleicao.h"
 using namespace std;
 
@@ -17,7 +17,7 @@ ostream &operator<<(ostream &out, const Excecao &excecao)
 
 int main(int argc, char const *argv[])
 {
-  setlocale(LC_ALL, "pt_BR.utf8"); //TODO mudar o locale
+  // setlocale(LC_ALL, "pt_BR.utf8"); //TODO mudar o locale
 
   ifstream in(argv[1]);
 

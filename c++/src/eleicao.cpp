@@ -5,7 +5,7 @@
 Eleicao::Eleicao() {}
 Eleicao::~Eleicao() {}
 
-Eleicao::Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &listaDePartidos, string &data)
+Eleicao::Eleicao(const list<Candidato> &listaDeCandidatosValidos, const list<Partido> &listaDePartidos, const string &data)
 {
   numeroTotalEleitos = 0;
   totalVotosNominais = 0;
@@ -24,9 +24,9 @@ Eleicao::Eleicao(list<Candidato> &listaDeCandidatosValidos, list<Partido> &lista
   setDataEleicao(data);
 }
 
-float Eleicao::calculaPercentual(unsigned &quant, unsigned &total)
+const double Eleicao::calculaPercentual(const unsigned &quant, const unsigned &total)
 {
-  return ((float)quant / total) * 100;
+  return ((double)quant / total) * 100;
 }
 
 void Eleicao::ordenaPrimeiroUltimoListaPartido()
@@ -35,7 +35,7 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
 
   list<Partido> temp;
 
-  for (auto &partido : listaDePartidos)
+  for (Partido &partido : listaDePartidos)
   {
     if (partido.getTotalVotosNominais() != 0)
     {
@@ -46,7 +46,7 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
   temp.sort(OrdenaPrimeiroUltimoListaPartido());
 
   unsigned i = 1;
-  for (auto &partido : temp)
+  for (Partido &partido : temp)
   {
     if (!(partido.getTotalVotosNominais() <= 0))
     {
@@ -61,13 +61,18 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
 
 void Eleicao::imprimeVotosTotaisEleicao()
 {
-  printf("Total de votos válidos:    %d\n", totalVotosValidos);
+  cout << endl;
+  cout << "Total de votos válidos:    " << totalVotosValidos << endl;
 
-  printf("Total de votos nominais:   %d", totalVotosNominais);
-  printf(" (%.2f%%)\n", ((float)totalVotosNominais / totalVotosValidos) * 100);
+  cout << "Total de votos nominais:   " << totalVotosNominais << " (";
 
-  printf("Total de votos de Legenda: %d", totalVotosLegenda);
-  printf(" (%.2f%%)\n\n", ((float)totalVotosLegenda / totalVotosValidos) * 100);
+  float aux = (float)totalVotosNominais / totalVotosValidos * 100;
+  cout << formatDoubleCurrency(aux, LOCALE_PT_BR) << "%)" << endl;
+
+  cout << "Total de votos de Legenda: " << totalVotosLegenda << " (";
+  aux = ((float)totalVotosLegenda / totalVotosValidos) * 100;
+  cout << formatDoubleCurrency(aux, LOCALE_PT_BR) << "%)" << endl;
+  cout << endl;
 };
 
 void Eleicao::imprimeCandidatosEleitos()
@@ -126,12 +131,13 @@ void Eleicao::imprimeCandidatosPorIdade()
 
     total++;
   }
-  printf("\nEleitos, por faixa etária (na data da eleição):\n");
-  printf("      Idade < 30: %d (%.2f%%)\n", menor30, calculaPercentual(menor30, total));
-  printf("30 <= Idade < 40: %d (%.2f%%)\n", d30_40, calculaPercentual(d30_40, total));
-  printf("40 <= Idade < 50: %d (%.2f%%)\n", d40_50, calculaPercentual(d40_50, total));
-  printf("50 <= Idade < 60: %d (%.2f%%)\n", d50_60, calculaPercentual(d50_60, total));
-  printf("60 <= Idade     : %d (%.2f%%)\n\n", maior60, calculaPercentual(maior60, total));
+  cout << "\nEleitos, por faixa etária (na data da eleição):" << endl;
+
+  cout << "      Idade < 30: " << menor30 << " (" << formatDoubleCurrency(calculaPercentual(menor30, total), LOCALE_PT_BR) << "%)" << endl;
+  cout << "30 <= Idade < 40: " << d30_40 << " (" << formatDoubleCurrency(calculaPercentual(d30_40, total), LOCALE_PT_BR) << "%)" << endl;
+  cout << "40 <= Idade < 50: " << d40_50 << " (" << formatDoubleCurrency(calculaPercentual(d40_50, total), LOCALE_PT_BR) << "%)" << endl;
+  cout << "50 <= Idade < 60: " << d50_60 << " (" << formatDoubleCurrency(calculaPercentual(d50_60, total), LOCALE_PT_BR) << "%)" << endl;
+  cout << "60 <= Idade     : " << maior60 << " (" << formatDoubleCurrency(calculaPercentual(maior60, total), LOCALE_PT_BR) << "%)" << endl;
 };
 
 void Eleicao::imprimeCandidatosPorSexo()
@@ -147,14 +153,17 @@ void Eleicao::imprimeCandidatosPorSexo()
     }
   }
   qntMasculino = getNumeroTotalEleitos() - qntFeminino;
-
+  cout << endl;
   cout << "Eleitos, por sexo:" << endl;
 
   float porcentagem = (qntFeminino / getNumeroTotalEleitos()) * 100;
 
-  printf("Feminino:  %.0f (%.2f%%)\n", qntFeminino, porcentagem);
+  cout << "Feminino:  " << qntFeminino << " ("
+       << formatDoubleCurrency(porcentagem, LOCALE_PT_BR) << "%)" << endl;
   porcentagem = (qntMasculino / numeroTotalEleitos) * 100;
-  printf("Masculino: %.0f (%.2f%%)\n\n", qntMasculino, porcentagem);
+
+  cout << "Masculino: " << qntMasculino << " ("
+       << formatDoubleCurrency(porcentagem, LOCALE_PT_BR) << "%)" << endl;
 };
 
 void Eleicao::imprimeListaPartidos()
@@ -170,10 +179,10 @@ void Eleicao::imprimeListaPartidos()
   cout << endl;
 }
 
-void Eleicao::imprimeListaCandidatos(list<Candidato> &lista)
+void Eleicao::imprimeListaCandidatos(const list<Candidato> &lista)
 {
   unsigned i = 1;
-  for (Candidato &candidato : lista)
+  for (Candidato candidato : lista)
   {
     cout << i << " - ";
     candidato.imprimeCandidato();
@@ -185,7 +194,7 @@ void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
 {
   cout << "Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):" << endl;
   unsigned i = 1;
-  for (auto candidato : getListaDeCandidatosMaisVotados())
+  for (Candidato candidato : getListaDeCandidatosMaisVotados())
   {
     cout << i << " - ";
     candidato.imprimeCandidato();
@@ -194,13 +203,13 @@ void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
   cout << endl;
 }
 
+//!BUG DO CONST
 void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
 {
   unsigned j = 0, i = 0;
   list<Candidato>::iterator it = lista.begin();
   for (Candidato &candListaValido : listaDeCandidatosValidos)
   {
-
     if (j == lista.size())
     {
       break;
@@ -321,7 +330,7 @@ const unsigned &Eleicao::getTotalVotosNominais()
   return this->totalVotosNominais;
 }
 
-void Eleicao::setDataEleicao(string &data)
+void Eleicao::setDataEleicao(const string &data)
 {
   this->dataEleicao = data;
 };
@@ -344,11 +353,12 @@ const unsigned &Eleicao::getTotalVotosValidos()
   return this->totalVotosValidos;
 }
 
-bool OrdenaPrimeiroUltimoListaPartido::compare(unsigned numeroPartidario1, unsigned numeroPartidario2)
+bool OrdenaPrimeiroUltimoListaPartido::compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2)
 {
   return numeroPartidario1 < numeroPartidario2;
 }
 
+//Verificar crime
 bool OrdenaPrimeiroUltimoListaPartido::operator()(Partido &partido1, Partido &partido2)
 {
 

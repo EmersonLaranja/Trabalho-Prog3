@@ -38,7 +38,7 @@ public:
 
   const string &getDestinoVoto();
 
-  void setDataNascimento(string dataNascimento);
+  void setDataNascimento(const string &dataNascimento);
 
   void setNome(const string &nome);
 
@@ -56,19 +56,19 @@ public:
 
   const unsigned &getNumeroPartido();
 
-  void setSexo(char sexo);
+  void setSexo(const char &sexo);
 
   const char &getSexo();
 
-  void setIdade(string &dataEleicao);
+  void setIdade(const string &dataEleicao);
 
   const unsigned &getIdade();
 
-  void setSituacao(string situacao);
+  void setSituacao(const string &situacao);
 
   const string &getSituacao();
 
-  void setVotosNominais(unsigned votosNominais);
+  void setVotosNominais(const unsigned &votosNominais);
 
   const unsigned &getVotosNominais();
 
@@ -77,9 +77,9 @@ public:
 
   void imprimeCandidato();
 
-  unsigned calculaIdadeCandidato(string dataEleicao, string dataNascimento);
+  const unsigned calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento);
 
-  Candidato(vector<string> vetorDadosCandidato, string &dataEleicao);
+  Candidato(const vector<string> &vetorDadosCandidato, const string &dataEleicao);
 
   ~Candidato();
 };
