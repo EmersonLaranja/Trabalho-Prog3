@@ -63,13 +63,10 @@ public:
   const unsigned &getTotalVotosValidos();
   void inicializaListaCandidatos(string nomeArquivoEntrada, string dataEleicao, list<Candidato> &listaDeCandidatos);
   void inicializaListaPartidos(string nomeArquivoEntrada, list<Partido> &listaPartidos, list<Candidato> &listaDeCandidatos);
-};
 
-class OrdenaPrimeiroUltimoListaPartido
-{
-public:
-  bool operator()(Partido &partido1, Partido &partido2);
-  bool compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2);
+private:
+  static bool ordenaPartidoPorVotosNominais(Partido &partido1, Partido &partido2);
+  static bool compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2);
 };
 
 #endif // ELEICAO_H

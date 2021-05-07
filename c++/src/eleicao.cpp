@@ -43,7 +43,7 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
     }
   }
 
-  temp.sort(OrdenaPrimeiroUltimoListaPartido());
+  temp.sort(ordenaPartidoPorVotosNominais);
 
   unsigned i = 1;
   for (Partido &partido : temp)
@@ -353,13 +353,13 @@ const unsigned &Eleicao::getTotalVotosValidos()
   return this->totalVotosValidos;
 }
 
-bool OrdenaPrimeiroUltimoListaPartido::compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2)
+bool Eleicao::compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2)
 {
   return numeroPartidario1 < numeroPartidario2;
 }
 
 //Verificar crime
-bool OrdenaPrimeiroUltimoListaPartido::operator()(Partido &partido1, Partido &partido2)
+bool Eleicao::ordenaPartidoPorVotosNominais(Partido &partido1, Partido &partido2)
 {
 
   if (partido1.buscaCandidatoPorPosicao(0).getVotosNominais() > partido2.buscaCandidatoPorPosicao(0).getVotosNominais())
