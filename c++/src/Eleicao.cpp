@@ -80,13 +80,13 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
 };
 
 // --------------imprimir---------------//
-void Eleicao::imprimeNumeroVagas()
+void Eleicao::imprimeNumeroVagas() const
 {
   cout << "Número de vagas: " << getNumeroTotalEleitos() << endl;
   cout << endl;
 };
 
-void Eleicao::imprimeVotosTotaisEleicao()
+void Eleicao::imprimeVotosTotaisEleicao() const
 {
   cout << endl;
   cout << "Total de votos válidos:    " << totalVotosValidos << endl;
@@ -102,7 +102,7 @@ void Eleicao::imprimeVotosTotaisEleicao()
   cout << endl;
 };
 
-void Eleicao::imprimeCandidatosEleitos()
+void Eleicao::imprimeCandidatosEleitos() const
 {
   cout << "Vereadores eleitos:" << endl;
 
@@ -110,21 +110,21 @@ void Eleicao::imprimeCandidatosEleitos()
   cout << endl;
 };
 
-void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria()
+void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria() const
 {
   cout << "Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:" << endl;
   cout << "(com sua posição no ranking de mais votados)" << endl;
   imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotados, listaDeCandidatosMaisVotadosEleitos);
 };
 
-void Eleicao::imprimeCandidatosBeneficiadosVotacaoProporcional()
+void Eleicao::imprimeCandidatosBeneficiadosVotacaoProporcional() const
 {
   cout << "Eleitos, que se beneficiaram do sistema proporcional:" << endl;
   cout << "(com sua posição no ranking de mais votados)" << endl;
   imprimeBeneficiadosPresentesLista1AusentesLista2(listaDeCandidatosMaisVotadosEleitos, listaDeCandidatosMaisVotados);
 };
 
-void Eleicao::imprimeCandidatosPorIdade()
+void Eleicao::imprimeCandidatosPorIdade() const
 {
 
   unsigned idade;
@@ -165,12 +165,12 @@ void Eleicao::imprimeCandidatosPorIdade()
   cout << "60 <= Idade     : " << maior60 << " (" << formatDoubleCurrency(calculaPercentual(maior60, total), LOCALE_PT_BR) << "%)" << endl;
 };
 
-void Eleicao::imprimeCandidatosPorSexo()
+void Eleicao::imprimeCandidatosPorSexo() const
 {
   float qntFeminino = 0.0F;
   float qntMasculino = 0.0F;
 
-  for (Candidato &candidato : listaDeCandidatosValidos)
+  for (Candidato candidato : listaDeCandidatosValidos)
   {
     if (candidato.getSexo() == 'F' && candidato.getSituacao() == "Eleito")
     {
@@ -191,11 +191,11 @@ void Eleicao::imprimeCandidatosPorSexo()
        << formatDoubleCurrency(porcentagem, LOCALE_PT_BR) << "%)" << endl;
 };
 
-void Eleicao::imprimeListaPartidos()
+void Eleicao::imprimeListaPartidos() const
 {
   unsigned id = 1;
   cout << "Votação dos partidos e número de candidatos eleitos:" << endl;
-  for (Partido &partido : listaDePartidos)
+  for (Partido partido : listaDePartidos)
   {
     cout << id << " - ";
     partido.imprimePartido();
@@ -204,7 +204,7 @@ void Eleicao::imprimeListaPartidos()
   cout << endl;
 }
 
-void Eleicao::imprimeListaCandidatos(const list<Candidato> &lista)
+void Eleicao::imprimeListaCandidatos(const list<Candidato> &lista) const
 {
   unsigned i = 1;
   for (Candidato candidato : lista)
@@ -215,7 +215,7 @@ void Eleicao::imprimeListaCandidatos(const list<Candidato> &lista)
   }
 };
 
-void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
+void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas() const
 {
   cout << "Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):" << endl;
   unsigned i = 1;
@@ -227,11 +227,11 @@ void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
   }
   cout << endl;
 }
-void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
+void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista) const
 {
   unsigned j = 0, i = 0;
   list<Candidato>::iterator it = lista.begin();
-  for (Candidato &candListaValido : listaDeCandidatosValidos)
+  for (Candidato candListaValido : listaDeCandidatosValidos)
   {
     if (j == lista.size())
     {
@@ -251,7 +251,7 @@ void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
   cout << endl;
 }
 
-void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2)
+void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2) const
 {
 
   list<Candidato> beneficiados;

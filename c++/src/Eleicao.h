@@ -30,18 +30,18 @@ public:
   void ordenaPrimeiroUltimoListaPartido();
 
   // --------------imprimir---------------//
-  void imprimeNumeroVagas();
-  void imprimeVotosTotaisEleicao();
-  void imprimeCandidatosEleitos();
-  void imprimeListaCandidatosMaisVotadosPorLimiteVagas();
-  void imprimeCandidatosBeneficiadosVotacaoMajoritaria();
-  void imprimeCandidatosBeneficiadosVotacaoProporcional();
-  void imprimeCandidatosPorIdade();
-  void imprimeCandidatosPorSexo();
-  void imprimeListaPartidos();
-  void imprimeListaCandidatos(const list<Candidato> &lista);
-  void imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista);
-  void imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2);
+  void imprimeNumeroVagas() const;
+  void imprimeVotosTotaisEleicao() const;
+  void imprimeCandidatosEleitos() const;
+  void imprimeListaCandidatosMaisVotadosPorLimiteVagas() const;
+  void imprimeCandidatosBeneficiadosVotacaoMajoritaria() const;
+  void imprimeCandidatosBeneficiadosVotacaoProporcional() const;
+  void imprimeCandidatosPorIdade() const;
+  void imprimeCandidatosPorSexo() const;
+  void imprimeListaPartidos() const;
+  void imprimeListaCandidatos(const list<Candidato> &lista) const;
+  void imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista) const;
+  void imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2) const;
 
   //------------------setters-----------------
   void setNumeroTotalEleitos();
