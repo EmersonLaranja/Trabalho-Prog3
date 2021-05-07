@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constant definitions.
-TEMP_DIR=/tmp
+TEMP_DIR=/tmp 
 TEST_DIR=testes
 TEST_SCRIPT=test.sh
 BASE_DIR=$TEMP_DIR/prog3-2020-2-tests2-$(whoami)
