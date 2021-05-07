@@ -1,7 +1,7 @@
 #if !defined(PARTIDO_H)
 #define PARTIDO_H
 
-#include "candidato.h"
+#include "Candidato.h"
 
 using namespace std;
 
@@ -19,24 +19,16 @@ class Partido
 
 public:
   Partido();
-  ~Partido();
-
   Partido(const vector<string> &vetorDadosCandidato, list<Candidato> &listaDeCandidatosValidos);
 
-  void imprimePartido();
-  void imprimePrimeiroUltimoPartido();
-  void imprimeListaCandidatosDoPartido();
+  bool ordenaPartidoPorVotos(const Partido &partido) const;
 
-  const unsigned &getTotalCandidatos();
-  const unsigned &getTotalCandidatosEleitos();
-  const unsigned &getTotalVotosNominais();
-  const unsigned &getTotalVotosPartido();
-  const unsigned &getNumero();
-  const unsigned &getVotosLegenda();
-  const string &getNome();
-  const string &getSigla();
-  const list<Candidato> &getListaCandidatos();
+  //---------------imprimir--------------
+  void imprimePartido() const;
+  void imprimePrimeiroUltimoPartido() const;
+  void imprimeListaCandidatosDoPartido() const;
 
+  //---------------setters--------------
   void setTotalCandidatos();
   void setTotalCandidatosEleitos();
   void setTotalVotosNominais();
@@ -46,14 +38,25 @@ public:
   void setSigla(const string &sigla);
   void setVotosLegenda(const unsigned &votosLegenda);
   void setNome(const string &nome);
-  bool ordenaPartidoPorVotos(const Partido &partido);
-  Candidato buscaCandidatoPorPosicao(const unsigned &posicao);
+
+  //---------------getters--------------
+  const unsigned &getTotalCandidatos() const;
+  const unsigned &getTotalCandidatosEleitos() const;
+  const unsigned &getTotalVotosNominais() const;
+  const unsigned &getTotalVotosPartido() const;
+  const unsigned &getNumero() const;
+  const unsigned &getVotosLegenda() const;
+  const string &getNome() const;
+  const string &getSigla() const;
+  const list<Candidato> &getListaCandidatos() const;
+
+  ~Partido();
 };
 
 class ComparaPartidos
 {
 public:
-  bool operator()(Partido &partido1, Partido &partido2);
+  bool operator()(const Partido &partido1, const Partido &partido2);
 };
 
 #endif // PARTIDO_H

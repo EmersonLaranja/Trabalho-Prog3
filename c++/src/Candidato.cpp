@@ -1,4 +1,4 @@
-#include "candidato.h"
+#include "Candidato.h"
 
 Candidato::Candidato(){
 
@@ -29,20 +29,17 @@ Candidato::Candidato(const vector<string> &vetorDadosCandidato, const string &da
 
 Candidato::~Candidato() {}
 
-bool Candidato::verificaDestinoVoto()
+bool Candidato::verificaDestinoVoto() const
 {
 
   return this->destinoVoto == "Válido";
 }
 
+//-------------setters-------------
+
 void Candidato::setSiglaPartido(const string &siglaPartido)
 {
   this->siglaPartido = siglaPartido;
-};
-
-const string &Candidato::getSiglaPartido()
-{
-  return this->siglaPartido;
 };
 
 void Candidato::setDestinoVoto(const string &destinoVoto)
@@ -50,19 +47,9 @@ void Candidato::setDestinoVoto(const string &destinoVoto)
   this->destinoVoto = destinoVoto;
 };
 
-const string &Candidato::getDestinoVoto()
-{
-  return this->destinoVoto;
-};
-
 void Candidato::setNome(const string &nome)
 {
   this->nome = nome;
-};
-
-const string &Candidato::getNome()
-{
-  return nome;
 };
 
 void Candidato::setNomeUrna(const string &nomeUrna)
@@ -70,29 +57,14 @@ void Candidato::setNomeUrna(const string &nomeUrna)
   this->nomeUrna = nomeUrna;
 };
 
-const string &Candidato::getNomeUrna()
-{
-  return nomeUrna;
-};
-
 void Candidato::setNumero(const unsigned &numero)
 {
   this->numero = numero;
 };
 
-const unsigned &Candidato::getNumero()
-{
-  return numero;
-};
-
 void Candidato::setNumeroPartido(const unsigned &numeroPartido)
 {
   this->numeroPartido = numeroPartido;
-};
-
-const unsigned &Candidato::getNumeroPartido()
-{
-  return numeroPartido;
 };
 
 void Candidato::setSexo(const char &sexo)
@@ -109,19 +81,9 @@ void Candidato::setSexo(const char &sexo)
   }
 };
 
-const char &Candidato::getSexo()
-{
-  return sexo;
-};
-
 void Candidato::setIdade(const string &dataEleicao)
 {
   this->idade = calculaIdadeCandidato(dataEleicao, this->getDataNascimento());
-};
-
-const unsigned &Candidato::getIdade()
-{
-  return this->idade;
 };
 
 void Candidato::setSituacao(const string &situacao)
@@ -129,19 +91,9 @@ void Candidato::setSituacao(const string &situacao)
   this->situacao = situacao;
 };
 
-const string &Candidato::getSituacao()
-{
-  return situacao;
-};
-
 void Candidato::setVotosNominais(const unsigned &votosNominais)
 {
   this->votosNominais = votosNominais;
-};
-
-const string &Candidato::getDataNascimento()
-{
-  return dataNascimento;
 };
 
 void Candidato::setDataNascimento(const string &dataNascimento)
@@ -149,12 +101,63 @@ void Candidato::setDataNascimento(const string &dataNascimento)
   this->dataNascimento = dataNascimento;
 };
 
-const unsigned &Candidato::getVotosNominais()
+//-------------getters-------------
+const string &Candidato::getSiglaPartido() const
+{
+  return this->siglaPartido;
+};
+
+const string &Candidato::getDestinoVoto() const
+{
+  return this->destinoVoto;
+};
+
+const string &Candidato::getNome() const
+{
+  return nome;
+};
+
+const string &Candidato::getNomeUrna() const
+{
+  return nomeUrna;
+};
+
+const unsigned &Candidato::getNumero() const
+{
+  return numero;
+};
+
+const unsigned &Candidato::getNumeroPartido() const
+{
+  return numeroPartido;
+};
+
+const unsigned &Candidato::getIdade() const
+{
+  return this->idade;
+};
+
+const string &Candidato::getSituacao() const
+{
+  return situacao;
+};
+
+const char &Candidato::getSexo() const
+{
+  return sexo;
+};
+
+const string &Candidato::getDataNascimento() const
+{
+  return dataNascimento;
+};
+
+const unsigned &Candidato::getVotosNominais() const
 {
   return votosNominais;
 };
 
-void Candidato ::imprimeCandidato()
+void Candidato ::imprimeCandidato() const
 {
   cout << this->getNome() << " / "
        << this->getNomeUrna() << " ("
@@ -168,7 +171,7 @@ void Candidato ::imprimeCandidato()
     cout << " voto)" << endl;
 };
 
-const unsigned Candidato ::calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento)
+const unsigned Candidato ::calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento) const
 {
   string data, linha;
   vector<unsigned> vetorDataEleicao;
@@ -201,7 +204,7 @@ const unsigned Candidato ::calculaIdadeCandidato(const string &dataEleicao, cons
   }
 }
 
-bool ComparaCandidatos::compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2)
+bool ComparaCandidatos::compare(const string &dataNascimentoCandidato1, const string &dataNascimentoCandidato2)
 {
   string data, linha;
   vector<unsigned> vetorDataNascimentoCandidato1;

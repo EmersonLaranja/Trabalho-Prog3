@@ -1,4 +1,4 @@
-#include "leitura.h"
+#include "Leitura.h"
 #include <stdexcept>
 
 const void Leitura::inicializaListaCandidatos(string nomeArquivoEntrada, string dataEleicao, list<Candidato> &listaDeCandidatos)
@@ -72,5 +72,13 @@ const void Leitura::inicializaListaPartidos(string nomeArquivoEntrada, list<Part
   else
   {
     throw runtime_error("Não foi possível ler arquivo de partidos");
+  }
+}
+
+const void Leitura::verificaQuantidadeParametros(const int &argumentos) const
+{
+  if (argumentos < 4)
+  {
+    throw runtime_error("Problemas ao ler dados de entrada, parametros de entrada incompletos");
   }
 }

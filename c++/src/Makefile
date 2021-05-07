@@ -21,7 +21,7 @@ EXECUTAVEL = vereadores
 #
 
 # comando para compilar o sistema
-make: eleicao.cpp candidato.cpp main.cpp partido.cpp leitura.cpp
+make: 
 	g++ -std=c++11 -o vereadores *.cpp
 
 # alvo principal é o executável  
@@ -42,7 +42,7 @@ run: $(EXECUTAVEL)
 
 # comando para limpeza
 start:
-	valgrind ./vereadores candidatos.csv partidos.csv 15/11/2020 >saida.txt
+	valgrind ./vereadores candidatos.csv partidos.csv 15/11/2020 
 clean: 
 	@rm *.o vereadores *.csv *.txt
 

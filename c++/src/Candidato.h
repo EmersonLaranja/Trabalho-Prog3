@@ -7,9 +7,12 @@
 #include <fstream>
 #include <vector>
 #include <list>
+
 #define MASCULINO 'M'
 #define FEMININO 'F'
+
 using namespace std;
+
 class Candidato
 {
 private:
@@ -26,67 +29,47 @@ private:
   string dataNascimento;
 
 public:
-  Candidato(/* args */);
+  Candidato();
+  Candidato(const vector<string> &vetorDadosCandidato, const string &dataEleicao);
+  bool verificaDestinoVoto() const;
+  const unsigned calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento) const;
 
-  bool verificaDestinoVoto();
+  // --------------imprimir---------------//
+  void imprimeCandidato() const;
 
+  //------------------setters-----------------
   void setSiglaPartido(const string &siglaPartido);
-
-  const string &getSiglaPartido();
-
   void setDestinoVoto(const string &destinoVoto);
-
-  const string &getDestinoVoto();
-
   void setDataNascimento(const string &dataNascimento);
-
   void setNome(const string &nome);
-
-  const string &getNome();
-
   void setNomeUrna(const string &nomeUrna);
-
-  const string &getNomeUrna();
-
   void setNumero(const unsigned &numero);
-
-  const unsigned &getNumero();
-
   void setNumeroPartido(const unsigned &numeroPartido);
-
-  const unsigned &getNumeroPartido();
-
   void setSexo(const char &sexo);
-
-  const char &getSexo();
-
   void setIdade(const string &dataEleicao);
-
-  const unsigned &getIdade();
-
   void setSituacao(const string &situacao);
-
-  const string &getSituacao();
-
   void setVotosNominais(const unsigned &votosNominais);
 
-  const unsigned &getVotosNominais();
-
-  // const Date& getIdade();
-  const string &getDataNascimento();
-
-  void imprimeCandidato();
-
-  const unsigned calculaIdadeCandidato(const string &dataEleicao, const string &dataNascimento);
-
-  Candidato(const vector<string> &vetorDadosCandidato, const string &dataEleicao);
+  //-------------getters---------------------
+  const string &getSiglaPartido() const;
+  const string &getDestinoVoto() const;
+  const string &getNome() const;
+  const string &getNomeUrna() const;
+  const unsigned &getNumero() const;
+  const unsigned &getNumeroPartido() const;
+  const char &getSexo() const;
+  const unsigned &getIdade() const;
+  const string &getSituacao() const;
+  const unsigned &getVotosNominais() const;
+  const string &getDataNascimento() const;
 
   ~Candidato();
 };
+
 class ComparaCandidatos
 {
 public:
   bool operator()(Candidato &candidato1, Candidato &candidato2);
-  bool compare(string dataNascimentoCandidato1, string dataNascimentoCandidato2);
+  bool compare(const string &dataNascimentoCandidato1, const string &dataNascimentoCandidato2);
 };
 #endif // CANDIDATO_H

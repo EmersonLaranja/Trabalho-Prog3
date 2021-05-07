@@ -1,4 +1,4 @@
-#include "eleicao.h"
+#include "Eleicao.h"
 #include <iterator>
 #include <iostream>
 
@@ -24,7 +24,29 @@ Eleicao::Eleicao(const list<Candidato> &listaDeCandidatosValidos, const list<Par
   setDataEleicao(data);
 }
 
-const double Eleicao::calculaPercentual(const unsigned &quant, const unsigned &total)
+bool Eleicao::comparaNumeroPartidario(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2)
+{
+  return numeroPartidario1 < numeroPartidario2;
+}
+
+bool Eleicao::ordenaPartidosPorVotosNominais(const Partido &partido1, const Partido &partido2)
+{
+  Candidato primeiroPartido1, primeiroPartido2;
+
+  primeiroPartido1 = partido1.getListaCandidatos().front();
+  primeiroPartido2 = partido2.getListaCandidatos().front();
+
+  if (primeiroPartido1.getVotosNominais() > primeiroPartido2.getVotosNominais())
+    return true;
+  else if (primeiroPartido1.getVotosNominais() < primeiroPartido2.getVotosNominais())
+    return false;
+  else
+  {
+    return comparaNumeroPartidario(partido1.getNumero(), partido2.getNumero());
+  }
+}
+
+const double Eleicao::calculaPercentual(const unsigned &quant, const unsigned &total) const
 {
   return ((double)quant / total) * 100;
 }
@@ -43,7 +65,7 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
     }
   }
 
-  temp.sort(ordenaPartidoPorVotosNominais);
+  temp.sort(ordenaPartidosPorVotosNominais);
 
   unsigned i = 1;
   for (Partido &partido : temp)
@@ -57,7 +79,12 @@ void Eleicao::ordenaPrimeiroUltimoListaPartido()
   }
 };
 
-// --------------Imprimir---------------//
+// --------------imprimir---------------//
+void Eleicao::imprimeNumeroVagas()
+{
+  cout << "Número de vagas: " << getNumeroTotalEleitos() << endl;
+  cout << endl;
+};
 
 void Eleicao::imprimeVotosTotaisEleicao()
 {
@@ -82,8 +109,6 @@ void Eleicao::imprimeCandidatosEleitos()
   imprimeListaCandidatos(listaDeCandidatosMaisVotadosEleitos);
   cout << endl;
 };
-
-void Eleicao::imprimeListaCandidatosValidos(){};
 
 void Eleicao::imprimeCandidatosBeneficiadosVotacaoMajoritaria()
 {
@@ -202,8 +227,6 @@ void Eleicao::imprimeListaCandidatosMaisVotadosPorLimiteVagas()
   }
   cout << endl;
 }
-
-//!BUG DO CONST
 void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
 {
   unsigned j = 0, i = 0;
@@ -228,15 +251,15 @@ void Eleicao::imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista)
   cout << endl;
 }
 
-void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2)
+void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2)
 {
 
   list<Candidato> beneficiados;
   unsigned presente;
 
-  for (Candidato &candidatoLista1 : lista1)
+  for (Candidato candidatoLista1 : lista1)
   {
-    for (Candidato &candidatoLista2 : lista2)
+    for (Candidato candidatoLista2 : lista2)
     {
       if (candidatoLista1.getNome() == candidatoLista2.getNome())
       {
@@ -251,21 +274,7 @@ void Eleicao::imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &
   imprimePreservandoPosicaoMaisVotados(beneficiados);
 }
 
-void Eleicao::setNumeroTotalEleitos()
-{
-  unsigned contador = 0;
-  for (Candidato &candidato : this->listaDeCandidatosValidos)
-  {
-    if (candidato.getSituacao() == "Eleito")
-      contador += 1;
-  }
-  this->numeroTotalEleitos = contador;
-}
-
-const unsigned &Eleicao::getNumeroTotalEleitos()
-{
-  return this->numeroTotalEleitos;
-}
+// --------------setters---------------//
 
 void Eleicao::setListaMaisVotados()
 {
@@ -280,7 +289,16 @@ void Eleicao::setListaMaisVotados()
     i++;
   }
 }
-
+void Eleicao::setNumeroTotalEleitos()
+{
+  unsigned contador = 0;
+  for (Candidato &candidato : this->listaDeCandidatosValidos)
+  {
+    if (candidato.getSituacao() == "Eleito")
+      contador += 1;
+  }
+  this->numeroTotalEleitos = contador;
+}
 void Eleicao::setListaMaisVotadosEleitos()
 {
   unsigned i = 0;
@@ -297,37 +315,12 @@ void Eleicao::setListaMaisVotadosEleitos()
   }
 }
 
-const list<Partido> &Eleicao::getListaDePartidos()
-{
-  return this->listaDePartidos;
-}
-
-const list<Candidato> &Eleicao::getListaDeCandidatosMaisVotadosEleitos()
-{
-  return this->listaDeCandidatosMaisVotadosEleitos;
-}
-
-const list<Candidato> &Eleicao::getListaDeCandidatosMaisVotados()
-{
-  return this->listaDeCandidatosMaisVotados;
-}
-
 void Eleicao::setTotalVotosLegenda()
 {
   for (Partido &partido : listaDePartidos)
   {
     this->totalVotosLegenda += partido.getVotosLegenda();
   }
-}
-
-const unsigned &Eleicao::getTotalVotosLegenda()
-{
-  return this->totalVotosLegenda;
-}
-
-const unsigned &Eleicao::getTotalVotosNominais()
-{
-  return this->totalVotosNominais;
 }
 
 void Eleicao::setDataEleicao(const string &data)
@@ -348,26 +341,38 @@ void Eleicao::setTotalVotosValidos()
   this->totalVotosValidos = totalVotosLegenda + totalVotosNominais;
 }
 
-const unsigned &Eleicao::getTotalVotosValidos()
+// --------------getters---------------//
+
+const unsigned &Eleicao::getNumeroTotalEleitos() const
+{
+  return this->numeroTotalEleitos;
+}
+
+const list<Partido> &Eleicao::getListaDePartidos() const
+{
+  return this->listaDePartidos;
+}
+
+const list<Candidato> &Eleicao::getListaDeCandidatosMaisVotadosEleitos() const
+{
+  return this->listaDeCandidatosMaisVotadosEleitos;
+}
+
+const list<Candidato> &Eleicao::getListaDeCandidatosMaisVotados() const
+{
+  return this->listaDeCandidatosMaisVotados;
+}
+
+const unsigned &Eleicao::getTotalVotosLegenda() const
+{
+  return this->totalVotosLegenda;
+}
+
+const unsigned &Eleicao::getTotalVotosNominais() const
+{
+  return this->totalVotosNominais;
+}
+const unsigned &Eleicao::getTotalVotosValidos() const
 {
   return this->totalVotosValidos;
-}
-
-bool Eleicao::compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2)
-{
-  return numeroPartidario1 < numeroPartidario2;
-}
-
-//Verificar crime
-bool Eleicao::ordenaPartidoPorVotosNominais(Partido &partido1, Partido &partido2)
-{
-
-  if (partido1.buscaCandidatoPorPosicao(0).getVotosNominais() > partido2.buscaCandidatoPorPosicao(0).getVotosNominais())
-    return true;
-  else if (partido1.buscaCandidatoPorPosicao(0).getVotosNominais() < partido2.buscaCandidatoPorPosicao(0).getVotosNominais())
-    return false;
-  else
-  {
-    return compare(partido1.getNumero(), partido2.getNumero());
-  }
 }

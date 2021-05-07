@@ -1,4 +1,4 @@
-#include "partido.h"
+#include "Partido.h"
 
 Partido::Partido() {}
 Partido::~Partido() {}
@@ -21,7 +21,7 @@ Partido::Partido(const vector<string> &vetorDadosCandidato, list<Candidato> &lis
   setTotalVotosPartido();
 }
 
-void Partido::imprimePartido()
+void Partido::imprimePartido() const
 {
   cout << this->getSigla() << " - "
        << this->getNumero() << ", ";
@@ -56,7 +56,7 @@ void Partido::imprimePartido()
   }
 }
 
-void Partido::imprimePrimeiroUltimoPartido()
+void Partido::imprimePrimeiroUltimoPartido() const
 {
   cout << this->getSigla() << " - " << this->getNumero() << ", ";
   if (this->listaCandidatos.size() > 0)
@@ -85,45 +85,16 @@ void Partido::imprimePrimeiroUltimoPartido()
   cout << endl;
 }
 
-void Partido::imprimeListaCandidatosDoPartido()
+void Partido::imprimeListaCandidatosDoPartido() const
 {
   unsigned i = 1;
-  for (Candidato &candidato : listaCandidatos)
+  for (Candidato candidato : listaCandidatos)
   {
     cout << i << " - ";
     candidato.imprimeCandidato();
     i++;
   }
 }
-
-const unsigned &Partido::getTotalCandidatos()
-{
-  return this->totalCandidatos;
-}
-const unsigned &Partido::getTotalCandidatosEleitos()
-{
-  return this->totalCandidatosEleitos;
-}
-const unsigned &Partido::getTotalVotosNominais()
-{
-  return this->totalVotosNominais;
-}
-const unsigned &Partido::getTotalVotosPartido()
-{
-  return this->totalVotosPartido;
-}
-const unsigned &Partido::getNumero()
-{
-  return this->numero;
-}
-const unsigned &Partido::getVotosLegenda()
-{
-  return this->votosLegenda;
-}
-
-const string &Partido::getNome() { return this->nomePartido; }
-const string &Partido::getSigla() { return this->sigla; }
-const list<Candidato> &Partido::getListaCandidatos() { return this->listaCandidatos; }
 
 void Partido::setTotalCandidatos()
 {
@@ -182,8 +153,35 @@ void Partido::setNome(const string &nome)
   this->nomePartido = nome;
 }
 
-//todo static ver
-bool Partido::ordenaPartidoPorVotos(const Partido &partido)
+const unsigned &Partido::getTotalCandidatos() const
+{
+  return this->totalCandidatos;
+}
+const unsigned &Partido::getTotalCandidatosEleitos() const
+{
+  return this->totalCandidatosEleitos;
+}
+const unsigned &Partido::getTotalVotosNominais() const
+{
+  return this->totalVotosNominais;
+}
+const unsigned &Partido::getTotalVotosPartido() const
+{
+  return this->totalVotosPartido;
+}
+const unsigned &Partido::getNumero() const
+{
+  return this->numero;
+}
+const unsigned &Partido::getVotosLegenda() const
+{
+  return this->votosLegenda;
+}
+const string &Partido::getNome() const { return this->nomePartido; }
+const string &Partido::getSigla() const { return this->sigla; }
+const list<Candidato> &Partido::getListaCandidatos() const { return this->listaCandidatos; }
+
+bool Partido::ordenaPartidoPorVotos(const Partido &partido) const
 {
   if (this->totalVotosPartido > partido.totalVotosPartido)
     return true;
@@ -196,23 +194,8 @@ bool Partido::ordenaPartidoPorVotos(const Partido &partido)
     return false;
   }
 }
-Candidato Partido::buscaCandidatoPorPosicao(const unsigned &posicao)
-{
-  Candidato aux;
-  unsigned i = 0;
-  for (Candidato &candidato : listaCandidatos)
-  {
-    if (posicao == i)
-    {
-      aux = candidato;
-    }
-    i++;
-  }
-  return aux;
-}
 
-//! BUG COM CONST
-bool ComparaPartidos::operator()(Partido &partido1, Partido &partido2)
+bool ComparaPartidos::operator()(const Partido &partido1, const Partido &partido2)
 {
   if (partido1.getTotalVotosPartido() > partido2.getTotalVotosPartido())
     return true;

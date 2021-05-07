@@ -2,7 +2,7 @@
 #define ELEICAO_H
 
 #include "NumberUtils.h"
-#include "partido.h"
+#include "Partido.h"
 
 #include <iterator>
 using namespace std;
@@ -14,27 +14,25 @@ class Eleicao
   unsigned totalVotosNominais;
   unsigned totalVotosLegenda;
   unsigned totalVotosValidos;
-
   list<Candidato> listaDeCandidatosValidos;
   list<Candidato> listaDeCandidatosMaisVotados;
   list<Candidato> listaDeCandidatosMaisVotadosEleitos;
   list<Partido> listaDePartidos;
   string dataEleicao;
 
-  const double calculaPercentual(const unsigned &quant, const unsigned &total);
+  const double calculaPercentual(const unsigned &quant, const unsigned &total) const;
+  static bool ordenaPartidosPorVotosNominais(const Partido &partido1, const Partido &partido2);
+  static bool comparaNumeroPartidario(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2);
 
 public:
   Eleicao();
-
   Eleicao(const list<Candidato> &listaDeCandidatosValidos, const list<Partido> &listaDePartidos, const string &data);
-
-  ~Eleicao();
-
   void ordenaPrimeiroUltimoListaPartido();
-  // --------------Imprimir---------------//
+
+  // --------------imprimir---------------//
+  void imprimeNumeroVagas();
   void imprimeVotosTotaisEleicao();
   void imprimeCandidatosEleitos();
-  void imprimeListaCandidatosValidos();
   void imprimeListaCandidatosMaisVotadosPorLimiteVagas();
   void imprimeCandidatosBeneficiadosVotacaoMajoritaria();
   void imprimeCandidatosBeneficiadosVotacaoProporcional();
@@ -43,9 +41,9 @@ public:
   void imprimeListaPartidos();
   void imprimeListaCandidatos(const list<Candidato> &lista);
   void imprimePreservandoPosicaoMaisVotados(list<Candidato> &lista);
+  void imprimeBeneficiadosPresentesLista1AusentesLista2(const list<Candidato> &lista1, const list<Candidato> &lista2);
 
-  void imprimeBeneficiadosPresentesLista1AusentesLista2(list<Candidato> &lista1, list<Candidato> &lista2);
-
+  //------------------setters-----------------
   void setNumeroTotalEleitos();
   void setDataEleicao(const string &data);
   void setListaMaisVotados();
@@ -54,19 +52,16 @@ public:
   void setTotalVotosNominais();
   void setTotalVotosValidos();
 
-  const unsigned &getNumeroTotalEleitos();
-  const list<Partido> &getListaDePartidos();
-  const list<Candidato> &getListaDeCandidatosMaisVotadosEleitos();
-  const list<Candidato> &getListaDeCandidatosMaisVotados();
-  const unsigned &getTotalVotosLegenda();
-  const unsigned &getTotalVotosNominais();
-  const unsigned &getTotalVotosValidos();
-  void inicializaListaCandidatos(string nomeArquivoEntrada, string dataEleicao, list<Candidato> &listaDeCandidatos);
-  void inicializaListaPartidos(string nomeArquivoEntrada, list<Partido> &listaPartidos, list<Candidato> &listaDeCandidatos);
+  //-------------getters---------------------
+  const unsigned &getNumeroTotalEleitos() const;
+  const list<Partido> &getListaDePartidos() const;
+  const list<Candidato> &getListaDeCandidatosMaisVotadosEleitos() const;
+  const list<Candidato> &getListaDeCandidatosMaisVotados() const;
+  const unsigned &getTotalVotosLegenda() const;
+  const unsigned &getTotalVotosNominais() const;
+  const unsigned &getTotalVotosValidos() const;
 
-private:
-  static bool ordenaPartidoPorVotosNominais(Partido &partido1, Partido &partido2);
-  static bool compare(const unsigned &numeroPartidario1, const unsigned &numeroPartidario2);
+  ~Eleicao();
 };
 
 #endif // ELEICAO_H

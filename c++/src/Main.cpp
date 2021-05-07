@@ -1,37 +1,31 @@
 
-#include "eleicao.h"
-#include "leitura.h"
+#include "Eleicao.h"
+#include "Leitura.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  setlocale(LC_ALL, "pt_BR.utf8");
+  setlocale(LC_ALL, "pt_BR.utf8"); //usando locale br + biblioteca NumberUtils para as formatações
 
-  if (argc < 4)
-  {
-    cout << "Problemas ao ler data de entrada, parametros de entrada incompletos" << endl;
-    return 0;
-  }
   try
   {
+    Leitura leitura;
+    leitura.verificaQuantidadeParametros(argc); //se faltou algum argumento, o programa fechará notificando-o
     string dataEleicao = argv[3];
 
-    // string linha, palavra;
-    // vector<string> vetorDados;
+    //lendo candidatos.csv e preenchendo na lista
     list<Candidato> listaDeCandidatos;
-    list<Partido> listaDePartidos;
-    Leitura leitura;
-
     leitura.inicializaListaCandidatos(argv[1], dataEleicao, listaDeCandidatos);
+
+    //lendo partidos.csv e preenchendo na lista
+    list<Partido> listaDePartidos;
     leitura.inicializaListaPartidos(argv[2], listaDePartidos, listaDeCandidatos);
 
-    //CRIANDO ELEIÇÃO
+    //criando eleição
     Eleicao eleicao(listaDeCandidatos, listaDePartidos, dataEleicao);
 
     //relatório 1
-    cout << "Número de vagas: " << eleicao.getNumeroTotalEleitos()
-         << endl
-         << endl;
+    eleicao.imprimeNumeroVagas();
 
     //relatório 2
     eleicao.imprimeCandidatosEleitos();
@@ -62,7 +56,7 @@ int main(int argc, char const *argv[])
   }
   catch (const exception &e)
   {
-    cout << e.what() << '\n';
+    cout << e.what() << '\n'; //lança exceção de arquivo não encontrado (especificando o arquivo)
   }
   return 0;
 }
