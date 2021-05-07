@@ -3,6 +3,7 @@
 
 #include "NumberUtils.h"
 #include "partido.h"
+
 #include <iterator>
 using namespace std;
 
@@ -60,6 +61,8 @@ public:
   const unsigned &getTotalVotosLegenda();
   const unsigned &getTotalVotosNominais();
   const unsigned &getTotalVotosValidos();
+  void inicializaListaCandidatos(string nomeArquivoEntrada, string dataEleicao, list<Candidato> &listaDeCandidatos);
+  void inicializaListaPartidos(string nomeArquivoEntrada, list<Partido> &listaPartidos, list<Candidato> &listaDeCandidatos);
 };
 
 class OrdenaPrimeiroUltimoListaPartido
