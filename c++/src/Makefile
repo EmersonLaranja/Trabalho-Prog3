@@ -20,9 +20,7 @@ EXECUTAVEL = vereadores
 # use @ antes de todos os comandos, pois é necessário no script de teste
 #
 
-# comando para compilar o sistema
-make: 
-	g++ -std=c++11 -o vereadores *.cpp
+
 
 # alvo principal é o executável  
 all: $(EXECUTAVEL)
@@ -36,13 +34,19 @@ $(EXECUTAVEL): $(OBJETOS)
 %.o: %.cpp
 	@$(CPP) $(CPPFLAGS) -c $(CFLAGS) $^
 
+# comando para compilar o sistema
+make: 
+	g++ -std=c++11 -o vereadores *.cpp
+
 # o comando para executar deve especificar sempre como parâmetro divulga.csv	
 run: $(EXECUTAVEL)
 	@./$(EXECUTAVEL) candidatos.csv partidos.csv 15/11/2020
 
-# comando para limpeza
+# o comando para executar com o valgrind	
 start:
 	valgrind ./vereadores candidatos.csv partidos.csv 15/11/2020 
+
+# comando para limpeza
 clean: 
 	@rm *.o vereadores *.csv *.txt
 
